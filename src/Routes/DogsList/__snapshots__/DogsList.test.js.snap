@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DogsList /> renders as expected 1`] = `
+<main
+  className="DogList"
+>
+  <section>
+    <div
+      className="list-container"
+    >
+      <h1
+        className="dogs-list-title"
+      >
+         Current Dogs 
+      </h1>
+    </div>
+    <div
+      className="dogs-list"
+    >
+      <li
+        className="dog-item"
+      >
+        <a
+          className="dog-img-link"
+          href="/add-new-dog"
+          onClick={[Function]}
+        >
+          <div
+            className="dog-img-container add-dog"
+          >
+            <button
+              className="add-a-dog-button"
+            >
+              <h2>
+                Add A 
+                <br />
+                 New Dog
+              </h2>
+            </button>
+          </div>
+        </a>
+      </li>
+    </div>
+  </section>
+</main>
+`;

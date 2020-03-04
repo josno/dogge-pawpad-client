@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Notes /> renders as expected 1`] = `
+<main
+  className="notes-container"
+>
+  <h2>
+    Notes On 
+  </h2>
+  <section
+    className="notes-list-container"
+  >
+    <div
+      className="medical-container"
+    >
+      <h3>
+        Medical Notes
+      </h3>
+    </div>
+    <div
+      className="additional-container"
+    >
+      <h3>
+        Additional Notes
+      </h3>
+    </div>
+  </section>
+  <form
+    onSubmit={[Function]}
+  >
+    <br />
+    <select
+      className="note-types"
+      name="typeOfNote"
+      onChange={[Function]}
+      required={true}
+      value=""
+    >
+      <option
+        value=""
+      >
+        Choose Note Type
+      </option>
+      <option
+        value="medical"
+      >
+        Medical
+      </option>
+      <option
+        value="additional"
+      >
+        Additional
+      </option>
+    </select>
+    <div
+      className="text-area-container"
+    >
+      <textarea
+        className="notes-input"
+        name="text"
+        onChange={[Function]}
+        required={true}
+        value=""
+      />
+    </div>
+    <div
+      className="nav-buttons"
+    >
+      <button
+        className="notes-button"
+        onClick={[Function]}
+      >
+        Back
+      </button>
+      <button
+        className="notes-button"
+        disabled={false}
+        type="submit"
+      >
+        Add Note
+      </button>
+    </div>
+  </form>
+</main>
+`;

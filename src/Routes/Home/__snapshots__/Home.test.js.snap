@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Home /> renders as expected 1`] = `
+<main
+  className="homepage"
+>
+  <header
+    className="header-title"
+    role="banner"
+  >
+    <h1
+      className="home-page-title"
+    >
+       PawPad 
+    </h1>
+    <img
+      alt="dog"
+      className="homepage-image"
+      src="ken-reid-Cnrxu_Za30M-unsplash-removebg-preview.png"
+    />
+  </header>
+  <section
+    className="intro-details"
+  >
+    <h3>
+       An animal shelter intake application.
+    </h3>
+    <p>
+      Check on your doggos and update essential information. Stay more organized and stay on track - doggo appreciates it!
+    </p>
+  </section>
+  <section
+    className="form-tab"
+  >
+    <a
+      href="/login"
+      onClick={[Function]}
+    >
+      Login To See Dogs
+    </a>
+  </section>
+</main>
+`;

@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DogInfo /> renders as expected 1`] = `
+<main
+  className="dog-info"
+>
+  <div
+    className="grid-container"
+  >
+    <div
+      className="dog-name"
+    >
+      <h1
+        className="dog-name-text"
+      />
+    </div>
+    <div
+      className="dog-img"
+    >
+      <img
+        alt="dog-name"
+        className="info-img"
+      />
+    </div>
+    <div
+      className="basic-dog-details box-flex"
+    >
+      <h3
+        className="info-title"
+      >
+        Basic Details 
+      </h3>
+      <ul
+        className="dog-info-text"
+      >
+        <li>
+          Gender: 
+        </li>
+        <li>
+          Estimated Age: 
+        </li>
+        <li>
+          Estimated Arrival:
+           
+          02/24/2020
+        </li>
+        <li>
+          <span
+            className="indicator-no"
+          >
+             ✘ 
+          </span>
+          Spayed/Neutered
+        </li>
+      </ul>
+    </div>
+    <div
+      className="shots-information box-flex"
+    >
+      <h3
+        className="info-title"
+      >
+        Shots Completed
+      </h3>
+      <ul
+        className="dog-info-text shot-container"
+      />
+    </div>
+  </div>
+  
+  <div
+    className="nav-buttons"
+  >
+    <button
+      className="go-back"
+    >
+      <a
+        className="dog-link"
+        href="/dogs-list"
+        onClick={[Function]}
+      >
+        Back To List
+      </a>
+    </button>
+    <button
+      className="see-notes"
+    >
+      <a
+        className="dog-link"
+        href="/notes-undefined/undefined"
+        onClick={[Function]}
+      >
+        Notes On 
+      </a>
+    </button>
+    <button
+      className="edit cancel"
+    >
+      <a
+        className="dog-link"
+        href="/edit-dog/undefined"
+        onClick={[Function]}
+      >
+        Edit Information
+      </a>
+    </button>
+  </div>
+</main>
+`;

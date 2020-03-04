@@ -1,0 +1,17 @@
+.add-shot-name {
+	border: 2px solid black;
+	box-shadow: 5px 5px gray;
+	font-size: 0.8em;
+	font-weight: bold;
+	height: 40px;
+	margin: 20px 0px 10px 0px;
+	width: 100%;
+}
+
+.add-shot-name:active {
+	box-shadow: none;
+}
+
+.new-shot-box {
+	margin-top: 20px;
+}

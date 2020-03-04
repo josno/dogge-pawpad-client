@@ -1,0 +1,55 @@
+.dog-img-container {
+	width: 100%;
+	height: 200px;
+	box-shadow: 10px 10px #5d576b;
+	border: 2px solid black;
+}
+
+.dog-img-container:active {
+	box-shadow: none;
+}
+
+.dog-item {
+	margin: 20px;
+}
+
+.add-a-dog-button {
+	font-size: 1em;
+	border: none;
+}
+
+.add-a-dog-button:hover {
+	cursor: pointer;
+}
+
+.dog-list-container {
+	padding-top: 40px;
+}
+
+.dogs-list {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.list-container {
+	padding-top: 30px;
+}
+
+.dog-list-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	height: 80vh;
+}
+
+.dogs-list-name {
+	color: #fcfcfc;
+	background-color: #f7567c;
+	font-size: 24px;
+	font-weight: bolder;
+	height: 40px;
+	line-height: 40px;
+	position: relative;
+	top: -71px;
+}

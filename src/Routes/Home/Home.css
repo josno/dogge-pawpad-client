@@ -1,0 +1,139 @@
+.home-page-title {
+	color: #fcfcfc;
+	font-family: Candal, sans-serif;
+	font-size: 3em;
+	padding-top: 60px;
+	margin: 0px;
+	width: 100%;
+	-webkit-text-stroke: 1px black;
+}
+
+.intro-details,
+.header-title {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.intro-details {
+	padding: 20px;
+}
+
+.header-title {
+	background-color: #99e1d9;
+}
+
+.homepage {
+	height: 100%;
+}
+
+.homepage-image {
+	object-position: bottom 0px right 30px;
+	width: 300px;
+	height: 200px;
+}
+
+.options {
+	margin-left: auto;
+	margin-right: auto;
+	height: fit-content;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.form-tab {
+	border: 2px solid #99e1d9;
+	box-shadow: inset 0 0 0 0 #99e1d9;
+	color: #fff;
+	cursor: pointer;
+	display: inline-block;
+	font-weight: bold;
+	height: 80px;
+	letter-spacing: 1px;
+	line-height: 60px;
+	margin: 20px;
+	padding: 10px;
+	text-align: center;
+	transition: ease-out 0.4s;
+	vertical-align: middle;
+	width: 80vw;
+	-webkit-transition: ease-out 0.4s;
+	-moz-transition: ease-out 0.4s;
+}
+
+.form-tab:hover {
+	box-shadow: inset 800px 0 0 0 #99e1d9;
+}
+
+a,
+a:hover,
+a:visited {
+	color: #2a3e3c;
+}
+
+.input-login-button {
+	border: 2px solid black;
+	width: 40vh;
+	margin: 10px auto;
+	font-size: 1em;
+}
+
+.input-login-button:hover {
+	cursor: pointer;
+}
+
+@media (min-width: 700px) {
+	.form-tab {
+		width: 400px;
+	}
+
+	.intro-details {
+		display: flex;
+	}
+
+	.options {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.header-title {
+		flex-direction: row;
+		padding-top: 20px;
+	}
+
+	.home-page-title {
+		font-size: em;
+		left: 5vw;
+		padding-top: 0;
+		position: relative;
+		width: 40vw;
+	}
+
+	.homepage-image {
+		height: 250px;
+		right: -30px;
+		width: 350px;
+		object-position: bottom 0px right 30px;
+		position: relative;
+	}
+}
+
+@media (min-width: 1200px) {
+	.header-title {
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		padding-top: 20px;
+	}
+
+	.homepage-image {
+		left: 0;
+		width: 400px;
+	}
+
+	.home-page-title {
+		font-size: 4em;
+		width: 40%;
+	}
+}

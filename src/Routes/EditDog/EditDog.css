@@ -1,0 +1,42 @@
+.updated-by {
+	font-size: 0.75em;
+	text-align: center;
+}
+
+.dog-name-photo {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.shot-instructions {
+	font-size: 0.75em;
+	font-style: italic;
+}
+
+.block {
+	display: block;
+	font-size: 1em;
+	height: 40px;
+	padding-left: 10px;
+	width: 100%;
+}
+
+.bold {
+	font-size: 0.8em;
+	font-weight: bold;
+	color: #f7567c;
+}
+
+.fielditem {
+	height: 80px;
+}
+
+input[type='radio'],
+input[type='checkbox'] {
+	margin-left: 20px;
+}
+
+fieldset {
+	display: flex;
+}

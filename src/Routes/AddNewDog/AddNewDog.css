@@ -1,0 +1,66 @@
+.block {
+	display: block;
+	font-size: 1em;
+	height: 40px;
+	padding-left: 10px;
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+.bold {
+	color: #f7567c;
+	font-size: 0.8em;
+	font-weight: bold;
+}
+
+.fielditem {
+	height: 80px;
+}
+
+input[type='radio'],
+input[type='checkbox'] {
+	margin-left: 20px;
+}
+
+.loader-container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	position: relative;
+	bottom: 50vh;
+}
+
+.loader {
+	border: 16px solid gray;
+	border-radius: 50%;
+	opacity: 0.5;
+	border-top: 16px solid #f993ab;
+	width: 120px;
+	height: 120px;
+	-webkit-animation: spin 2s linear infinite; /* Safari */
+	animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+fieldset {
+	display: flex;
+	margin: 10px 0px 10px 0px;
+}
