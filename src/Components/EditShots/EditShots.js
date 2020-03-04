@@ -129,18 +129,24 @@ class EditShots extends Component {
 
 	deleteShot(e) {
 		const { id } = e.target;
-		DogsApiService.deleteDogShot(id).then(response =>
-			DogsApiService.getShots(this.props.dogId)
-				.then(shots => {
-					shots.sort((a, b) => a.id - b.id);
-					return shots;
-				})
-				.then(sortedShots =>
-					this.setState({
-						shots: sortedShots
+		DogsApiService.deleteDogShot(id)
+			.then(response => {
+				DogsApiService.getShots(this.props.dogId)
+					.then(shots => {
+						shots.sort((a, b) => a.id - b.id);
+						return shots;
 					})
-				)
-		);
+					.then(sortedShots =>
+						this.setState({
+							shots: sortedShots
+						})
+					);
+			})
+			.catch(e =>
+				this.setState({
+					error: `Something went wrong. Try again later.`
+				})
+			);
 	}
 
 	componentDidMount() {

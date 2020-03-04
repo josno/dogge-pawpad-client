@@ -10,6 +10,12 @@ export default function NoteListItem(props) {
 					Written By:{' '}
 					<span className="note-author">{props.noteBy}</span>
 				</li>
+				<button
+					className="delete-note-button"
+					onClick={props.deleteNote}
+				>
+					Delete
+				</button>
 			</ul>
 		</div>
 	);

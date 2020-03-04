@@ -17,12 +17,13 @@ class Notes extends Component {
 				value: '',
 				touched: false
 			},
-			error: ''
+			error: null
 		};
 		this.formatDate = this.formatDate.bind(this);
 		this.handleTextChange = this.handleTextChange.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		// this.handleDelete = this.handleDelete.bind(this);
 	}
 
 	formatDate(date) {
@@ -43,6 +44,30 @@ class Notes extends Component {
 		});
 	};
 
+	handleDelete = noteId => {
+		DogsApiService.deleteNote(noteId)
+			.then(note => {
+				DogsApiService.getDogNotes(this.props.dogId).then(note => {
+					const medicalNotes = note.filter(
+						n => n.type_of_note === 'medical'
+					);
+					const additionalNotes = note.filter(
+						n => n.type_of_note === 'additional'
+					);
+
+					this.setState({
+						medical: medicalNotes,
+						additional: additionalNotes
+					});
+				});
+			})
+			.catch(error =>
+				this.setState({
+					error: `Something went wrong. Try again later.`
+				})
+			);
+	};
+
 	handleSubmit = e => {
 		e.preventDefault();
 
@@ -55,19 +80,25 @@ class Notes extends Component {
 			dog_id: this.props.dogId
 		};
 
-		DogsApiService.insertNewNote(newNote).then(note => {
-			note.type_of_note === 'medical'
-				? this.setState({
-						medical: [...this.state.medical, note],
-						typeOfNote: '',
-						text: { value: '', touched: false }
-				  })
-				: this.setState({
-						additional: [...this.state.additional, note],
-						typeOfNote: '',
-						text: { value: '', touched: false }
-				  });
-		});
+		DogsApiService.insertNewNote(newNote)
+			.then(note => {
+				note.type_of_note === 'medical'
+					? this.setState({
+							medical: [...this.state.medical, note],
+							typeOfNote: '',
+							text: { value: '', touched: false }
+					  })
+					: this.setState({
+							additional: [...this.state.additional, note],
+							typeOfNote: '',
+							text: { value: '', touched: false }
+					  });
+			})
+			.catch(error =>
+				this.setState({
+					error: `Something went wrong. Try again later.`
+				})
+			);
 	};
 
 	componentDidMount() {
@@ -89,16 +120,23 @@ class Notes extends Component {
 		return (
 			<main className="notes-container">
 				<h2>Notes On {this.props.dogName}</h2>
+				{this.state.error && (
+					<h2>
+						<ValidationError message={this.state.error} />
+					</h2>
+				)}
 				<section className="notes-list-container">
 					<div className="medical-container">
 						<h3>Medical Notes</h3>
 						{medical.map(n => (
 							<NoteListItem
+								dogName={this.props.dogName}
+								dogId={this.props.dogId}
 								key={n.id + 1}
 								notes={n.notes}
 								noteBy={n.note_updated_by}
 								date={this.formatDate(n.date_created)}
-								title={'Medical Notes'}
+								deleteNote={() => this.handleDelete(n.id)}
 							/>
 						))}
 					</div>
@@ -107,11 +145,13 @@ class Notes extends Component {
 						<h3>Additional Notes</h3>
 						{additional.map(n => (
 							<NoteListItem
+								dogName={this.props.dogName}
+								dogId={this.props.dogId}
 								key={n.id + 1}
 								notes={n.notes}
 								noteBy={n.note_updated_by}
 								date={this.formatDate(n.date_created)}
-								title={'Medical Notes'}
+								deleteNote={() => this.handleDelete(n.id)}
 							/>
 						))}
 					</div>

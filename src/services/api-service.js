@@ -118,9 +118,15 @@ const DogsApiService = {
 			headers: {
 				authorization: `Bearer ${TokenService.getAuthToken()}`
 			}
-		}).then(res =>
-			!res.ok ? res.json().then(e => Promise.reject(e)) : null
-		);
+		});
+	},
+	deleteNote(noteId) {
+		return fetch(`${config.API_ENDPOINT}/notes/${noteId}`, {
+			method: 'DELETE',
+			headers: {
+				authorization: `Bearer ${TokenService.getAuthToken()}`
+			}
+		});
 	}
 };
 
