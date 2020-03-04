@@ -1,3 +1,10 @@
+.add-dog {
+	width: 200px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 .dog-img-container {
 	width: 100%;
 	height: 200px;
@@ -52,4 +59,21 @@
 	line-height: 40px;
 	position: relative;
 	top: -71px;
+}
+
+.search-dog {
+	height: 30px;
+	display: block;
+	margin: 0px auto 0px auto;
+	width: 60vw;
+	border: 1px solid black;
+	padding-left: 5px;
+	font-size: 0.8em;
+}
+
+@media (min-width: 500px) {
+	.search-dog {
+		width: 30vw;
+		height: 40px;
+	}
 }

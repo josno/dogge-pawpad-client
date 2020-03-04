@@ -47,10 +47,10 @@ class DogList extends Component {
 
 		return (
 			<main className="DogList">
-				<section>
-					<div className="list-container">
-						<h1 className="dogs-list-title"> Current Dogs </h1>
-						<label>
+				<section className="list-container">
+					<h1 className="dogs-list-title"> Current Dogs </h1>
+					<div>
+						<label className="search-box">
 							Search By Dog Name{' '}
 							<input
 								className="search-dog"
@@ -60,30 +60,27 @@ class DogList extends Component {
 								onChange={this.handleChange}
 							/>
 						</label>
-						<div className="dogs-list">
-							{filteredDogs.map(d => (
-								<DogListItem
-									name={d.dog_name}
-									id={d.id}
-									key={d.id}
-									img={d.profile_img}
-								/>
-							))}
+					</div>
+					<div className="dogs-list">
+						{filteredDogs.map(d => (
+							<DogListItem
+								name={d.dog_name}
+								id={d.id}
+								key={d.id}
+								img={d.profile_img}
+							/>
+						))}
 
-							<li className="dog-item">
-								<Link
-									className="dog-img-link"
-									to={'/add-new-dog'}
-								>
-									<div className="dog-img-container add-dog">
-										<button className="add-a-dog-button">
-											<h2>
-												Add A <br /> New Dog
-											</h2>
-										</button>
-									</div>
-								</Link>
-							</li>
+						<div className="dog-item">
+							<Link className="dog-img-link" to={'/add-new-dog'}>
+								<div className="dog-img-container add-dog">
+									<button className="add-a-dog-button">
+										<h2>
+											Add A <br /> New Dog
+										</h2>
+									</button>
+								</div>
+							</Link>
 						</div>
 					</div>
 				</section>
