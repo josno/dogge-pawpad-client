@@ -51,13 +51,6 @@ textarea {
 	height: 10vh;
 }
 
-.add-dog {
-	width: 200px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
 .form-buttons {
 	text-align: center;
 	justify-content: center;
@@ -166,6 +159,12 @@ footer {
 }
 
 @media (min-width: 500px) {
+	.homepage,
+	.dog-info,
+	.dogslist {
+		height: 100vh;
+	}
+
 	.form-container {
 		width: 50vw;
 	}

@@ -46,7 +46,7 @@ class DogList extends Component {
 		});
 
 		return (
-			<main className="DogList">
+			<main className="dogslist">
 				<section className="list-container">
 					<h1 className="dogs-list-title"> Current Dogs </h1>
 					<div>
