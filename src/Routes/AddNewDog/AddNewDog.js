@@ -15,9 +15,9 @@ class AddNewDog extends Component {
 			profileImgPreview: '',
 			profileImg: '',
 			spayedneutered: false,
-			rabies: false,
-			complexOne: false,
-			complexTwo: false,
+			rabies: '',
+			complexOne: '',
+			complexTwo: '',
 			gender: '',
 			loading: false,
 			age: { value: '', touched: false },
@@ -28,6 +28,7 @@ class AddNewDog extends Component {
 		this.handleCheckbox = this.handleCheckbox.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.setShotsObject = this.setShotsObject.bind(this);
 	}
 
 	handleImgChange = e => {
@@ -66,27 +67,42 @@ class AddNewDog extends Component {
 		}));
 	};
 
-	handleSubmit = e => {
-		e.preventDefault();
-		const { profileImg, spayedNeutered, gender, arrivalDate } = this.state;
-
-		const allCompletedShots = [
+	setShotsObject = () => {
+		const { rabies, complexOne, complexTwo } = this.state;
+		const shots = [
 			{
 				shot_name: 'Rabies',
-				shot_iscompleted: this.state.rabies,
+				shot_date: rabies.length > 0 ? rabies : null,
 				dog_id: ''
 			},
 			{
 				shot_name: 'Complex I',
-				shot_iscompleted: this.state.complexOne,
+				shot_date: complexOne.length > 0 ? complexOne : null,
 				dog_id: ''
 			},
 			{
 				shot_name: 'Complex II',
-				shot_iscompleted: this.state.complexTwo,
+				shot_date: complexTwo.length > 0 ? complexTwo : null,
 				dog_id: ''
 			}
 		];
+
+		shots.forEach(i => {
+			if (i.shot_date !== null) {
+				i.shot_iscompleted = true;
+			} else {
+				i.shot_iscompleted = false;
+			}
+		});
+
+		return shots;
+	};
+
+	handleSubmit = e => {
+		e.preventDefault();
+		const { profileImg, spayedNeutered, gender, arrivalDate } = this.state;
+		const allCompletedShots = this.setShotsObject();
+		console.log(allCompletedShots);
 
 		const newDog = [
 			{ dog_name: this.state.dogName.value },
@@ -263,36 +279,39 @@ class AddNewDog extends Component {
 						</legend>
 
 						<label htmlFor="rabies">
+							Rabies{' '}
 							<input
+								className="shot-date-input"
 								id="rabies"
-								type="checkbox"
+								type="date"
 								name="rabies"
 								value={this.state.rabies}
-								onChange={this.handleCheckbox}
+								onChange={this.handleChange}
 							/>
-							Rabies
 						</label>
 
 						<label htmlFor="complexOne">
+							Complex I
 							<input
+								className="shot-date-input"
 								id="complexOne"
-								type="checkbox"
+								type="date"
 								name="complexOne"
 								value={this.state.complexOne}
-								onChange={this.handleCheckbox}
+								onChange={this.handleChange}
 							/>
-							Complex I
 						</label>
 
 						<label htmlFor="complexTwo">
+							Complex II
 							<input
+								className="shot-date-input"
 								id="complexTwo"
-								type="checkbox"
+								type="date"
 								name="complexTwo"
 								value={this.state.complexTwo}
-								onChange={this.handleCheckbox}
+								onChange={this.handleChange}
 							/>
-							Complex II
 						</label>
 					</fieldset>
 

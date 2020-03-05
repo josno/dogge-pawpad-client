@@ -10,7 +10,7 @@ class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			error: '',
+			error: null,
 			loading: false
 		};
 	}
@@ -37,7 +37,7 @@ class Login extends Component {
 				this.props.history.push('/');
 			})
 			.catch(res => {
-				this.setState({ error: res.error });
+				this.setState({ error: res });
 			});
 	};
 
@@ -67,14 +67,12 @@ class Login extends Component {
 						name="password"
 						required
 					/>
-					{this.state.error.length > 0 ? (
+					{this.state.error !== null && (
 						<ValidationError
 							message={
 								'Something wrong happened. Refresh and try again.'
 							}
 						/>
-					) : (
-						''
 					)}
 					<button
 						aria-label="login"
@@ -83,12 +81,10 @@ class Login extends Component {
 					>
 						Login
 					</button>
-					{this.state.loading && this.state.error.length === 0 ? (
+					{this.state.loading && this.state.error === null && (
 						<div className="login-loader-container">
 							<div className="loader"></div>
 						</div>
-					) : (
-						''
 					)}
 				</form>
 			</div>

@@ -17,6 +17,15 @@
 	height: 80px;
 }
 
+.shot-date-input {
+	display: block;
+	text-align: center;
+	font-size: 0.8em;
+	height: 30px;
+	margin: 10px 10px 10px;
+	width: 80%;
+}
+
 input[type='radio'],
 input[type='checkbox'] {
 	margin-left: 20px;
