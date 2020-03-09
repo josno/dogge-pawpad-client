@@ -26,14 +26,14 @@ class DogInfo extends Component {
 		if (boolean) {
 			return (
 				<>
-					<span className="indicator-yes">&#10004; </span>
+					<span className="indicator-yes">&#10004; </span>{' '}
 					Spayed/Neutered
 				</>
 			);
 		} else {
 			return (
 				<>
-					<span className="indicator-no"> &#10008; </span>
+					<span className="indicator-no"> &#10008; </span>{' '}
 					Spayed/Neutered
 				</>
 			);
@@ -95,16 +95,32 @@ class DogInfo extends Component {
 
 					<div className="basic-dog-details box-flex">
 						<h3 className="info-title">Basic Details </h3>
-						<ul className="dog-info-text">
-							<li>Gender: {dogInfo.gender}</li>
-							<li>Estimated Age: {dogInfo.age}</li>
-							<li>
-								Estimated Arrival:{' '}
+						<ul className="dog-info-text details-grid-container">
+							<li className="gender align-details">Gender: </li>
+							<li className="gender-value align-details">
+								{dogInfo.gender}
+							</li>
+							<li className="age align-details">Age: </li>
+							<li className="age-value align-details">
+								{dogInfo.age}
+							</li>
+							<li className="arrival align-details">
+								Arrival Date:{' '}
+							</li>
+							<li className="arrival-value align-details">
 								{this.formatDate(dogInfo.arrival_date)}
 							</li>
-							<li>Tag Number: {dogInfo.tag_number}</li>
-							<li>Microchip Number: {dogInfo.microchip}</li>
-							<li>
+							<li className="tag align-details">Tag: </li>
+							<li className="tag-value align-details">
+								{dogInfo.tag_number}
+							</li>
+							<li className="microchip align-details">
+								Microchip:{' '}
+							</li>
+							<li className="microchip-value align-details">
+								{dogInfo.microchip}
+							</li>
+							<li className="spayed-neutered align-details">
 								{this.renderSpayedNeutered(
 									dogInfo.spayedneutered
 								)}

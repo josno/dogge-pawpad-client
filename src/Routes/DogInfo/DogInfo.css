@@ -70,6 +70,65 @@
 	border: 2px solid;
 }
 
+.details-grid-container {
+	background-clip: content-box;
+	display: grid;
+	grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+	grid-template-columns: 0.9fr 1fr;
+	grid-template-areas: 'gender gender-value' 'age age-value' 'arrival arrival-value' 'tag tag-value' 'microchip microchip-value' 'spayed-neutered spayed-neutered';
+}
+
+.align-details {
+	align-content: flex-start;
+	align-items: center;
+	display: flex;
+	font-size: 0.7em;
+}
+
+.gender {
+	grid-area: gender;
+}
+
+.gender-value {
+	grid-area: gender-value;
+}
+
+.age {
+	grid-area: age;
+}
+
+.age-value {
+	grid-area: age-value;
+}
+
+.arrival {
+	grid-area: arrival;
+}
+
+.arrival-value {
+	grid-area: arrival-value;
+}
+
+.tag {
+	grid-area: tag;
+}
+
+.tag-value {
+	grid-area: tag-value;
+}
+
+.microchip {
+	grid-area: microchip;
+}
+
+.microchip-value {
+	grid-area: microchip-value;
+}
+
+.spayed-neutered {
+	grid-area: spayed-neutered;
+}
+
 @media (min-width: 800px) {
 	.grid-container {
 		background-clip: content-box;
