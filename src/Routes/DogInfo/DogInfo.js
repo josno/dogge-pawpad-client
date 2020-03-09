@@ -18,24 +18,26 @@ class DogInfo extends Component {
 	}
 
 	formatDate(date) {
-		const formattedDate = moment(date).format('MM/DD/YYYY');
+		const formattedDate = moment(date).format('LL');
 		return formattedDate;
 	}
 
 	renderSpayedNeutered(boolean) {
-		if (boolean === true) {
+		if (boolean) {
 			return (
 				<>
 					<span className="indicator-yes">&#10004; </span>
 					Spayed/Neutered
 				</>
 			);
+		} else {
+			return (
+				<>
+					<span className="indicator-no"> &#10008; </span>
+					Spayed/Neutered
+				</>
+			);
 		}
-		return (
-			<>
-				<span className="indicator-no"> &#10008; </span>Spayed/Neutered
-			</>
-		);
 	}
 
 	renderShotsCompleted(list) {
@@ -51,7 +53,11 @@ class DogInfo extends Component {
 			return (
 				<li className="shot-checkbox" key={i.shot_name + 'one'}>
 					<span className="indicator-yes">&#10004; </span>{' '}
-					{i.shot_name}: {this.formatDate(i.shot_date)}
+					{i.shot_name}
+					<span className="last-shot-text">
+						Last {i.shot_name} Date: <br />
+						{this.formatDate(i.shot_date)}
+					</span>
 				</li>
 			);
 		});
@@ -96,6 +102,8 @@ class DogInfo extends Component {
 								Estimated Arrival:{' '}
 								{this.formatDate(dogInfo.arrival_date)}
 							</li>
+							<li>Tag Number: {dogInfo.tag_number}</li>
+							<li>Microchip Number: {dogInfo.microchip}</li>
 							<li>
 								{this.renderSpayedNeutered(
 									dogInfo.spayedneutered

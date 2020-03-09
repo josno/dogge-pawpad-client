@@ -116,7 +116,7 @@ class AddNewDog extends Component {
 			{ spayedneutered: spayedNeutered },
 			{ gender: gender },
 			{ microchip: microchip },
-			{ tagNumber: tagNumber },
+			{ tag_number: tagNumber },
 			{ age: age },
 			{ arrival_date: arrivalDate }
 		];
@@ -377,16 +377,16 @@ class AddNewDog extends Component {
 						</label>
 					</fieldset>
 
+					{this.state.error.length > 0 ? (
+						<ValidationError
+							message={
+								'Something wrong happened. Refresh and try again.'
+							}
+						/>
+					) : (
+						''
+					)}
 					<div className="form-buttons">
-						{this.state.error.length > 0 ? (
-							<ValidationError
-								message={
-									'Something wrong happened. Refresh and try again.'
-								}
-							/>
-						) : (
-							''
-						)}
 						<button className="cancel">
 							<Link className="dog-link" to={'/dogs-list'}>
 								Cancel

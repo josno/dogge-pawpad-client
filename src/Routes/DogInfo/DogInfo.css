@@ -11,7 +11,7 @@
 
 .dog-info-text {
 	text-align: left;
-	line-height: 50px;
+	line-height: 25px;
 	margin: 20px;
 }
 
@@ -45,6 +45,13 @@
 .info-title {
 	color: #5d576b;
 	margin: 5px;
+}
+
+.last-shot-text {
+	display: block;
+	padding-left: 30px;
+	font-size: 0.75em;
+	margin: 0px;
 }
 
 .box-flex,
