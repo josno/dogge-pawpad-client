@@ -35,6 +35,7 @@ class EditShots extends Component {
 		var shotsToMap = shotsArray.filter(a =>
 			requiredShots.some(b => a.shot_name === b)
 		);
+
 		return shotsToMap.map(i => (
 			<li className="edit-shot-line" key={i.id}>
 				<label htmlFor={i.id}>
@@ -57,6 +58,8 @@ class EditShots extends Component {
 						type="date"
 						name={i.shot_name}
 						onChange={this.handleDateChange}
+						min="2018-01-01"
+						max="2030-12-31"
 					/>
 					<button
 						type="button"
@@ -92,7 +95,6 @@ class EditShots extends Component {
 			shot_iscompleted: true
 		};
 
-		console.log(shot);
 		DogsApiService.updateDogShot(shot, id).then(response =>
 			DogsApiService.getShots(this.props.dogId)
 				.then(shots => {
@@ -193,7 +195,7 @@ class EditShots extends Component {
 		if (date === null) {
 			formattedDate = `N/A`;
 		} else {
-			formattedDate = moment(date).format('MM-DD-YYYY');
+			formattedDate = moment(date).format('LL');
 		}
 
 		return formattedDate;
