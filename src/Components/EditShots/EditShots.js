@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import './EditShots.css';
 import DogsApiService from '../../services/api-service';
 import Validate from '../../Utils/validation';
@@ -21,8 +22,11 @@ class EditShots extends Component {
 		this.renderOptionShots = this.renderOptionShots.bind(this);
 		this.renderTextbox = this.renderTextBox.bind(this);
 		this.handleAddShot = this.handleAddShot.bind(this);
-		this.submitNewShot = this.submitNewShot.bind(this);
+		this.handleSubmitNewShot = this.handleSubmitNewShot.bind(this);
 		this.deleteShot = this.deleteShot.bind(this);
+		this.formatDate = this.formatDate.bind(this);
+		this.handleDateChange = this.handleDateChange.bind(this);
+		this.handleUpdateShotDate = this.handleUpdateShotDate.bind(this);
 	}
 
 	renderMandatoryShots(shotsArray) {
@@ -32,10 +36,10 @@ class EditShots extends Component {
 			requiredShots.some(b => a.shot_name === b)
 		);
 		return shotsToMap.map(i => (
-			<li key={i.id}>
+			<li className="edit-shot-line" key={i.id}>
 				<label htmlFor={i.id}>
 					<input
-						id={i.id}
+						id={i.id + ' ' + i.shot_name}
 						type="checkbox"
 						name={i.shot_name}
 						value={i.shot_iscompleted}
@@ -43,9 +47,60 @@ class EditShots extends Component {
 						onChange={this.handleChecks}
 					/>
 					{i.shot_name}
+					<br />
+					{this.formatDate(i.shot_date)}
+
+					<input
+						type="date"
+						name={i.shot_name}
+						onChange={this.handleDateChange}
+					/>
+					<button
+						type="button"
+						id={i.id}
+						name={i.shot_name}
+						onClick={this.handleUpdateShotDate}
+					>
+						{' '}
+						Update
+					</button>
 				</label>
 			</li>
 		));
+	}
+
+	handleDateChange(e) {
+		const { name, value } = e.target;
+		if (moment(value).isValid()) {
+			this.setState({
+				[name]: value
+			});
+		}
+	}
+
+	handleUpdateShotDate(e) {
+		e.preventDefault();
+		const { name, id } = e.target;
+		const shot = {
+			shot_name: name,
+			shot_date: this.state[e.target.name],
+			id: id,
+			shot_iscompleted: true
+		};
+
+		console.log(shot);
+		DogsApiService.updateDogShot(shot, id).then(response =>
+			DogsApiService.getShots(this.props.dogId)
+				.then(shots => {
+					shots.sort((a, b) => a.id - b.id);
+					return shots;
+				})
+				.then(sortedShots =>
+					this.setState({
+						shots: sortedShots
+					})
+				)
+		);
 	}
 
 	renderOptionShots(shotsArray) {
@@ -56,7 +111,7 @@ class EditShots extends Component {
 		);
 
 		return shotsToMap.map(i => (
-			<div key={i.id}>
+			<label key={i.id} htmlFor={i.shot_name}>
 				<input
 					id={i.id}
 					type="checkbox"
@@ -65,11 +120,8 @@ class EditShots extends Component {
 					checked={i.shot_iscompleted}
 					onChange={this.deleteShot}
 				/>
-				<label key={i.id} htmlFor={i.shot_name}>
-					{i.shot_name}
-				</label>
-				<br />
-			</div>
+				{i.shot_name}
+			</label>
 		));
 	}
 
@@ -85,7 +137,7 @@ class EditShots extends Component {
 		});
 	}
 
-	submitNewShot() {
+	handleSubmitNewShot() {
 		const shot = {
 			shot_name: this.state.newShot.value,
 			shot_iscompleted: true,
@@ -106,14 +158,18 @@ class EditShots extends Component {
 
 	handleChecks(e) {
 		const { name, id, value } = e.target;
+		const shotId = id.split(' ')[0];
 
 		const shot = {
 			shot_name: name,
-			id: id,
+			id: shotId,
+			shot_date: null,
 			shot_iscompleted: value === 'false' ? true : false
 		};
 
-		DogsApiService.updateDogShot(shot, id).then(response =>
+		console.log(shot);
+
+		DogsApiService.updateDogShot(shot, shotId).then(response =>
 			DogsApiService.getShots(this.props.dogId)
 				.then(shots => {
 					shots.sort((a, b) => a.id - b.id);
@@ -126,6 +182,12 @@ class EditShots extends Component {
 				)
 		);
 	}
+
+	formatDate = date => {
+		const formattedDate = moment(date).format('YYYY-MM-DD');
+
+		return formattedDate;
+	};
 
 	deleteShot(e) {
 		const { id } = e.target;
@@ -165,7 +227,10 @@ class EditShots extends Component {
 			<>
 				<fieldset className="field-item">
 					<legend className="bold">Required Shots Completed</legend>
-					{shots !== undefined && this.renderMandatoryShots(shots)}
+					<div className="update-shot-date-box">
+						{shots !== undefined &&
+							this.renderMandatoryShots(shots)}
+					</div>
 				</fieldset>
 
 				<fieldset>
@@ -195,7 +260,7 @@ class EditShots extends Component {
 							<button
 								type="button"
 								className="add-shot-name"
-								onClick={this.submitNewShot}
+								onClick={this.handleSubmitNewShot}
 								disabled={Validate.validateShotName(
 									this.state.newShot.value
 								)}

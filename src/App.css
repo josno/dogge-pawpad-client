@@ -179,9 +179,6 @@ footer {
 	.dog-name {
 		grid-area: dog-name;
 	}
-	.form-container {
-		width: 40vw;
-	}
 
 	.form-buttons {
 		flex-wrap: nowrap;
@@ -201,12 +198,6 @@ footer {
 	.go-back,
 	.edit,
 	.notes-button {
-		width: 30vw;
-	}
-}
-
-@media (min-width: 1100px) {
-	.form-container {
 		width: 30vw;
 	}
 }

@@ -75,6 +75,8 @@ class EditDog extends Component {
 			arrival_date: new Date(arrivalDate)
 		};
 
+		console.log('submit clicked');
+
 		DogsApiService.updateDog(updatedDogObj, this.props.dogId)
 			.then(res =>
 				this.props.history.push(`/dog-info/${this.props.dogId}`)

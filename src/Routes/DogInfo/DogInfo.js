@@ -51,7 +51,7 @@ class DogInfo extends Component {
 			return (
 				<li className="shot-checkbox" key={i.shot_name + 'one'}>
 					<span className="indicator-yes">&#10004; </span>{' '}
-					{i.shot_name}
+					{i.shot_name}: {this.formatDate(i.shot_date)}
 				</li>
 			);
 		});
