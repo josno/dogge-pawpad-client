@@ -47,16 +47,20 @@ class EditShots extends Component {
 						onChange={this.handleChecks}
 					/>
 					{i.shot_name}
-					<br />
-					{this.formatDate(i.shot_date)}
+
+					<span class="shot-date-text">
+						{this.formatDate(i.shot_date)}
+					</span>
 
 					<input
+						className="edit-shot-date-input"
 						type="date"
 						name={i.shot_name}
 						onChange={this.handleDateChange}
 					/>
 					<button
 						type="button"
+						className="shot-date-button"
 						id={i.id}
 						name={i.shot_name}
 						onClick={this.handleUpdateShotDate}
@@ -184,7 +188,13 @@ class EditShots extends Component {
 	}
 
 	formatDate = date => {
-		const formattedDate = moment(date).format('YYYY-MM-DD');
+		let formattedDate = '';
+
+		if (date === null) {
+			formattedDate = `N/A`;
+		} else {
+			formattedDate = moment(date).format('MM-DD-YYYY');
+		}
 
 		return formattedDate;
 	};

@@ -26,10 +26,10 @@
 	width: 80%;
 }
 
-input[type='radio'],
+/* input[type='radio'],
 input[type='checkbox'] {
 	margin-left: 20px;
-}
+} */
 
 .loader-container {
 	width: 100%;

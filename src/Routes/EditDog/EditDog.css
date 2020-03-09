@@ -31,11 +31,11 @@
 .fielditem {
 	height: 80px;
 }
-
+/* 
 input[type='radio'],
 input[type='checkbox'] {
 	margin-left: 20px;
-}
+} */
 
 fieldset {
 	display: flex;
@@ -45,4 +45,3 @@ fieldset {
 	margin-left: 10px;
 	font-size: 0.8em;
 }
-

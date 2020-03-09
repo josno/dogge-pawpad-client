@@ -1,4 +1,5 @@
-.add-shot-name {
+.add-shot-name,
+.shot-date-button {
 	border: 2px solid black;
 	box-shadow: 5px 5px gray;
 	font-size: 0.8em;
@@ -19,6 +20,19 @@
 .edit-shot-line {
 	display: block;
 	margin: 20px;
+}
+
+.edit-shot-date-input {
+	height: 40px;
+	width: 100%;
+	font-size: 0.8em;
+}
+
+.shot-date-text {
+	font-size: 0.8em;
+	font-style: italic;
+	font-weight: bold;
+	display: block;
 }
 
 /* .update-shot-date-box {
