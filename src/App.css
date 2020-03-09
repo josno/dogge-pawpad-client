@@ -150,7 +150,7 @@ main {
 
 .App {
 	position: relative;
-	min-height: 100vh;
+	min-height: 100%;
 }
 
 footer {
@@ -160,7 +160,6 @@ footer {
 
 @media (min-width: 500px) {
 	.homepage,
-	.dog-info,
 	.dogslist {
 		height: 100vh;
 	}
@@ -182,6 +181,10 @@ footer {
 
 	.form-buttons {
 		flex-wrap: nowrap;
+	}
+
+	.form-container {
+		width: 80vw;
 	}
 
 	.nav-buttons {

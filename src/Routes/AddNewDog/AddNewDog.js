@@ -13,15 +13,17 @@ class AddNewDog extends Component {
 		this.state = {
 			dogName: { value: '', touched: false },
 			profileImgPreview: '',
-			profileImg: '',
+			profileImg: null,
 			spayedneutered: false,
 			rabies: '',
 			complexOne: '',
 			complexTwo: '',
-			gender: '',
+			microchip: null,
+			tagNumber: null,
+			gender: null,
 			loading: false,
 			age: { value: '', touched: false },
-			arrivalDate: '',
+			arrivalDate: null,
 			error: ''
 		};
 		this.handleImgChange = this.handleImgChange.bind(this);
@@ -29,6 +31,8 @@ class AddNewDog extends Component {
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.setShotsObject = this.setShotsObject.bind(this);
+		this.setDogObject = this.setDogObject.bind(this);
+		this.setFormData = this.setFormData.bind(this);
 	}
 
 	handleImgChange = e => {
@@ -98,27 +102,63 @@ class AddNewDog extends Component {
 		return shots;
 	};
 
-	handleSubmit = e => {
-		e.preventDefault();
-		const { profileImg, spayedNeutered, gender, arrivalDate } = this.state;
-		const allCompletedShots = this.setShotsObject();
-		console.log(allCompletedShots);
-
+	setDogObject = (
+		spayedNeutered,
+		gender,
+		microchip,
+		tagNumber,
+		arrivalDate,
+		age,
+		dogName
+	) => {
 		const newDog = [
-			{ dog_name: this.state.dogName.value },
+			{ dog_name: dogName },
 			{ spayedneutered: spayedNeutered },
 			{ gender: gender },
-			{ age: this.state.age.value },
+			{ microchip: microchip },
+			{ tagNumber: tagNumber },
+			{ age: age },
 			{ arrival_date: arrivalDate }
 		];
 
-		const formData = new FormData(); //need to create and submit multi-part because of img
+		return newDog;
+	};
 
+	setFormData = (newDog, profileImg) => {
+		const formData = new FormData();
 		formData.append('profile_img', profileImg);
 
 		newDog.forEach(i => {
 			formData.append(Object.keys(i), Object.values(i));
 		});
+
+		return formData;
+	};
+
+	handleSubmit = e => {
+		e.preventDefault();
+		const {
+			profileImg,
+			spayedNeutered,
+			gender,
+			arrivalDate,
+			tagNumber,
+			microchip
+		} = this.state;
+		const dogName = this.state.dogName.value;
+		const age = this.state.age.value;
+
+		const newDog = this.setDogObject(
+			spayedNeutered,
+			gender,
+			microchip,
+			tagNumber,
+			arrivalDate,
+			age,
+			dogName
+		);
+		const allCompletedShots = this.setShotsObject();
+		const formData = this.setFormData(newDog, profileImg);
 
 		this.setState({
 			loading: true
@@ -247,6 +287,28 @@ class AddNewDog extends Component {
 						name="arrivalDate"
 						onChange={this.handleChange}
 						required
+					/>
+
+					<label htmlFor="tag-number" className="bold">
+						Tag Number
+					</label>
+					<input
+						className="block"
+						id="tag-number"
+						type="text"
+						name="tagNumber"
+						onChange={this.handleChange}
+					/>
+
+					<label htmlFor="microchip" className="bold">
+						Microchip Number
+					</label>
+					<input
+						className="block"
+						id="microchip"
+						type="text"
+						name="microchip"
+						onChange={this.handleChange}
 					/>
 
 					<fieldset className="field-item">
