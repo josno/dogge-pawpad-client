@@ -70,20 +70,14 @@ class DogList extends Component {
 								img={d.profile_img}
 							/>
 						))}
-
-						<div className="dog-item">
-							<Link className="dog-img-link" to={'/add-new-dog'}>
-								<div className="dog-img-container add-dog">
-									<button className="add-a-dog-button">
-										<h2>
-											Add A <br /> New Dog
-										</h2>
-									</button>
-								</div>
-							</Link>
-						</div>
 					</div>
 				</section>
+
+				<button className="add-a-dog-button add-dog">
+					<Link className="add-dog-link" to={'/add-new-dog'}>
+						Add Dog
+					</Link>
+				</button>
 			</main>
 		);
 	}
