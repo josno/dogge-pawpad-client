@@ -204,3 +204,9 @@ footer {
 		width: 30vw;
 	}
 }
+
+@media (min-width: 800px) {
+	.nav-buttons {
+		max-width: 1000px;
+	}
+}

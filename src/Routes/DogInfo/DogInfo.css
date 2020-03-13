@@ -10,15 +10,16 @@
 }
 
 .dog-info-text {
-	text-align: left;
 	line-height: 25px;
 	margin: 20px;
+	text-align: left;
 }
 
 .shot-container {
 	display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;
+	height: 100%;
 }
 
 .grid-container {
@@ -76,6 +77,7 @@
 	grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
 	grid-template-columns: 0.9fr 1fr;
 	grid-template-areas: 'gender gender-value' 'age age-value' 'arrival arrival-value' 'tag tag-value' 'microchip microchip-value' 'spayed-neutered spayed-neutered';
+	height: 100%;
 }
 
 .align-details {
@@ -130,6 +132,10 @@
 }
 
 @media (min-width: 800px) {
+	.align-details {
+		font-size: 1em;
+	}
+
 	.grid-container {
 		background-clip: content-box;
 		padding: 50px;
@@ -157,12 +163,15 @@
 		justify-content: space-evenly;
 	}
 }
-
 @media (min-width: 1200px) {
-	.shot-container {
-		height: 200px;
+	.grid-container {
+		max-width: 1000px;
+		margin-left: auto;
+		margin-right: auto;
 	}
-
+	/* .shot-container {
+		height: 200px;
+	} */
 	.dog-info-text {
 		font-size: 0.8em;
 	}
