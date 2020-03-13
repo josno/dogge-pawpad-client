@@ -54,6 +54,15 @@
 	width: 100%;
 }
 
+.delete-note-button:hover {
+	background-color: #ff7300;
+	color: white;
+}
+
+.delete-note-button:active {
+	box-shadow: none;
+}
+
 .note-details {
 	padding-left: 20px;
 }

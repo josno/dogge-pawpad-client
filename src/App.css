@@ -3,6 +3,7 @@
 * {
 	box-sizing: border-box;
 	font-family: Montserrat, sans-serif;
+	color: #2a2929;
 }
 
 body {
@@ -66,9 +67,9 @@ textarea {
 .go-back,
 .edit,
 .notes-button {
-	border: 2px solid #99e1d9;
-	box-shadow: inset 0 0 0 0 #99e1d9;
-	color: #2a3e3c;
+	border: 2px solid #8bd3de;
+	box-shadow: inset 0 0 0 0 #8bd3de;
+	color: #2a2929;
 	cursor: pointer;
 	display: inline-block;
 	font-size: 1em;
@@ -161,7 +162,7 @@ footer {
 @media (min-width: 500px) {
 	.homepage,
 	.dogslist {
-		height: 100%;
+		height: 100vh;
 	}
 
 	.form-container {

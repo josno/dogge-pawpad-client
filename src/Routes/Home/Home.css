@@ -21,7 +21,7 @@
 }
 
 .header-title {
-	background-color: #99e1d9;
+	background-color: #009fb7;
 }
 
 .homepage {
@@ -66,10 +66,8 @@
 	box-shadow: inset 800px 0 0 0 #99e1d9;
 }
 
-a,
-a:hover,
-a:visited {
-	color: #2a3e3c;
+a:hover {
+	text-shadow: 2px 3px #ff7300;
 }
 
 .input-login-button {
