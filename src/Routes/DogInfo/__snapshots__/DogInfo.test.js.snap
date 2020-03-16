@@ -31,25 +31,61 @@ exports[`<DogInfo /> renders as expected 1`] = `
         Basic Details 
       </h3>
       <ul
-        className="dog-info-text"
+        className="dog-info-text details-grid-container"
       >
-        <li>
+        <li
+          className="gender align-details"
+        >
           Gender: 
         </li>
-        <li>
-          Estimated Age: 
+        <li
+          className="gender-value align-details"
+        />
+        <li
+          className="age align-details"
+        >
+          Age: 
         </li>
-        <li>
-          Estimated Arrival:
+        <li
+          className="age-value align-details"
+        />
+        <li
+          className="arrival align-details"
+        >
+          Arrival Date:
            
-          02/24/2020
         </li>
-        <li>
+        <li
+          className="arrival-value align-details"
+        >
+          March 16, 2020
+        </li>
+        <li
+          className="tag align-details"
+        >
+          Tag: 
+        </li>
+        <li
+          className="tag-value align-details"
+        />
+        <li
+          className="microchip align-details"
+        >
+          Microchip:
+           
+        </li>
+        <li
+          className="microchip-value align-details"
+        />
+        <li
+          className="spayed-neutered align-details"
+        >
           <span
             className="indicator-no"
           >
              ✘ 
           </span>
+           
           Spayed/Neutered
         </li>
       </ul>

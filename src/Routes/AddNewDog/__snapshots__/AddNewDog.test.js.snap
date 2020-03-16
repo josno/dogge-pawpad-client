@@ -16,7 +16,6 @@ exports[`<AddNewDog /> renders as expected 1`] = `
     <div
       className="field-item"
     >
-      
       <label
         className="bold"
         htmlFor="name"
@@ -121,6 +120,32 @@ exports[`<AddNewDog /> renders as expected 1`] = `
       required={true}
       type="date"
     />
+    <label
+      className="bold"
+      htmlFor="tag-number"
+    >
+      Tag Number
+    </label>
+    <input
+      className="block"
+      id="tag-number"
+      name="tagNumber"
+      onChange={[Function]}
+      type="text"
+    />
+    <label
+      className="bold"
+      htmlFor="microchip"
+    >
+      Microchip Number
+    </label>
+    <input
+      className="block"
+      id="microchip"
+      name="microchip"
+      onChange={[Function]}
+      type="text"
+    />
     <fieldset
       className="field-item"
     >
@@ -164,40 +189,45 @@ exports[`<AddNewDog /> renders as expected 1`] = `
       <label
         htmlFor="rabies"
       >
+        Rabies
+         
         <input
+          className="shot-date-input"
           id="rabies"
           name="rabies"
           onChange={[Function]}
-          type="checkbox"
-          value={false}
+          type="date"
+          value=""
         />
-        Rabies
       </label>
       <label
         htmlFor="complexOne"
       >
+        Complex I
         <input
+          className="shot-date-input"
           id="complexOne"
           name="complexOne"
           onChange={[Function]}
-          type="checkbox"
-          value={false}
+          type="date"
+          value=""
         />
-        Complex I
       </label>
       <label
         htmlFor="complexTwo"
       >
+        Complex II
         <input
+          className="shot-date-input"
           id="complexTwo"
           name="complexTwo"
           onChange={[Function]}
-          type="checkbox"
-          value={false}
+          type="date"
+          value=""
         />
-        Complex II
       </label>
     </fieldset>
+    
     <div
       className="form-buttons"
     >
@@ -221,5 +251,6 @@ exports[`<AddNewDog /> renders as expected 1`] = `
       </button>
     </div>
   </form>
+  
 </main>
 `;

@@ -31,7 +31,7 @@ a {
 	box-shadow: 5px 5px 5px gray;
 	display: flex;
 	flex-direction: column;
-     height: 500px;
+	height: 500px;
 	justify-content: center;
 	width: 80vw;
 
@@ -47,8 +47,8 @@ a {
 }
 
 .input-submit-button {
-	border: 2px solid #99e1d9;
-	box-shadow: inset 0 0 0 0 #99e1d9;
+	border: 2px solid #009fb7;
+	box-shadow: inset 0 0 0 0 #009fb7;
 	color: #2a3e3c;
 	cursor: pointer;
 
@@ -65,7 +65,8 @@ a {
 }
 
 .input-submit-button:hover {
-	box-shadow: inset 800px 0 0 0 #99e1d9;
+	color: white;
+	box-shadow: inset 800px 0 0 0 #009fb7;
 }
 
 .input-submit-button:disabled {

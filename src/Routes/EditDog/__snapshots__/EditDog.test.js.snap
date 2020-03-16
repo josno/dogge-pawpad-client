@@ -16,7 +16,6 @@ exports[`<EditDog /> renders as expected 1`] = `
     <div
       className="dog-name-photo"
     >
-      
       <h1
         htmlFor="name"
       >
@@ -106,6 +105,9 @@ exports[`<EditDog /> renders as expected 1`] = `
       >
         Required Shots Completed
       </legend>
+      <div
+        className="update-shot-date-box"
+      />
     </fieldset>
     <fieldset>
       <legend
@@ -157,6 +159,7 @@ exports[`<EditDog /> renders as expected 1`] = `
     <div
       className="form-buttons"
     >
+      
       <button
         className="cancel"
         type="submit"

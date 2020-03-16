@@ -2,45 +2,45 @@
 
 exports[`<DogsList /> renders as expected 1`] = `
 <main
-  className="DogList"
+  className="dogslist"
 >
-  <section>
-    <div
-      className="list-container"
+  <section
+    className="list-container"
+  >
+    <h1
+      className="dogs-list-title"
     >
-      <h1
-        className="dogs-list-title"
+       Current Dogs 
+    </h1>
+    <div>
+      <label
+        className="search-box"
       >
-         Current Dogs 
-      </h1>
+        Search By Dog Name
+         
+        <input
+          className="search-dog"
+          name="dogSearch"
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+      </label>
     </div>
     <div
       className="dogs-list"
-    >
-      <li
-        className="dog-item"
-      >
-        <a
-          className="dog-img-link"
-          href="/add-new-dog"
-          onClick={[Function]}
-        >
-          <div
-            className="dog-img-container add-dog"
-          >
-            <button
-              className="add-a-dog-button"
-            >
-              <h2>
-                Add A 
-                <br />
-                 New Dog
-              </h2>
-            </button>
-          </div>
-        </a>
-      </li>
-    </div>
+    />
   </section>
+  <button
+    className="add-a-dog-button add-dog"
+  >
+    <a
+      className="add-dog-link"
+      href="/add-new-dog"
+      onClick={[Function]}
+    >
+      Add Dog
+    </a>
+  </button>
 </main>
 `;
