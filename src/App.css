@@ -67,8 +67,8 @@ textarea {
 .go-back,
 .edit,
 .notes-button {
-	border: 2px solid #8bd3de;
-	box-shadow: inset 0 0 0 0 #8bd3de;
+	border: 2px solid #009fb7;
+	box-shadow: inset 0 0 0 0 #009fb7;
 	color: #2a2929;
 	cursor: pointer;
 	display: inline-block;
@@ -90,8 +90,16 @@ textarea {
 .edit:hover,
 .cancel:hover,
 .submit:hover,
-.notes-button:hover {
-	box-shadow: inset 800px 0 0 0 #99e1d9;
+.notes-button:hover,
+.see-notes:hover {
+	box-shadow: inset 800px 0 0 0 #009fb7;
+	color: white;
+	text-shadow: none;
+}
+
+.dog-link:hover {
+	color: white;
+	text-shadow: none;
 }
 
 .add-new-dog:disabled,
