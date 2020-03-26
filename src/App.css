@@ -174,7 +174,7 @@ footer {
 	}
 
 	.form-container {
-		width: 50vw;
+		width: 400px;
 	}
 }
 
@@ -190,10 +190,6 @@ footer {
 
 	.form-buttons {
 		flex-wrap: nowrap;
-	}
-
-	.form-container {
-		width: 80vw;
 	}
 
 	.nav-buttons {

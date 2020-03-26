@@ -14,7 +14,14 @@ class EditShots extends Component {
 			newShot: {
 				value: '',
 				touched: false
-			}
+			},
+			requiredShots: [
+				'Rabies I',
+				'Rabies Yearly Booster',
+				'Complex I',
+				'Complex II',
+				'Complex Yearly Booster'
+			]
 		};
 
 		this.renderMandatoryShots = this.renderMandatoryShots.bind(this);
@@ -30,7 +37,7 @@ class EditShots extends Component {
 	}
 
 	renderMandatoryShots(shotsArray) {
-		const requiredShots = ['Rabies', 'Complex I', 'Complex II'];
+		const { requiredShots } = this.state;
 
 		var shotsToMap = shotsArray.filter(a =>
 			requiredShots.some(b => a.shot_name === b)
@@ -49,7 +56,7 @@ class EditShots extends Component {
 					/>
 					{i.shot_name}
 
-					<span class="shot-date-text">
+					<span className="shot-date-text">
 						{this.formatDate(i.shot_date)}
 					</span>
 
@@ -110,7 +117,7 @@ class EditShots extends Component {
 	}
 
 	renderOptionShots(shotsArray) {
-		const requiredShots = ['Rabies', 'Complex I', 'Complex II'];
+		const { requiredShots } = this.state;
 
 		var shotsToMap = shotsArray.filter(
 			a => !requiredShots.some(b => a.shot_name === b)
@@ -225,7 +232,7 @@ class EditShots extends Component {
 
 	componentDidMount() {
 		DogsApiService.getShots(this.props.dogId).then(shots => {
-			shots.sort((a, b) => a.id - b.id);
+			shots.sort((a, b) => (a.shot_name > b.shot_name ? 1 : -1));
 			this.setState({
 				shots: shots
 			});

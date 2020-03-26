@@ -16,15 +16,17 @@ class AddNewDog extends Component {
 			profileImg: null,
 			spayedneutered: false,
 			rabies: '',
+			rabiesBooster: '',
 			complexOne: '',
 			complexTwo: '',
+			complexBooster: '',
 			microchip: null,
 			tagNumber: null,
 			gender: null,
 			loading: false,
 			age: { value: '', touched: false },
 			arrivalDate: null,
-			error: ''
+			error: null
 		};
 		this.handleImgChange = this.handleImgChange.bind(this);
 		this.handleCheckbox = this.handleCheckbox.bind(this);
@@ -72,11 +74,23 @@ class AddNewDog extends Component {
 	};
 
 	setShotsObject = () => {
-		const { rabies, complexOne, complexTwo } = this.state;
+		const {
+			rabies,
+			complexOne,
+			complexTwo,
+			rabiesBooster,
+			complexBooster
+		} = this.state;
+
 		const shots = [
 			{
 				shot_name: 'Rabies',
 				shot_date: rabies.length > 0 ? rabies : null,
+				dog_id: ''
+			},
+			{
+				shot_name: 'Rabies Yearly Booster',
+				shot_date: rabiesBooster.length > 0 ? rabiesBooster : null,
 				dog_id: ''
 			},
 			{
@@ -87,6 +101,11 @@ class AddNewDog extends Component {
 			{
 				shot_name: 'Complex II',
 				shot_date: complexTwo.length > 0 ? complexTwo : null,
+				dog_id: ''
+			},
+			{
+				shot_name: 'Complex Yearly Booster',
+				shot_date: complexBooster.length > 0 ? complexBooster : null,
 				dog_id: ''
 			}
 		];
@@ -352,6 +371,18 @@ class AddNewDog extends Component {
 							/>
 						</label>
 
+						<label htmlFor="rabiesBooster">
+							Rabies Yearly Booster{' '}
+							<input
+								className="shot-date-input"
+								id="rabiesBooster"
+								type="date"
+								name="rabiesBooster"
+								value={this.state.rabiesBooster}
+								onChange={this.handleChange}
+							/>
+						</label>
+
 						<label htmlFor="complexOne">
 							Complex I
 							<input
@@ -375,16 +406,26 @@ class AddNewDog extends Component {
 								onChange={this.handleChange}
 							/>
 						</label>
+
+						<label htmlFor="complexBooster">
+							Complex Yearly Booster
+							<input
+								className="shot-date-input"
+								id="complexBooster"
+								type="date"
+								name="complexBooster"
+								value={this.state.complexBooster}
+								onChange={this.handleChange}
+							/>
+						</label>
 					</fieldset>
 
-					{this.state.error.length > 0 ? (
+					{this.state.error !== null && (
 						<ValidationError
 							message={
 								'Something wrong happened. Refresh and try again.'
 							}
 						/>
-					) : (
-						''
 					)}
 					<div className="form-buttons">
 						<button className="cancel">
@@ -406,12 +447,10 @@ class AddNewDog extends Component {
 						</button>
 					</div>
 				</form>
-				{this.state.loading && this.state.error.length === 0 ? (
+				{this.state.loading && this.state.error !== null && (
 					<div className="loader-container">
 						<div className="loader"></div>
 					</div>
-				) : (
-					''
 				)}
 			</main>
 		);

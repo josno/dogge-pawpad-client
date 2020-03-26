@@ -22,10 +22,14 @@
 	margin: 20px;
 }
 
+.edit-shot-date {
+	padding-left: 10px;
+}
+
 .edit-shot-date-input {
-	height: 40px;
-	width: 100%;
 	font-size: 0.8em;
+	height: 40px;
+	padding-left: 15px;
 }
 
 .shot-date-text {
@@ -35,14 +39,26 @@
 	display: block;
 }
 
-/* .update-shot-date-box {
-	flex-direction: column;
-} */
-
 @media (min-width: 800px) {
 	.update-shot-date-box {
 		display: flex;
-		justify-content: space-between;
+		flex-direction: column;
+		justify-content: center;
 		align-items: center;
+	}
+}
+
+@media (min-width: 1000px) {
+	.edit-shot-line {
+		flex-wrap: wrap;
+	}
+}
+
+@media (min-width: 1300px) {
+	.update-shot-date-box {
+		flex-wrap: wrap;
+		flex-direction: row;
+		justify-content: space-evenly;
+		align-items: start;
 	}
 }

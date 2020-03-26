@@ -44,7 +44,7 @@ class DogInfo extends Component {
 		const check = list.map(i => {
 			if (i.shot_iscompleted === false) {
 				return (
-					<li className="shot-checkbox" key={i.shot_name + 'one'}>
+					<li className="shot-checkbox" key={i.shot_name + '-one'}>
 						<span className="indicator-no">&#10008; </span>
 						{i.shot_name}
 					</li>
@@ -55,29 +55,28 @@ class DogInfo extends Component {
 					<span className="indicator-yes">&#10004; </span>{' '}
 					{i.shot_name}
 					<span className="last-shot-text">
-						Last {i.shot_name} Date: <br />
-						{this.formatDate(i.shot_date)}
+						Date Completed: {this.formatDate(i.shot_date)}
 					</span>
 				</li>
 			);
 		});
-
 		return check;
 	}
 
 	async componentDidMount() {
 		const { dogId } = this.props;
-		await DogsApiService.getDogInfo(dogId).then(response =>
-			this.setState({
-				dogInfo: response,
-				shots: this.renderShotsCompleted(response.shotsCompleted)
-			})
+		const res = await DogsApiService.getDogInfo(dogId);
+		const resShots = res.shotsCompleted.sort((a, b) =>
+			a.shot_name > b.shot_name ? 1 : -1
 		);
+		this.setState({
+			dogInfo: res,
+			shots: this.renderShotsCompleted(resShots)
+		});
 	}
 
 	render() {
 		const { dogInfo, shots } = this.state;
-
 		return (
 			<main className="dog-info">
 				<div className="grid-container">
