@@ -15,6 +15,7 @@ class EditShots extends Component {
 				value: '',
 				touched: false
 			},
+			newShotDate: '',
 			requiredShots: [
 				'Rabies I',
 				'Rabies Yearly Booster',
@@ -27,7 +28,7 @@ class EditShots extends Component {
 		this.renderMandatoryShots = this.renderMandatoryShots.bind(this);
 		this.handleChecks = this.handleChecks.bind(this);
 		this.renderOptionShots = this.renderOptionShots.bind(this);
-		this.renderTextbox = this.renderTextBox.bind(this);
+		this.renderTextbox = this.renderTextbox.bind(this);
 		this.handleAddShot = this.handleAddShot.bind(this);
 		this.handleSubmitNewShot = this.handleSubmitNewShot.bind(this);
 		this.deleteShot = this.deleteShot.bind(this);
@@ -134,6 +135,10 @@ class EditShots extends Component {
 					onChange={this.deleteShot}
 				/>
 				{i.shot_name}
+
+				<span className="shot-date-text">
+					{this.formatDate(i.shot_date)}
+				</span>
 			</label>
 		));
 	}
@@ -144,7 +149,7 @@ class EditShots extends Component {
 		});
 	}
 
-	renderTextBox() {
+	renderTextbox() {
 		this.setState({
 			renderAddShot: !this.state.renderAddShot
 		});
@@ -152,6 +157,7 @@ class EditShots extends Component {
 
 	handleSubmitNewShot() {
 		const shot = {
+			shot_date: this.state.newShotDate,
 			shot_name: this.state.newShot.value,
 			shot_iscompleted: true,
 			dog_id: this.props.dogId
@@ -263,11 +269,21 @@ class EditShots extends Component {
 								id="name"
 								type="text"
 								name="newShot"
+								placeholder="example: 'Serum'"
 								value={this.state.newShot.value}
 								onChange={e =>
 									this.handleAddShot(e.target.value)
 								}
 								required
+							/>
+
+							<input
+								className="edit-shot-date-input"
+								type="date"
+								name="newShotDate"
+								onChange={this.handleDateChange}
+								min="2018-01-01"
+								max="2030-12-31"
 							/>
 							{this.state.newShot.touched && (
 								<ValidationError
@@ -276,16 +292,25 @@ class EditShots extends Component {
 									)}
 								/>
 							)}
-							<button
-								type="button"
-								className="add-shot-name"
-								onClick={this.handleSubmitNewShot}
-								disabled={Validate.validateShotName(
-									this.state.newShot.value
-								)}
-							>
-								Add
-							</button>
+							<div className="sht-btn-box">
+								<button
+									type="button"
+									className="add-shot-name"
+									onClick={this.handleSubmitNewShot}
+									disabled={Validate.validateShotName(
+										this.state.newShot.value
+									)}
+								>
+									Add
+								</button>
+								<button
+									type="button"
+									className="add-shot-name"
+									onClick={this.renderTextbox}
+								>
+									Cancel
+								</button>
+							</div>
 						</>
 					) : (
 						<>

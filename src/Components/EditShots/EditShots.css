@@ -9,8 +9,17 @@
 	width: 100%;
 }
 
+.add-shot-name {
+	width: 40%;
+}
+
 .add-shot-name:active {
 	box-shadow: none;
+}
+
+.sht-btn-box {
+	display: flex;
+	justify-content: space-evenly;
 }
 
 .new-shot-box {
@@ -30,6 +39,7 @@
 	font-size: 0.8em;
 	height: 40px;
 	padding-left: 15px;
+	width: 100%;
 }
 
 .shot-date-text {
