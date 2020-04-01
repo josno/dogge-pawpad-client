@@ -278,7 +278,7 @@ class AddNewDog extends Component {
 					</fieldset>
 
 					<label htmlFor='estimated-age' className='bold'>
-						Estimated Age
+						Estimated Birthdate
 					</label>
 					<input
 						className='block'
