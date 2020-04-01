@@ -1,5 +1,6 @@
-.add-shot-name,
-.shot-date-button {
+.add-shot-btn,
+.shot-date-button,
+.shot-btn {
 	border: 2px solid black;
 	box-shadow: 5px 5px gray;
 	font-size: 0.8em;
@@ -9,12 +10,13 @@
 	width: 100%;
 }
 
-.add-shot-name {
-	width: 40%;
+.add-shot-btn:active,
+.shot-btn:active {
+	box-shadow: none;
 }
 
-.add-shot-name:active {
-	box-shadow: none;
+.shot-btn {
+	width: 40%;
 }
 
 .sht-btn-box {

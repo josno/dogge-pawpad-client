@@ -201,6 +201,20 @@ exports[`<AddNewDog /> renders as expected 1`] = `
         />
       </label>
       <label
+        htmlFor="rabiesBooster"
+      >
+        Rabies Yearly Booster
+         
+        <input
+          className="shot-date-input"
+          id="rabiesBooster"
+          name="rabiesBooster"
+          onChange={[Function]}
+          type="date"
+          value=""
+        />
+      </label>
+      <label
         htmlFor="complexOne"
       >
         Complex I
@@ -226,8 +240,20 @@ exports[`<AddNewDog /> renders as expected 1`] = `
           value=""
         />
       </label>
+      <label
+        htmlFor="complexBooster"
+      >
+        Complex Yearly Booster
+        <input
+          className="shot-date-input"
+          id="complexBooster"
+          name="complexBooster"
+          onChange={[Function]}
+          type="date"
+          value=""
+        />
+      </label>
     </fieldset>
-    
     <div
       className="form-buttons"
     >
@@ -251,6 +277,5 @@ exports[`<AddNewDog /> renders as expected 1`] = `
       </button>
     </div>
   </form>
-  
 </main>
 `;

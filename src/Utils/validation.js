@@ -1,12 +1,7 @@
 const Validate = {
 	validateShotName(shotName) {
 		if (shotName.length < 2) {
-			return 'Shot name should have two or more characters';
-		}
-	},
-	validateAge(str) {
-		if (!str.includes('month') && !str.includes('year')) {
-			return `Age must end in year(s) or month(s).`;
+			return "Shot name should have two or more characters";
 		}
 	},
 	validateName(str) {
@@ -15,11 +10,11 @@ const Validate = {
 		if (str.length <= 1) {
 			return `Name should have more than one letter.`;
 		} else if (invalidChar) {
-			return 'Type only letters please.';
+			return "Type only letters please.";
 		}
 	},
 	validateNoteSelect(str) {
-		if (str !== 'medical' || str !== 'additional') {
+		if (str !== "medical" || str !== "additional") {
 			return `Please select Medical or Additional.`;
 		}
 	},
@@ -38,14 +33,14 @@ const Validate = {
 		const hasNumbers = str.match(/[0-9]/g);
 
 		if (!hasNumbers || hasNumbers === null) {
-			return 'Password has to include at least a number.';
+			return "Password has to include at least a number.";
 		}
 	},
 	validatePasswordSymbol(str) {
 		const hasSymbols = str.match(/[^a-zA-Z0-9]/g);
 
 		if (!hasSymbols || hasSymbols === null) {
-			return 'Password has to include at least one symbol.';
+			return "Password has to include at least one symbol.";
 		}
 	}
 };

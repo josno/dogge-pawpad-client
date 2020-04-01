@@ -116,7 +116,7 @@ exports[`<EditDog /> renders as expected 1`] = `
         Add Optional Shots
       </legend>
       <button
-        className="add-shot-name"
+        className="add-shot-btn"
         onClick={[Function]}
         type="button"
       >

@@ -295,7 +295,14 @@ class EditShots extends Component {
 							<div className="sht-btn-box">
 								<button
 									type="button"
-									className="add-shot-name"
+									className="shot-btn"
+									onClick={this.renderTextbox}
+								>
+									Cancel
+								</button>
+								<button
+									type="button"
+									className="shot-btn"
 									onClick={this.handleSubmitNewShot}
 									disabled={Validate.validateShotName(
 										this.state.newShot.value
@@ -303,20 +310,13 @@ class EditShots extends Component {
 								>
 									Add
 								</button>
-								<button
-									type="button"
-									className="add-shot-name"
-									onClick={this.renderTextbox}
-								>
-									Cancel
-								</button>
 							</div>
 						</>
 					) : (
 						<>
 							<button
 								type="button"
-								className="add-shot-name"
+								className="add-shot-btn"
 								onClick={this.renderTextbox}
 							>
 								Add A Shot

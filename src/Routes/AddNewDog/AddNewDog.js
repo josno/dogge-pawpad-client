@@ -1,30 +1,30 @@
-import React, { Component } from 'react';
-import PawPadContext from '../../PawPadContext.js';
-import { Link } from 'react-router-dom';
-import DogsApiService from '../../services/api-service';
-import './AddNewDog.css';
-import ValidationError from '../../Components/ValidationError/ValidationError';
-import Validate from '../../Utils/validation';
+import React, { Component } from "react";
+import PawPadContext from "../../PawPadContext.js";
+import { Link } from "react-router-dom";
+import DogsApiService from "../../services/api-service";
+import "./AddNewDog.css";
+import ValidationError from "../../Components/ValidationError/ValidationError";
+import Validate from "../../Utils/validation";
 
 class AddNewDog extends Component {
 	static contextType = PawPadContext;
 	constructor(props) {
 		super(props);
 		this.state = {
-			dogName: { value: '', touched: false },
-			profileImgPreview: '',
+			dogName: { value: "", touched: false },
+			profileImgPreview: "",
 			profileImg: null,
 			spayedneutered: false,
-			rabies: '',
-			rabiesBooster: '',
-			complexOne: '',
-			complexTwo: '',
-			complexBooster: '',
+			rabies: "",
+			rabiesBooster: "",
+			complexOne: "",
+			complexTwo: "",
+			complexBooster: "",
 			microchip: null,
 			tagNumber: null,
 			gender: null,
 			loading: false,
-			age: { value: '', touched: false },
+			age: { value: "", touched: false },
 			arrivalDate: null,
 			error: null
 		};
@@ -84,29 +84,29 @@ class AddNewDog extends Component {
 
 		const shots = [
 			{
-				shot_name: 'Rabies',
+				shot_name: "Rabies",
 				shot_date: rabies.length > 0 ? rabies : null,
-				dog_id: ''
+				dog_id: ""
 			},
 			{
-				shot_name: 'Rabies Yearly Booster',
+				shot_name: "Rabies Yearly Booster",
 				shot_date: rabiesBooster.length > 0 ? rabiesBooster : null,
-				dog_id: ''
+				dog_id: ""
 			},
 			{
-				shot_name: 'Complex I',
+				shot_name: "Complex I",
 				shot_date: complexOne.length > 0 ? complexOne : null,
-				dog_id: ''
+				dog_id: ""
 			},
 			{
-				shot_name: 'Complex II',
+				shot_name: "Complex II",
 				shot_date: complexTwo.length > 0 ? complexTwo : null,
-				dog_id: ''
+				dog_id: ""
 			},
 			{
-				shot_name: 'Complex Yearly Booster',
+				shot_name: "Complex Yearly Booster",
 				shot_date: complexBooster.length > 0 ? complexBooster : null,
-				dog_id: ''
+				dog_id: ""
 			}
 		];
 
@@ -145,7 +145,7 @@ class AddNewDog extends Component {
 
 	setFormData = (newDog, profileImg) => {
 		const formData = new FormData();
-		formData.append('profile_img', profileImg);
+		formData.append("profile_img", profileImg);
 
 		newDog.forEach(i => {
 			formData.append(Object.keys(i), Object.values(i));
@@ -187,11 +187,9 @@ class AddNewDog extends Component {
 			.then(res => {
 				allCompletedShots.map(i => (i.dog_id = res.id));
 
-				allCompletedShots.map(shot =>
-					DogsApiService.insertNewShot(shot)
-				);
+				allCompletedShots.map(shot => DogsApiService.insertNewShot(shot));
 			})
-			.then(res => this.props.history.push('/dogs-list'))
+			.then(res => this.props.history.push("/dogs-list"))
 			.catch(error => {
 				this.setState({ error: error.message });
 			});
@@ -202,218 +200,211 @@ class AddNewDog extends Component {
 	}
 
 	render() {
-		let imgStyle = { display: 'none' };
+		let imgStyle = { display: "none" };
 
 		if (this.state.profileImgPreview.length > 0) {
 			imgStyle = {
-				display: 'block'
+				display: "block"
 			};
 		}
 
 		return (
-			<main className="add-dog-container">
-				<h1 className="form-title">Add New Dog</h1>
+			<main className='add-dog-container'>
+				<h1 className='form-title'>Add New Dog</h1>
 
-				<form className="form-container" onSubmit={this.handleSubmit}>
-					<div className="field-item">
-						<label htmlFor="name" className="bold">
+				<form className='form-container' onSubmit={this.handleSubmit}>
+					<div className='field-item'>
+						<label htmlFor='name' className='bold'>
 							Name
 						</label>
 						<input
-							id="name"
-							type="text"
-							name="dogName"
-							className="block"
+							id='name'
+							type='text'
+							name='dogName'
+							className='block'
 							onChange={e => this.updateName(e.target.value)}
 							required
 						/>
 						{this.state.dogName.touched && (
 							<ValidationError
-								message={Validate.validateName(
-									this.state.dogName.value
-								)}
+								message={Validate.validateName(this.state.dogName.value)}
 							/>
 						)}
 					</div>
-					<div className="field-item">
-						<label htmlFor="image" className="bold">
+					<div className='field-item'>
+						<label htmlFor='image' className='bold'>
 							Image
 						</label>
 						<input
-							className="block"
-							type="file"
-							name="profileImg"
+							className='block'
+							type='file'
+							name='profileImg'
 							onChange={this.handleImgChange}
-							accept="image/*"
+							accept='image/*'
 							required
 						/>
 						<img
-							id="img-preview"
+							id='img-preview'
 							src={this.state.profileImgPreview}
-							alt="your-pic"
+							alt='your-pic'
 							style={imgStyle}
 						/>
 					</div>
 
-					<fieldset className="field-item">
-						<legend className="bold">Gender</legend>
-						<label htmlFor="male">
+					<fieldset className='field-item'>
+						<legend className='bold'>Gender</legend>
+						<label htmlFor='male'>
 							<input
-								type="radio"
-								name="gender"
-								value="Male"
+								type='radio'
+								name='gender'
+								value='Male'
 								onChange={this.handleChange}
-								id="male"
+								id='male'
 								required
 							/>
 							Male
 						</label>
 
-						<label htmlFor="female">
+						<label htmlFor='female'>
 							<input
-								type="radio"
-								name="gender"
-								value="Female"
+								type='radio'
+								name='gender'
+								value='Female'
 								onChange={this.handleChange}
-								id="female"
+								id='female'
 							/>
 							Female
 						</label>
 					</fieldset>
 
-					<label htmlFor="estimated-age" className="bold">
+					<label htmlFor='estimated-age' className='bold'>
 						Estimated Age
 					</label>
 					<input
-						className="block"
-						id="age"
-						type="text"
-						name="age"
+						className='block'
+						id='age'
+						type='text'
+						name='age'
+						placeholder='example: 12/14/2019 or 12/xx/2019'
 						onChange={e => this.updateAge(e.target.value)}
+						required
 					/>
-					{this.state.age.touched && (
-						<ValidationError
-							message={Validate.validateAge(this.state.age.value)}
-						/>
-					)}
-					<label htmlFor="arrival" className="bold">
+					<label htmlFor='arrival' className='bold'>
 						Estimated Arrival
 					</label>
 					<input
-						className="block"
-						id="arrival"
-						type="date"
-						name="arrivalDate"
+						className='block'
+						id='arrival'
+						type='date'
+						name='arrivalDate'
 						onChange={this.handleChange}
 						required
 					/>
 
-					<label htmlFor="tag-number" className="bold">
+					<label htmlFor='tag-number' className='bold'>
 						Tag Number
 					</label>
 					<input
-						className="block"
-						id="tag-number"
-						type="text"
-						name="tagNumber"
+						className='block'
+						id='tag-number'
+						type='text'
+						name='tagNumber'
 						onChange={this.handleChange}
 					/>
 
-					<label htmlFor="microchip" className="bold">
+					<label htmlFor='microchip' className='bold'>
 						Microchip Number
 					</label>
 					<input
-						className="block"
-						id="microchip"
-						type="text"
-						name="microchip"
+						className='block'
+						id='microchip'
+						type='text'
+						name='microchip'
 						onChange={this.handleChange}
 					/>
 
-					<fieldset className="field-item">
-						<legend className="bold">Spayed/Neutered </legend>
-						<label htmlFor="yes">
+					<fieldset className='field-item'>
+						<legend className='bold'>Spayed/Neutered </legend>
+						<label htmlFor='yes'>
 							<input
-								id="yes"
-								type="radio"
-								name="spayedNeutered"
+								id='yes'
+								type='radio'
+								name='spayedNeutered'
 								onChange={this.handleCheckbox}
 								required
 							/>
 							Yes
 						</label>
 
-						<label htmlFor="no">
+						<label htmlFor='no'>
 							<input
-								id="no"
-								type="radio"
-								name="spayedNeutered"
+								id='no'
+								type='radio'
+								name='spayedNeutered'
 								onChange={this.handleCheckbox}
 							/>
 							No
 						</label>
 					</fieldset>
 
-					<fieldset className="field-item ">
-						<legend className="bold">
-							Required Shots Completed
-						</legend>
+					<fieldset className='field-item '>
+						<legend className='bold'>Required Shots Completed</legend>
 
-						<label htmlFor="rabies">
-							Rabies{' '}
+						<label htmlFor='rabies'>
+							Rabies{" "}
 							<input
-								className="shot-date-input"
-								id="rabies"
-								type="date"
-								name="rabies"
+								className='shot-date-input'
+								id='rabies'
+								type='date'
+								name='rabies'
 								value={this.state.rabies}
 								onChange={this.handleChange}
 							/>
 						</label>
 
-						<label htmlFor="rabiesBooster">
-							Rabies Yearly Booster{' '}
+						<label htmlFor='rabiesBooster'>
+							Rabies Yearly Booster{" "}
 							<input
-								className="shot-date-input"
-								id="rabiesBooster"
-								type="date"
-								name="rabiesBooster"
+								className='shot-date-input'
+								id='rabiesBooster'
+								type='date'
+								name='rabiesBooster'
 								value={this.state.rabiesBooster}
 								onChange={this.handleChange}
 							/>
 						</label>
 
-						<label htmlFor="complexOne">
+						<label htmlFor='complexOne'>
 							Complex I
 							<input
-								className="shot-date-input"
-								id="complexOne"
-								type="date"
-								name="complexOne"
+								className='shot-date-input'
+								id='complexOne'
+								type='date'
+								name='complexOne'
 								value={this.state.complexOne}
 								onChange={this.handleChange}
 							/>
 						</label>
 
-						<label htmlFor="complexTwo">
+						<label htmlFor='complexTwo'>
 							Complex II
 							<input
-								className="shot-date-input"
-								id="complexTwo"
-								type="date"
-								name="complexTwo"
+								className='shot-date-input'
+								id='complexTwo'
+								type='date'
+								name='complexTwo'
 								value={this.state.complexTwo}
 								onChange={this.handleChange}
 							/>
 						</label>
 
-						<label htmlFor="complexBooster">
+						<label htmlFor='complexBooster'>
 							Complex Yearly Booster
 							<input
-								className="shot-date-input"
-								id="complexBooster"
-								type="date"
-								name="complexBooster"
+								className='shot-date-input'
+								id='complexBooster'
+								type='date'
+								name='complexBooster'
 								value={this.state.complexBooster}
 								onChange={this.handleChange}
 							/>
@@ -422,34 +413,28 @@ class AddNewDog extends Component {
 
 					{this.state.error !== null && (
 						<ValidationError
-							message={
-								'Something wrong happened. Refresh and try again.'
-							}
+							message={"Something wrong happened. Refresh and try again."}
 						/>
 					)}
-					<div className="form-buttons">
-						<button className="cancel">
-							<Link className="dog-link" to={'/dogs-list'}>
+					<div className='form-buttons'>
+						<button className='cancel'>
+							<Link className='dog-link' to={"/dogs-list"}>
 								Cancel
 							</Link>
 						</button>
 
 						<button
-							className="submit"
-							type="submit"
-							disabled={
-								Validate.validateName(
-									this.state.dogName.value
-								) || Validate.validateAge(this.state.age.value)
-							}
+							className='submit'
+							type='submit'
+							disabled={Validate.validateName(this.state.dogName.value)}
 						>
 							Submit
 						</button>
 					</div>
 				</form>
 				{this.state.loading && this.state.error !== null && (
-					<div className="loader-container">
-						<div className="loader"></div>
+					<div className='loader-container'>
+						<div className='loader'></div>
 					</div>
 				)}
 			</main>

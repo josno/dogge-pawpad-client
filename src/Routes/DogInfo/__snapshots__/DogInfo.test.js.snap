@@ -58,7 +58,7 @@ exports[`<DogInfo /> renders as expected 1`] = `
         <li
           className="arrival-value align-details"
         >
-          March 18, 2020
+          March 28, 2020
         </li>
         <li
           className="tag align-details"
