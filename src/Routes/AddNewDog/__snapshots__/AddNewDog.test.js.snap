@@ -97,13 +97,15 @@ exports[`<AddNewDog /> renders as expected 1`] = `
       className="bold"
       htmlFor="estimated-age"
     >
-      Estimated Age
+      Estimated Birthdate
     </label>
     <input
       className="block"
       id="age"
       name="age"
       onChange={[Function]}
+      placeholder="example: 12/14/2019 or 12/xx/2019"
+      required={true}
       type="text"
     />
     <label

@@ -72,7 +72,7 @@ exports[`<EditDog /> renders as expected 1`] = `
       className="bold"
       htmlFor="estimated-age"
     >
-      Estimated Age
+      Estimated Birthdate
     </label>
     <input
       className="block"
@@ -174,7 +174,6 @@ exports[`<EditDog /> renders as expected 1`] = `
       </button>
       <button
         className="submit"
-        disabled="Age must end in year(s) or month(s)."
         type="submit"
       >
         Submit
