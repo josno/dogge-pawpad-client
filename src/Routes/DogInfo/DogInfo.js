@@ -15,12 +15,23 @@ class DogInfo extends Component {
 		this.formatDate = this.formatDate.bind(this);
 		this.renderSpayedNeutered = this.renderSpayedNeutered.bind(this);
 		this.renderShotsCompleted = this.renderShotsCompleted.bind(this);
+		this.handleDelete = this.handleDelete.bind(this);
 	}
 
 	formatDate(date) {
 		const formattedDate = moment(date).format("LL");
 		return formattedDate;
 	}
+
+	handleDelete = () => {
+		const { dogId } = this.props.match.params;
+
+		DogsApiService.deleteDog(dogId).then((response) => {
+			DogsApiService.deleteNotesByDogId(this.props.match.params.dogId);
+			DogsApiService.deleteShotsByDogId(this.props.match.params.dogId);
+			this.props.history.push("/dogs-list");
+		});
+	};
 
 	renderSpayedNeutered(boolean) {
 		if (boolean) {
@@ -149,10 +160,8 @@ class DogInfo extends Component {
 						</Link>
 					</button>
 
-					<button className='delete'>
-						<Link className='dog-link' to={`/edit-dog/${this.props.dogId}`}>
-							Delete
-						</Link>
+					<button className='delete' onClick={this.handleDelete}>
+						Delete
 					</button>
 				</div>
 			</main>

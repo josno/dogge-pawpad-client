@@ -26,7 +26,7 @@ class AddNewDog extends Component {
 			loading: false,
 			age: { value: "", touched: false },
 			arrivalDate: null,
-			error: null
+			error: null,
 		};
 		this.handleImgChange = this.handleImgChange.bind(this);
 		this.handleCheckbox = this.handleCheckbox.bind(this);
@@ -35,41 +35,42 @@ class AddNewDog extends Component {
 		this.setShotsObject = this.setShotsObject.bind(this);
 		this.setDogObject = this.setDogObject.bind(this);
 		this.setFormData = this.setFormData.bind(this);
+		this.setLoading = this.setLoading.bind(this);
 	}
 
-	handleImgChange = e => {
+	handleImgChange = (e) => {
 		this.setState({
 			profileImgPreview: URL.createObjectURL(e.target.files[0]),
-			profileImg: e.target.files[0]
+			profileImg: e.target.files[0],
 		});
 	};
 
-	handleChange = e => {
+	handleChange = (e) => {
 		const { name, value } = e.target;
 		this.setState({
-			[name]: value
+			[name]: value,
 		});
 	};
 
 	updateAge(str) {
 		const age = str.trim();
 		this.setState({
-			age: { value: age, touched: true }
+			age: { value: age, touched: true },
 		});
 	}
 
 	updateName(str) {
 		const name = str.trim();
 		this.setState({
-			dogName: { value: name, touched: true }
+			dogName: { value: name, touched: true },
 		});
 	}
 
-	handleCheckbox = e => {
+	handleCheckbox = (e) => {
 		const { name } = e.target;
 
-		this.setState(prevState => ({
-			[name]: !prevState[name]
+		this.setState((prevState) => ({
+			[name]: !prevState[name],
 		}));
 	};
 
@@ -79,38 +80,38 @@ class AddNewDog extends Component {
 			complexOne,
 			complexTwo,
 			rabiesBooster,
-			complexBooster
+			complexBooster,
 		} = this.state;
 
 		const shots = [
 			{
 				shot_name: "Rabies",
 				shot_date: rabies.length > 0 ? rabies : null,
-				dog_id: ""
+				dog_id: "",
 			},
 			{
 				shot_name: "Rabies Yearly Booster",
 				shot_date: rabiesBooster.length > 0 ? rabiesBooster : null,
-				dog_id: ""
+				dog_id: "",
 			},
 			{
 				shot_name: "Complex I",
 				shot_date: complexOne.length > 0 ? complexOne : null,
-				dog_id: ""
+				dog_id: "",
 			},
 			{
 				shot_name: "Complex II",
 				shot_date: complexTwo.length > 0 ? complexTwo : null,
-				dog_id: ""
+				dog_id: "",
 			},
 			{
 				shot_name: "Complex Yearly Booster",
 				shot_date: complexBooster.length > 0 ? complexBooster : null,
-				dog_id: ""
-			}
+				dog_id: "",
+			},
 		];
 
-		shots.forEach(i => {
+		shots.forEach((i) => {
 			if (i.shot_date !== null) {
 				i.shot_iscompleted = true;
 			} else {
@@ -137,7 +138,7 @@ class AddNewDog extends Component {
 			{ microchip: microchip },
 			{ tag_number: tagNumber },
 			{ age: age },
-			{ arrival_date: arrivalDate }
+			{ arrival_date: arrivalDate },
 		];
 
 		return newDog;
@@ -147,14 +148,20 @@ class AddNewDog extends Component {
 		const formData = new FormData();
 		formData.append("profile_img", profileImg);
 
-		newDog.forEach(i => {
+		newDog.forEach((i) => {
 			formData.append(Object.keys(i), Object.values(i));
 		});
 
 		return formData;
 	};
 
-	handleSubmit = e => {
+	setLoading = (e) => {
+		this.setState({
+			loading: true,
+		});
+	};
+
+	handleSubmit = (e) => {
 		e.preventDefault();
 		const {
 			profileImg,
@@ -162,7 +169,7 @@ class AddNewDog extends Component {
 			gender,
 			arrivalDate,
 			tagNumber,
-			microchip
+			microchip,
 		} = this.state;
 		const dogName = this.state.dogName.value;
 		const age = this.state.age.value;
@@ -179,18 +186,13 @@ class AddNewDog extends Component {
 		const allCompletedShots = this.setShotsObject();
 		const formData = this.setFormData(newDog, profileImg);
 
-		this.setState({
-			loading: true
-		});
-
 		DogsApiService.insertNewDog(formData)
-			.then(res => {
-				allCompletedShots.map(i => (i.dog_id = res.id));
-
-				allCompletedShots.map(shot => DogsApiService.insertNewShot(shot));
+			.then((res) => {
+				allCompletedShots.map((i) => (i.dog_id = res.id));
+				allCompletedShots.map((shot) => DogsApiService.insertNewShot(shot));
 			})
-			.then(res => this.props.history.push("/dogs-list"))
-			.catch(error => {
+			.then((res) => this.props.history.push("/dogs-list"))
+			.catch((error) => {
 				this.setState({ error: error.message });
 			});
 	};
@@ -204,7 +206,7 @@ class AddNewDog extends Component {
 
 		if (this.state.profileImgPreview.length > 0) {
 			imgStyle = {
-				display: "block"
+				display: "block",
 			};
 		}
 
@@ -222,7 +224,7 @@ class AddNewDog extends Component {
 							type='text'
 							name='dogName'
 							className='block'
-							onChange={e => this.updateName(e.target.value)}
+							onChange={(e) => this.updateName(e.target.value)}
 							required
 						/>
 						{this.state.dogName.touched && (
@@ -231,6 +233,7 @@ class AddNewDog extends Component {
 							/>
 						)}
 					</div>
+
 					<div className='field-item'>
 						<label htmlFor='image' className='bold'>
 							Image
@@ -286,7 +289,7 @@ class AddNewDog extends Component {
 						type='text'
 						name='age'
 						placeholder='example: 12/14/2019 or 12/xx/2019'
-						onChange={e => this.updateAge(e.target.value)}
+						onChange={(e) => this.updateAge(e.target.value)}
 						required
 					/>
 					<label htmlFor='arrival' className='bold'>
@@ -426,13 +429,14 @@ class AddNewDog extends Component {
 						<button
 							className='submit'
 							type='submit'
+							onClick={this.setLoading}
 							disabled={Validate.validateName(this.state.dogName.value)}
 						>
 							Submit
 						</button>
 					</div>
 				</form>
-				{this.state.loading && this.state.error !== null && (
+				{this.state.loading && (
 					<div className='loader-container'>
 						<div className='loader'></div>
 					</div>

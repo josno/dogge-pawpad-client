@@ -19,50 +19,63 @@ class EditDog extends Component {
 			age: { value: "", touched: false },
 			arrivalDate: "",
 			updatedBy: "",
-			error: ""
+			error: "",
+			profileImgPreview: "",
+			tagNumber: "",
+			microchip: "",
 		};
 		this.formatDate = this.formatDate.bind(this);
 		this.handleCheckbox = this.handleCheckbox.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.updateAge = this.updateAge.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleImgChange = this.handleImgChange.bind(this);
 	}
 
-	formatDate = date => {
+	formatDate = (date) => {
 		const formattedDate = moment(date).format("YYYY-MM-DD");
 
 		return formattedDate;
 	};
 
-	handleChange = e => {
+	handleChange = (e) => {
 		const { name, value } = e.target;
 		this.setState({
-			[name]: value
+			[name]: value,
 		});
 	};
 
 	updateAge(age) {
 		this.setState({
-			age: { value: age, touched: true }
+			age: { value: age, touched: true },
 		});
 	}
 
-	handleCheckbox = e => {
+	handleCheckbox = (e) => {
 		const { name } = e.target;
 
-		this.setState(prevState => ({
-			[name]: !prevState[name]
+		this.setState((prevState) => ({
+			[name]: !prevState[name],
 		}));
 	};
 
-	handleSubmit = e => {
+	handleImgChange = (e) => {
+		this.setState({
+			profileImgPreview: URL.createObjectURL(e.target.files[0]),
+			profileImg: e.target.files[0],
+		});
+	};
+
+	handleSubmit = (e) => {
 		e.preventDefault();
 		const {
 			dogName,
 			profileImg,
 			spayedNeutered,
 			gender,
-			arrivalDate
+			arrivalDate,
+			tagNumber,
+			microchip,
 		} = this.state;
 
 		const updatedDogObj = {
@@ -71,42 +84,87 @@ class EditDog extends Component {
 			spayedneutered: spayedNeutered,
 			gender: gender,
 			age: this.state.age.value,
-			arrival_date: new Date(arrivalDate)
+			arrival_date: new Date(arrivalDate),
+			tag_number: tagNumber,
+			microchip: microchip,
 		};
 
 		console.log("submit clicked");
 
 		DogsApiService.updateDog(updatedDogObj, this.props.dogId)
-			.then(res => this.props.history.push(`/dog-info/${this.props.dogId}`))
-			.catch(error => this.setState({ error: error.message }));
+			.then((res) => this.props.history.push(`/dog-info/${this.props.dogId}`))
+			.catch((error) => this.setState({ error: error.message }));
 	};
 
 	componentDidMount() {
 		window.scrollTo(0, 0);
 		const { dogId } = this.props;
 
-		DogsApiService.getDogInfo(dogId).then(dogInfo => {
+		DogsApiService.getDogInfo(dogId).then((dogInfo) => {
 			this.setState({
 				dogName: dogInfo.dog_name,
 				profileImg: dogInfo.profile_img,
 				spayedNeutered: dogInfo.spayedneutered,
 				gender: dogInfo.gender,
 				age: { value: dogInfo.age, touched: false },
-				arrivalDate: dogInfo.arrival_date
+				arrivalDate: dogInfo.arrival_date,
+				profileImgPreview: dogInfo.profile_img,
+				tagNumber: dogInfo.tag_number,
+				microchip: dogInfo.microchip,
 			});
 		});
 	}
 
 	render() {
+		let imgStyle = { display: "none" };
+
+		if (this.state.profileImgPreview.length > 0) {
+			imgStyle = {
+				display: "block",
+			};
+		}
+
 		return (
 			<main className='edit-dog-container'>
 				<h1 className='form-title'>Edit Dog</h1>
 				<form className='form-container' onSubmit={this.handleSubmit}>
-					<div className='dog-name-photo'>
-						<h1 htmlFor='name'>{this.state.dogName}</h1>
-						<img id='img-preview' src={this.state.profileImg} alt='your-pic' />
-					</div>
+					<h1 htmlFor='name' className='dog-name-edit'>
+						{this.state.dogName}
+					</h1>
 					<h3 className='form-title'>Update Information Below </h3>
+					<label htmlFor='name' className='bold'>
+						Name
+					</label>
+					<input
+						id='name'
+						type='text'
+						name='dogName'
+						className='block'
+						value={this.state.dogName}
+						onChange={this.handleChange}
+						required
+					/>
+
+					<div className='field-item'></div>
+					<label htmlFor='image' className='bold'>
+						Image
+					</label>
+					<img
+						id='img-preview'
+						src={this.state.profileImgPreview}
+						alt='your-pic'
+						style={imgStyle}
+					/>
+
+					<input
+						className='block'
+						type='file'
+						name='profileImg'
+						onChange={this.handleImgChange}
+						accept='image/*'
+						required
+					/>
+
 					<fieldset className='field-item'>
 						<legend className='bold'>Gender:</legend>
 						<label htmlFor='male'>
@@ -143,7 +201,7 @@ class EditDog extends Component {
 						type='text'
 						name='age'
 						value={this.state.age.value}
-						onChange={e => this.updateAge(e.target.value)}
+						onChange={(e) => this.updateAge(e.target.value)}
 						required
 					/>
 
@@ -157,6 +215,32 @@ class EditDog extends Component {
 						name='arrivalDate'
 						value={this.formatDate(this.state.arrivalDate)}
 						onChange={this.handleChange}
+					/>
+
+					<label htmlFor='tag-number' className='bold'>
+						Tag Number
+					</label>
+					<input
+						id='tagNumber'
+						type='text'
+						name='tagNumber'
+						className='block'
+						value={this.state.tagNumber}
+						onChange={this.handleChange}
+						required
+					/>
+
+					<label htmlFor='microchip' className='bold'>
+						Microchip
+					</label>
+					<input
+						id='microchip'
+						type='text'
+						name='microchip'
+						className='block'
+						value={this.state.microchip}
+						onChange={this.handleChange}
+						required
 					/>
 
 					<EditShots key={this.props.dogId} dogId={this.props.dogId} />

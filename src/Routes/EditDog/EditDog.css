@@ -3,15 +3,17 @@
 	text-align: center;
 }
 
-.dog-name-photo {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+.dog-name-edit {
+	text-align: center;
 }
 
 .shot-instructions {
 	font-size: 0.75em;
 	font-style: italic;
+}
+
+#img-preview {
+	margin-bottom: 10px;
 }
 
 .block {
