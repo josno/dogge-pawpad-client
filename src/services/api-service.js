@@ -95,6 +95,19 @@ const DogsApiService = {
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : null
 		);
 	},
+	updateDogImg(data) {
+		const updatedDog = {
+			method: "POST",
+			headers: {
+				Authorization: `Bearer ${TokenService.getAuthToken()}`,
+			},
+			body: data,
+		};
+
+		return fetch(`${config.API_ENDPOINT}/images/dogs`, updatedDog).then((res) =>
+			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+		);
+	},
 	getShots(dogId) {
 		return fetch(`${config.API_ENDPOINT}/shots/${dogId}`, {
 			headers: {

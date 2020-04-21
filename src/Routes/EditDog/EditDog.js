@@ -23,6 +23,7 @@ class EditDog extends Component {
 			profileImgPreview: "",
 			tagNumber: "",
 			microchip: "",
+			profileImg: null,
 		};
 		this.formatDate = this.formatDate.bind(this);
 		this.handleCheckbox = this.handleCheckbox.bind(this);
@@ -78,22 +79,32 @@ class EditDog extends Component {
 			microchip,
 		} = this.state;
 
-		const updatedDogObj = {
-			dog_name: dogName,
-			profile_img: profileImg,
-			spayedneutered: spayedNeutered,
-			gender: gender,
-			age: this.state.age.value,
-			arrival_date: new Date(arrivalDate),
-			tag_number: tagNumber,
-			microchip: microchip,
-		};
+		const updatedDogObj = [
+			{ dog_name: dogName },
+			{ profile_img: profileImg },
+			{ spayedneutered: spayedNeutered },
+			{ gender: gender },
+			{ age: this.state.age.value },
+			{ arrival_date: new Date(arrivalDate) },
+			{ tag_number: tagNumber },
+			{ microchip: microchip },
+		];
+
+		const updateDogImg = [
+			{ tag_number: tagNumber },
+			{ profile_img: profileImg },
+		];
 
 		console.log("submit clicked");
+		const formData = new FormData();
+		updateDogImg.forEach((i) => {
+			formData.append(Object.keys(i), Object.values(i));
+		});
+		DogsApiService.updateDogImg(formData);
 
-		DogsApiService.updateDog(updatedDogObj, this.props.dogId)
-			.then((res) => this.props.history.push(`/dog-info/${this.props.dogId}`))
-			.catch((error) => this.setState({ error: error.message }));
+		// DogsApiService.updateDog(updatedDogObj, this.props.dogId)
+		// 	.then((res) => this.props.history.push(`/dog-info/${this.props.dogId}`))
+		// 	.catch((error) => this.setState({ error: error.message }));
 	};
 
 	componentDidMount() {
