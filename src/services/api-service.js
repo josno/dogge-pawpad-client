@@ -95,17 +95,36 @@ const DogsApiService = {
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : null
 		);
 	},
-	updateDogImg(data) {
+	uploadDogImg(data, tagNumber) {
 		const updatedDog = {
-			method: "POST",
+			method: "PUT",
 			headers: {
 				Authorization: `Bearer ${TokenService.getAuthToken()}`,
 			},
 			body: data,
 		};
 
-		return fetch(`${config.API_ENDPOINT}/images/dogs`, updatedDog).then((res) =>
+		return fetch(
+			`${config.API_ENDPOINT}/dogs/images/${tagNumber}`,
+			updatedDog
+		).then((res) =>
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+		);
+	},
+	deleteDogImg(data, tagNumber) {
+		const updatedDog = {
+			method: "DELETE",
+			headers: {
+				Authorization: `Bearer ${TokenService.getAuthToken()}`,
+			},
+			body: data,
+		};
+
+		return fetch(
+			`${config.API_ENDPOINT}/dogs/images/${tagNumber}`,
+			updatedDog
+		).then((res) =>
+			!res.ok ? res.json().then((e) => Promise.reject(e)) : null
 		);
 	},
 	getShots(dogId) {
