@@ -98,6 +98,7 @@ const DogsApiService = {
 	uploadDogImg(data, tagNumber) {
 		const updatedDog = {
 			method: "PUT",
+			mode: "no-cors",
 			headers: {
 				Authorization: `Bearer ${TokenService.getAuthToken()}`,
 			},
