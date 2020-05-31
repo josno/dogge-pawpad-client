@@ -163,6 +163,9 @@ class DogInfo extends Component {
 					<button className='delete' onClick={this.handleDelete}>
 						Delete
 					</button>
+
+					<button className='delete'>Archive Dog</button>
+					<button className='delete'>Adopted</button>
 				</div>
 			</main>
 		);
