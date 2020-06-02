@@ -89,15 +89,41 @@ class DogInfo extends Component {
 			<main className='dog-info'>
 				<div className='grid-container'>
 					<div className='dog-name'>
-						<h1 className='dog-name-text'>{dogInfo.dog_name}</h1>
-					</div>
-
-					<div className='dog-img'>
 						<img
 							alt='dog-name'
 							className='info-img'
 							src={dogInfo.profile_img}
 						/>
+						<h1 className='dog-name-text'>{dogInfo.dog_name}</h1>
+					</div>
+					<div className='nav-buttons'>
+						<button className='go-back'>
+							<Link className='dog-link' to={"/dogs-list"}>
+								Back
+							</Link>
+						</button>
+
+						<button className='see-notes'>
+							<Link
+								className='dog-link'
+								to={`/notes-${dogInfo.dog_name}/${dogInfo.id}`}
+							>
+								Notes
+							</Link>
+						</button>
+
+						<button className='edit cancel'>
+							<Link className='dog-link' to={`/edit-dog/${this.props.dogId}`}>
+								Edit
+							</Link>
+						</button>
+
+						<button className='delete' onClick={this.handleDelete}>
+							Delete
+						</button>
+
+						<button className='delete'>Archive Dog</button>
+						<button className='delete'>Adopted</button>
 					</div>
 
 					<div className='basic-dog-details box-flex'>
@@ -138,35 +164,6 @@ class DogInfo extends Component {
 						</p>
 					</div>
 				)}
-				<div className='nav-buttons'>
-					<button className='go-back'>
-						<Link className='dog-link' to={"/dogs-list"}>
-							Back
-						</Link>
-					</button>
-
-					<button className='see-notes'>
-						<Link
-							className='dog-link'
-							to={`/notes-${dogInfo.dog_name}/${dogInfo.id}`}
-						>
-							Notes
-						</Link>
-					</button>
-
-					<button className='edit cancel'>
-						<Link className='dog-link' to={`/edit-dog/${this.props.dogId}`}>
-							Edit
-						</Link>
-					</button>
-
-					<button className='delete' onClick={this.handleDelete}>
-						Delete
-					</button>
-
-					<button className='delete'>Archive Dog</button>
-					<button className='delete'>Adopted</button>
-				</div>
 			</main>
 		);
 	}

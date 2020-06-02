@@ -202,8 +202,8 @@ footer {
 
 	.nav-buttons {
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
-		width: 80vw;
 		margin: 0px auto;
 	}
 
