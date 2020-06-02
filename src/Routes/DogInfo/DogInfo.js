@@ -97,11 +97,11 @@ class DogInfo extends Component {
 						<h1 className='dog-name-text'>{dogInfo.dog_name}</h1>
 					</div>
 					<div className='nav-buttons'>
-						<button className='go-back'>
+						{/* <button className='go-back'>
 							<Link className='dog-link' to={"/dogs-list"}>
 								Back
 							</Link>
-						</button>
+						</button> */}
 
 						<button className='see-notes'>
 							<Link
@@ -112,18 +112,16 @@ class DogInfo extends Component {
 							</Link>
 						</button>
 
-						<button className='edit cancel'>
+						{/* <button className='edit cancel'>
 							<Link className='dog-link' to={`/edit-dog/${this.props.dogId}`}>
 								Edit
 							</Link>
-						</button>
-
+						</button> */}
+						<button className='delete'>Adopted</button>
+						<button className='delete'>Archive</button>
 						<button className='delete' onClick={this.handleDelete}>
 							Delete
 						</button>
-
-						<button className='delete'>Archive Dog</button>
-						<button className='delete'>Adopted</button>
 					</div>
 
 					<div className='basic-dog-details box-flex'>

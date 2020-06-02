@@ -79,7 +79,7 @@ textarea {
 	padding: 10px;
 	text-align: center;
 	transition: ease-out 0.4s;
-	width: 30vw;
+	/* width: 30vw; */
 	margin: 10px 5px 10px 5px;
 	vertical-align: middle;
 	-webkit-transition: ease-out 0.4s;
@@ -207,7 +207,7 @@ footer {
 		margin: 0px auto;
 	}
 
-	.add-new-dog,
+	/* .add-new-dog,
 	.cancel,
 	.see-notes,
 	.submit,
@@ -215,7 +215,7 @@ footer {
 	.edit,
 	.notes-button {
 		width: 30vw;
-	}
+	} */
 }
 
 @media (min-width: 800px) {

@@ -173,7 +173,7 @@
 }
 @media (min-width: 1200px) {
 	.grid-container {
-		max-width: 1000px;
+		max-width: 700px;
 		margin-left: auto;
 		margin-right: auto;
 	}
