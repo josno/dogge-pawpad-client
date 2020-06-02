@@ -187,6 +187,18 @@ const DogsApiService = {
 			body: JSON.stringify(dogId),
 		});
 	},
+
+	archiveDog(dogId, date) {
+		return fetch(`${config.API_ENDPOINT}/dogs/${dogId}/archive`, {
+			method: "PATCH",
+			headers: {
+				authorization: `Bearer ${TokenService.getAuthToken()}`,
+			},
+			body: JSON.stringify(date),
+		}).then((res) =>
+			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+		);
+	},
 };
 
 export default DogsApiService;

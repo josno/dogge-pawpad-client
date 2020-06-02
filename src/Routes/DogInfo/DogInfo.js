@@ -16,6 +16,7 @@ class DogInfo extends Component {
 		this.renderSpayedNeutered = this.renderSpayedNeutered.bind(this);
 		this.renderShotsCompleted = this.renderShotsCompleted.bind(this);
 		this.handleDelete = this.handleDelete.bind(this);
+		this.handleArchive = this.handleArchive.bind(this);
 	}
 
 	formatDate(date) {
@@ -30,6 +31,15 @@ class DogInfo extends Component {
 			DogsApiService.deleteNotesByDogId(this.props.match.params.dogId);
 			DogsApiService.deleteShotsByDogId(this.props.match.params.dogId);
 			this.props.history.push("/dogs-list");
+		});
+	};
+
+	handleArchive = () => {
+		const { dogId } = this.props.match.params;
+
+		const dateObj = { archive_date: new Date() };
+		DogsApiService.archiveDog(dogId, dateObj).then((response) => {
+			console.log(response);
 		});
 	};
 
@@ -77,6 +87,7 @@ class DogInfo extends Component {
 		const resShots = res.shotsCompleted.sort((a, b) =>
 			a.shot_name > b.shot_name ? 1 : -1
 		);
+		console.log(res);
 		this.setState({
 			dogInfo: res,
 			shots: this.renderShotsCompleted(resShots),
@@ -118,7 +129,9 @@ class DogInfo extends Component {
 							</Link>
 						</button> */}
 						<button className='delete'>Adopted</button>
-						<button className='delete'>Archive</button>
+						<button className='delete' onClick={this.handleArchive}>
+							Archive
+						</button>
 						<button className='delete' onClick={this.handleDelete}>
 							Delete
 						</button>
