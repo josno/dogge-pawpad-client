@@ -1,7 +1,11 @@
 import React, { Component } from "react";
-import PawPadContext from "../../PawPadContext.js";
+import { Modal } from "react-responsive-modal";
+import "react-responsive-modal/styles.css";
 import { Link } from "react-router-dom";
+import AdoptModal from "../../Components/AdoptModal/AdoptModal";
+import PawPadContext from "../../PawPadContext.js";
 import DogsApiService from "../../services/api-service";
+
 import "./DogInfo.css";
 import moment from "moment";
 
@@ -11,18 +15,28 @@ class DogInfo extends Component {
 		super(props);
 		this.state = {
 			dogInfo: "",
+			open: false,
 		};
 		this.formatDate = this.formatDate.bind(this);
 		this.renderSpayedNeutered = this.renderSpayedNeutered.bind(this);
 		this.renderShotsCompleted = this.renderShotsCompleted.bind(this);
 		this.handleDelete = this.handleDelete.bind(this);
 		this.handleArchive = this.handleArchive.bind(this);
+		this.openModal = this.openModal.bind(this);
 	}
 
 	formatDate(date) {
 		const formattedDate = moment(date).format("LL");
 		return formattedDate;
 	}
+
+	openModal = () => {
+		this.setState({ open: true });
+	};
+
+	closeModal = () => {
+		this.setState({ open: false });
+	};
 
 	handleDelete = () => {
 		const { dogId } = this.props.match.params;
@@ -87,7 +101,7 @@ class DogInfo extends Component {
 		const resShots = res.shotsCompleted.sort((a, b) =>
 			a.shot_name > b.shot_name ? 1 : -1
 		);
-		console.log(res);
+
 		this.setState({
 			dogInfo: res,
 			shots: this.renderShotsCompleted(resShots),
@@ -128,7 +142,9 @@ class DogInfo extends Component {
 								Edit
 							</Link>
 						</button> */}
-						<button className='delete'>Adopted</button>
+						<button className='delete' onClick={this.openModal}>
+							Adopted
+						</button>
 						<button className='delete' onClick={this.handleArchive}>
 							Archive
 						</button>
@@ -136,7 +152,9 @@ class DogInfo extends Component {
 							Delete
 						</button>
 					</div>
-
+					<Modal open={this.state.open} onClose={this.closeModal} center>
+						<AdoptModal dogId={this.props.match.params.dogId} />
+					</Modal>
 					<div className='basic-dog-details box-flex'>
 						<h3 className='info-title'>Basic Details </h3>
 						<ul className='dog-info-text details-grid-container'>

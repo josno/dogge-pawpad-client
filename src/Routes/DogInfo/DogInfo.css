@@ -149,7 +149,7 @@
 		padding: 50px;
 		display: grid;
 		grid-template-columns: 1fr 1.1fr;
-		grid-template-rows: 0.4fr 0.1fr;
+		grid-template-rows: 1fr 1fr 1fr;
 		grid-template-areas: "dog-name nav-buttons" "basic-dog-details basic-dog-details" "shots-information shots-information";
 	}
 
@@ -166,9 +166,17 @@
 		grid-area: shots-information;
 	}
 
+	.nav-buttons {
+		grid-area: nav-buttons;
+	}
+
 	.shot-check-container {
 		display: flex;
 		justify-content: space-evenly;
+	}
+
+	.react-responsive-modal-modal {
+		border-radius: 15px;
 	}
 }
 @media (min-width: 1200px) {

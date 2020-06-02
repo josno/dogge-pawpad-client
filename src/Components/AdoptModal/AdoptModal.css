@@ -1,0 +1,61 @@
+@media (min-width: 800px) {
+	.adopter-grid {
+		display: grid;
+		background-clip: content-box;
+		padding: 5px;
+		display: grid;
+		grid-template-columns: 1fr 1.1fr;
+		grid-template-rows: 1fr 1fr 1fr;
+		grid-template-areas: "name adoption-date" "email phone" "address country";
+	}
+
+	.name {
+		grid-area: name;
+	}
+
+	.adoption-date {
+		grid-area: adoption-date;
+	}
+
+	.email {
+		grid-area: email;
+	}
+
+	.phone {
+		grid-area: phone;
+	}
+
+	.address {
+		grid-area: address;
+	}
+
+	.country {
+		grid-area: country;
+	}
+
+	.modal-inner {
+		margin: 10px;
+		width: 700px;
+		padding: 10px;
+	}
+}
+
+label {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+label,
+input {
+	display: block;
+	margin: 7px;
+	text-align: left;
+}
+
+input {
+	margin-left: 20px;
+	padding-left: 4px;
+	height: 40px;
+	width: 90%;
+}
