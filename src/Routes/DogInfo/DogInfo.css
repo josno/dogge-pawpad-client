@@ -85,7 +85,6 @@
 	grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
 	grid-template-columns: 0.9fr 1fr;
 	grid-template-areas: "gender gender-value" "age age-value" "arrival arrival-value" "tag tag-value" "microchip microchip-value" "spayed-neutered spayed-neutered";
-	height: 100%;
 }
 
 .align-details {
@@ -149,7 +148,7 @@
 		padding: 50px;
 		display: grid;
 		grid-template-columns: 1fr 1.1fr;
-		grid-template-rows: 1fr 1fr 1fr;
+		grid-template-rows: 1fr 0.8fr 1fr;
 		grid-template-areas: "dog-name nav-buttons" "basic-dog-details basic-dog-details" "shots-information shots-information";
 	}
 

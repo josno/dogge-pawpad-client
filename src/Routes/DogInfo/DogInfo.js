@@ -3,6 +3,9 @@ import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 import { Link } from "react-router-dom";
 import AdoptModal from "../../Components/AdoptModal/AdoptModal";
+import ArchiveModal from "../../Components/ArchiveModal/ArchiveModal";
+import EditDog from "../../Components/EditDog/EditDog";
+import DefaultDogInfo from "../../Components/DefaultDogInfo/DefaultDogInfo";
 import PawPadContext from "../../PawPadContext.js";
 import DogsApiService from "../../services/api-service";
 
@@ -15,14 +18,15 @@ class DogInfo extends Component {
 		super(props);
 		this.state = {
 			dogInfo: "",
-			open: false,
+			openAdopt: false,
+			openArchive: false,
+			editMode: false,
 		};
 		this.formatDate = this.formatDate.bind(this);
 		this.renderSpayedNeutered = this.renderSpayedNeutered.bind(this);
 		this.renderShotsCompleted = this.renderShotsCompleted.bind(this);
 		this.handleDelete = this.handleDelete.bind(this);
 		this.handleArchive = this.handleArchive.bind(this);
-		this.openModal = this.openModal.bind(this);
 	}
 
 	formatDate(date) {
@@ -30,12 +34,13 @@ class DogInfo extends Component {
 		return formattedDate;
 	}
 
-	openModal = () => {
-		this.setState({ open: true });
+	openModal = (e) => {
+		const { name } = e.target;
+		this.setState({ [name]: true });
 	};
 
-	closeModal = () => {
-		this.setState({ open: false });
+	closeModal = (str) => {
+		this.setState({ [str]: false });
 	};
 
 	handleDelete = () => {
@@ -72,6 +77,12 @@ class DogInfo extends Component {
 			);
 		}
 	}
+
+	changeEditMode = () => {
+		this.setState({
+			editMode: !this.state.editMode,
+		});
+	};
 
 	renderShotsCompleted(list) {
 		const check = list.map((i) => {
@@ -110,6 +121,7 @@ class DogInfo extends Component {
 
 	render() {
 		const { dogInfo, shots } = this.state;
+
 		return (
 			<main className='dog-info'>
 				<div className='grid-container'>
@@ -128,6 +140,12 @@ class DogInfo extends Component {
 							</Link>
 						</button> */}
 
+						{/* <button className='edit cancel'>
+							<Link className='dog-link' to={`/edit-dog/${this.props.dogId}`}>
+								Edit
+							</Link>
+						</button> */}
+
 						<button className='see-notes'>
 							<Link
 								className='dog-link'
@@ -136,47 +154,60 @@ class DogInfo extends Component {
 								Notes
 							</Link>
 						</button>
-
-						{/* <button className='edit cancel'>
-							<Link className='dog-link' to={`/edit-dog/${this.props.dogId}`}>
-								Edit
-							</Link>
-						</button> */}
-						<button className='delete' onClick={this.openModal}>
+						<button
+							className='delete'
+							name='openAdopt'
+							onClick={(e) => this.openModal(e)}
+						>
 							Adopted
 						</button>
-						<button className='delete' onClick={this.handleArchive}>
+						<button
+							className='delete'
+							name='openArchive'
+							onClick={(e) => this.openModal(e)}
+						>
 							Archive
 						</button>
 						<button className='delete' onClick={this.handleDelete}>
 							Delete
 						</button>
 					</div>
-					<Modal open={this.state.open} onClose={this.closeModal} center>
-						<AdoptModal dogId={this.props.match.params.dogId} />
+					<Modal
+						open={this.state.openArchive}
+						onClose={(e) => this.closeModal("openArchive")}
+						center
+					>
+						<ArchiveModal dogName={dogInfo.dog_name} dogId={dogInfo.dogId} />
 					</Modal>
-					<div className='basic-dog-details box-flex'>
-						<h3 className='info-title'>Basic Details </h3>
-						<ul className='dog-info-text details-grid-container'>
-							<li className='gender align-details'>Gender: </li>
-							<li className='gender-value align-details'>{dogInfo.gender}</li>
-							<li className='age align-details'>Age: </li>
-							<li className='age-value align-details'>{dogInfo.age}</li>
-							<li className='arrival align-details'>Arrival Date: </li>
-							<li className='arrival-value align-details'>
-								{this.formatDate(dogInfo.arrival_date)}
-							</li>
-							<li className='tag align-details'>Tag: </li>
-							<li className='tag-value align-details'>{dogInfo.tag_number}</li>
-							<li className='microchip align-details'>Microchip: </li>
-							<li className='microchip-value align-details'>
-								{dogInfo.microchip}
-							</li>
-							<li className='spayed-neutered align-details'>
-								{this.renderSpayedNeutered(dogInfo.spayedneutered)}
-							</li>
-						</ul>
-					</div>
+
+					<Modal
+						open={this.state.openAdopt}
+						onClose={(e) => this.closeModal("openAdopt")}
+						center
+					>
+						<AdoptModal ddogId={dogInfo.dogId} />
+					</Modal>
+					{this.state.editMode ? (
+						<>
+							<button>X</button>
+							<button>0</button>
+							<EditDog
+								dogInfo={dogInfo}
+								formatDate={this.formatDate}
+								renderSpayedNeutered={this.renderSpayedNeutered}
+								changeEditMode={this.changeEditMode}
+							/>
+						</>
+					) : (
+						<>
+							<DefaultDogInfo
+								dogInfo={dogInfo}
+								formatDate={this.formatDate}
+								renderSpayedNeutered={this.renderSpayedNeutered}
+								changeEditMode={this.changeEditMode}
+							/>
+						</>
+					)}
 
 					<div className='shots-information box-flex'>
 						<h3 className='info-title'>Shots Completed</h3>
