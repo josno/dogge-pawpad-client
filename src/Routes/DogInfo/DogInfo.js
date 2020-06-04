@@ -21,6 +21,7 @@ class DogInfo extends Component {
 			openAdopt: false,
 			openArchive: false,
 			editMode: false,
+			error: null,
 		};
 		this.formatDate = this.formatDate.bind(this);
 		this.renderSpayedNeutered = this.renderSpayedNeutered.bind(this);
@@ -53,13 +54,26 @@ class DogInfo extends Component {
 		});
 	};
 
-	handleArchive = () => {
+	handleArchive = (str) => {
 		const { dogId } = this.props.match.params;
-
+		console.log(str);
 		const dateObj = { archive_date: new Date() };
-		DogsApiService.archiveDog(dogId, dateObj).then((response) => {
-			console.log(response);
-		});
+		const noteObj = {
+			type_of_note: "archive",
+			notes: str,
+			dog_id: dogId,
+		};
+		DogsApiService.archiveDog(dogId, dateObj)
+			.then((response) => DogsApiService.insertNewNote(noteObj))
+			.then((response) => {
+				DogsApiService.getDogInfo(dogId).then((res) =>
+					this.setState({
+						openArchive: false,
+						dogInfo: res,
+					})
+				);
+			})
+			.catch((err) => this.setState({ error: "Can't archive dog." }));
 	};
 
 	renderSpayedNeutered(boolean) {
@@ -158,6 +172,12 @@ class DogInfo extends Component {
 							className='delete'
 							name='openAdopt'
 							onClick={(e) => this.openModal(e)}
+							disabled={
+								dogInfo.dog_status === "Adopted" ||
+								dogInfo.dog_status === "Archived"
+									? true
+									: false
+							}
 						>
 							Adopted
 						</button>
@@ -165,6 +185,12 @@ class DogInfo extends Component {
 							className='delete'
 							name='openArchive'
 							onClick={(e) => this.openModal(e)}
+							disabled={
+								dogInfo.dog_status === "Adopted" ||
+								dogInfo.dog_status === "Archived"
+									? true
+									: false
+							}
 						>
 							Archive
 						</button>
@@ -177,7 +203,11 @@ class DogInfo extends Component {
 						onClose={(e) => this.closeModal("openArchive")}
 						center
 					>
-						<ArchiveModal dogName={dogInfo.dog_name} dogId={dogInfo.dogId} />
+						<ArchiveModal
+							dogName={dogInfo.dog_name}
+							dogId={dogInfo.dogId}
+							handleArchive={this.handleArchive}
+						/>
 					</Modal>
 
 					<Modal

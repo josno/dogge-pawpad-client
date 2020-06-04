@@ -31,7 +31,9 @@ class ArchiveModal extends Component {
 						/>
 					</label>
 				</form>
-				<button>Archive {this.props.dogName}</button>
+				<button onClick={(e) => this.props.handleArchive(this.state.note)}>
+					Archive {this.props.dogName}
+				</button>
 			</div>
 		);
 	}
