@@ -11,6 +11,8 @@ class AdoptModal extends Component {
 			phone: "",
 			address: "",
 			country: "",
+			contract_img: "",
+			comment: "",
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
@@ -52,6 +54,8 @@ class AdoptModal extends Component {
 			phone,
 			address,
 			country,
+			contract_img,
+			comment,
 		} = this.state;
 
 		return (
@@ -104,11 +108,30 @@ class AdoptModal extends Component {
 							type='text'
 						/>
 					</label>
+					<label className='contract'>
+						Contract Image
+						<input
+							name='contract_img'
+							value={contract_img}
+							onChange={(e) => this.onChange(e)}
+							type='file'
+						/>
+					</label>
 					<label className='country'>
 						Adopter Country
 						<input
 							name='country'
 							value={country}
+							onChange={(e) => this.onChange(e)}
+							type='text'
+						/>
+					</label>
+
+					<label className='comment'>
+						Comments
+						<input
+							name='comment'
+							value={comment}
 							onChange={(e) => this.onChange(e)}
 							type='text'
 						/>
