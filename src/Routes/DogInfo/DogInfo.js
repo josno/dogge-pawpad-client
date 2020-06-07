@@ -4,7 +4,7 @@ import "react-responsive-modal/styles.css";
 import { Link } from "react-router-dom";
 import AdoptModal from "../../Components/AdoptModal/AdoptModal";
 import ArchiveModal from "../../Components/ArchiveModal/ArchiveModal";
-import EditDog from "../../Components/EditDog/EditDog";
+// import EditDog from "../../Components/EditDog/EditDog";
 import DefaultDogInfo from "../../Components/DefaultDogInfo/DefaultDogInfo";
 import PawPadContext from "../../PawPadContext.js";
 import DogsApiService from "../../services/api-service";
@@ -20,11 +20,10 @@ class DogInfo extends Component {
 			dogInfo: "",
 			openAdopt: false,
 			openArchive: false,
-			editMode: false,
 			error: null,
 		};
 		this.formatDate = this.formatDate.bind(this);
-		this.renderSpayedNeutered = this.renderSpayedNeutered.bind(this);
+		// this.renderSpayedNeutered = this.renderSpayedNeutered.bind(this);
 		this.renderShotsCompleted = this.renderShotsCompleted.bind(this);
 		this.handleDelete = this.handleDelete.bind(this);
 		this.handleArchive = this.handleArchive.bind(this);
@@ -56,7 +55,6 @@ class DogInfo extends Component {
 
 	handleArchive = (str) => {
 		const { dogId } = this.props.match.params;
-		console.log(str);
 		const dateObj = { archive_date: new Date() };
 		const noteObj = {
 			type_of_note: "archive",
@@ -74,28 +72,6 @@ class DogInfo extends Component {
 				);
 			})
 			.catch((err) => this.setState({ error: "Can't archive dog." }));
-	};
-
-	renderSpayedNeutered(boolean) {
-		if (boolean) {
-			return (
-				<>
-					<span className='indicator-yes'>&#10004; </span> Spayed/Neutered
-				</>
-			);
-		} else {
-			return (
-				<>
-					<span className='indicator-no'> &#10008; </span> Spayed/Neutered
-				</>
-			);
-		}
-	}
-
-	changeEditMode = () => {
-		this.setState({
-			editMode: !this.state.editMode,
-		});
 	};
 
 	renderShotsCompleted(list) {
@@ -148,18 +124,6 @@ class DogInfo extends Component {
 						<h1 className='dog-name-text'>{dogInfo.dog_name}</h1>
 					</div>
 					<div className='nav-buttons'>
-						{/* <button className='go-back'>
-							<Link className='dog-link' to={"/dogs-list"}>
-								Back
-							</Link>
-						</button> */}
-
-						{/* <button className='edit cancel'>
-							<Link className='dog-link' to={`/edit-dog/${this.props.dogId}`}>
-								Edit
-							</Link>
-						</button> */}
-
 						<button className='see-notes'>
 							<Link
 								className='dog-link'
@@ -215,29 +179,10 @@ class DogInfo extends Component {
 						onClose={(e) => this.closeModal("openAdopt")}
 						center
 					>
-						<AdoptModal ddogId={dogInfo.dogId} />
+						<AdoptModal dogId={dogInfo.dogId} />
 					</Modal>
-					{this.state.editMode ? (
-						<>
-							<button>X</button>
-							<button>0</button>
-							<EditDog
-								dogInfo={dogInfo}
-								formatDate={this.formatDate}
-								renderSpayedNeutered={this.renderSpayedNeutered}
-								changeEditMode={this.changeEditMode}
-							/>
-						</>
-					) : (
-						<>
-							<DefaultDogInfo
-								dogInfo={dogInfo}
-								formatDate={this.formatDate}
-								renderSpayedNeutered={this.renderSpayedNeutered}
-								changeEditMode={this.changeEditMode}
-							/>
-						</>
-					)}
+
+					<DefaultDogInfo dogId={this.props.dogId} />
 
 					<div className='shots-information box-flex'>
 						<h3 className='info-title'>Shots Completed</h3>

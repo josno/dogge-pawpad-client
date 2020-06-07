@@ -62,36 +62,40 @@ class AdoptModal extends Component {
 			<div className='modal-inner'>
 				<h1> Adoption Info</h1>
 				<form className='adopter-grid'>
-					<label className='name'>
+					<label className='name adopt-label'>
 						Adopter Name
 						<input
+							className='adopt-input'
 							name='adopter_name'
 							value={adopter_name}
 							onChange={(e) => this.onChange(e)}
 							type='text'
 						/>
 					</label>
-					<label className='adoption-date'>
+					<label className='adoption-date adopt-label'>
 						Adoption Date
 						<input
+							className='adopt-input'
 							name='adoption_date'
 							value={adoption_date}
 							onChange={(e) => this.onChange(e)}
 							type='date'
 						/>
 					</label>
-					<label className='email'>
+					<label className='email adopt-label'>
 						Adopter Email
 						<input
+							className='adopt-input'
 							name='email'
 							value={email}
 							onChange={(e) => this.onChange(e)}
 							type='text'
 						/>
 					</label>
-					<label className='phone'>
+					<label className='phone adopt-label'>
 						Adopter Phone
 						<input
+							className='adopt-input'
 							name='phone'
 							value={phone}
 							onChange={(e) => this.onChange(e)}
@@ -99,27 +103,30 @@ class AdoptModal extends Component {
 						/>
 					</label>
 
-					<label className='address'>
+					<label className='address adopt-label'>
 						Adopter Address
 						<input
+							className='adopt-input'
 							name='address'
 							value={address}
 							onChange={(e) => this.onChange(e)}
 							type='text'
 						/>
 					</label>
-					<label className='contract'>
+					<label className='contract adopt-label'>
 						Contract Image
 						<input
+							className='adopt-input'
 							name='contract_img'
 							value={contract_img}
 							onChange={(e) => this.onChange(e)}
 							type='file'
 						/>
 					</label>
-					<label className='country'>
+					<label className='country adopt-label'>
 						Adopter Country
 						<input
+							className='adopt-input'
 							name='country'
 							value={country}
 							onChange={(e) => this.onChange(e)}
@@ -127,9 +134,10 @@ class AdoptModal extends Component {
 						/>
 					</label>
 
-					<label className='comment'>
+					<label className='comment adopt-label'>
 						Comments
 						<input
+							className='adopt-input'
 							name='comment'
 							value={comment}
 							onChange={(e) => this.onChange(e)}

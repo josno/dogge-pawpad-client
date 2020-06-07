@@ -40,20 +40,20 @@
 	}
 }
 
-label {
+.adopt-label {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 }
 
-label,
-input {
+.adopt-label,
+.adopt-input {
 	display: block;
 	margin: 7px;
 	text-align: left;
 }
 
-input {
+.adopt-input {
 	margin-left: 20px;
 	padding-left: 4px;
 	height: 40px;
