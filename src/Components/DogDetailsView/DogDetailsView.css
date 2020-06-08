@@ -1,6 +1,7 @@
 .edit-input {
 	width: auto;
 	padding: none;
+	margin-right: 10px;
 	font-size: 1em;
 	border: none;
 	color: #009fb7;
@@ -35,5 +36,11 @@
 	}
 	100% {
 		opacity: 1;
+	}
+}
+
+@media (min-width: 500px) {
+	.edit-input {
+		width: 200px;
 	}
 }

@@ -4,8 +4,10 @@ import "react-responsive-modal/styles.css";
 import { Link } from "react-router-dom";
 import AdoptModal from "../../Components/AdoptModal/AdoptModal";
 import ArchiveModal from "../../Components/ArchiveModal/ArchiveModal";
+import ModalForm from "../../Components/ImgModalForm/ImgModalForm";
 // import EditDog from "../../Components/EditDog/EditDog";
-import DefaultDogInfo from "../../Components/DefaultDogInfo/DefaultDogInfo";
+// import DogNamePhotoView from "../../Components/DogNamePhotoView/DogNamePhotoView.js";
+import DogDetailsView from "../../Components/DogDetailsView/DogDetailsView";
 import PawPadContext from "../../PawPadContext.js";
 import DogsApiService from "../../services/api-service";
 
@@ -20,6 +22,7 @@ class DogInfo extends Component {
 			dogInfo: "",
 			openAdopt: false,
 			openArchive: false,
+			openProfileImg: false,
 			error: null,
 		};
 		this.formatDate = this.formatDate.bind(this);
@@ -74,6 +77,56 @@ class DogInfo extends Component {
 			.catch((err) => this.setState({ error: "Can't archive dog." }));
 	};
 
+	handleProfileImgUpdate = (str) => {
+		//Delete then upload
+		// DogsApiService.uploadDogImg(data, tagNumber)
+		//
+	};
+
+	renderNavButtons = (dogInfo) => {
+		return (
+			<div className='nav-buttons'>
+				<button className='see-notes'>
+					<Link
+						className='dog-link'
+						to={`/notes-${dogInfo.dog_name}/${dogInfo.id}`}
+					>
+						Notes
+					</Link>
+				</button>
+				<button
+					className='delete'
+					name='openAdopt'
+					onClick={(e) => this.openModal(e)}
+					disabled={
+						dogInfo.dog_status === "Adopted" ||
+						dogInfo.dog_status === "Archived"
+							? true
+							: false
+					}
+				>
+					Adopted
+				</button>
+				<button
+					className='delete'
+					name='openArchive'
+					onClick={(e) => this.openModal(e)}
+					disabled={
+						dogInfo.dog_status === "Adopted" ||
+						dogInfo.dog_status === "Archived"
+							? true
+							: false
+					}
+				>
+					Archive
+				</button>
+				<button className='delete' onClick={this.handleDelete}>
+					Delete
+				</button>
+			</div>
+		);
+	};
+
 	renderShotsCompleted(list) {
 		const check = list.map((i) => {
 			if (i.shot_iscompleted === false) {
@@ -96,6 +149,44 @@ class DogInfo extends Component {
 		return check;
 	}
 
+	renderDogImgName = (obj) => {
+		return (
+			<div className='dog-name'>
+				<img alt='dog-name' className='info-img' src={obj.profile_img} />
+				<button
+					className='edit-pencil edit-pencil-img'
+					name='openProfileImg'
+					onClick={(e) => this.openModal(e)}
+				>
+					&#9998;
+				</button>
+				<h1 className='dog-name-text'>{obj.dog_name}</h1>
+			</div>
+		);
+	};
+
+	renderShots = (shotObj) => {
+		return (
+			<div className='shots-information box-flex'>
+				<h3 className='info-title'>Shots Completed</h3>
+				<ul className='dog-info-text shot-container'>{shotObj}</ul>
+			</div>
+		);
+	};
+
+	renderUpdateByLine = (obj) => {
+		return !obj.updated_by ? (
+			""
+		) : (
+			<div className='updated-by'>
+				<p>
+					Updated by {obj.updated_by} on{" "}
+					{this.formatDate(obj.notes_date_modified)}
+				</p>
+			</div>
+		);
+	};
+
 	async componentDidMount() {
 		const { dogId } = this.props;
 		const res = await DogsApiService.getDogInfo(dogId);
@@ -115,53 +206,15 @@ class DogInfo extends Component {
 		return (
 			<main className='dog-info'>
 				<div className='grid-container'>
-					<div className='dog-name'>
-						<img
-							alt='dog-name'
-							className='info-img'
-							src={dogInfo.profile_img}
-						/>
-						<h1 className='dog-name-text'>{dogInfo.dog_name}</h1>
-					</div>
-					<div className='nav-buttons'>
-						<button className='see-notes'>
-							<Link
-								className='dog-link'
-								to={`/notes-${dogInfo.dog_name}/${dogInfo.id}`}
-							>
-								Notes
-							</Link>
-						</button>
-						<button
-							className='delete'
-							name='openAdopt'
-							onClick={(e) => this.openModal(e)}
-							disabled={
-								dogInfo.dog_status === "Adopted" ||
-								dogInfo.dog_status === "Archived"
-									? true
-									: false
-							}
-						>
-							Adopted
-						</button>
-						<button
-							className='delete'
-							name='openArchive'
-							onClick={(e) => this.openModal(e)}
-							disabled={
-								dogInfo.dog_status === "Adopted" ||
-								dogInfo.dog_status === "Archived"
-									? true
-									: false
-							}
-						>
-							Archive
-						</button>
-						<button className='delete' onClick={this.handleDelete}>
-							Delete
-						</button>
-					</div>
+					{this.renderDogImgName(dogInfo)}
+					{this.renderNavButtons(dogInfo)}
+					<Modal
+						open={this.state.openProfileImg}
+						onClose={(e) => this.closeModal("openProfileImg")}
+						center
+					>
+						<ModalForm />
+					</Modal>
 					<Modal
 						open={this.state.openArchive}
 						onClose={(e) => this.closeModal("openArchive")}
@@ -173,7 +226,6 @@ class DogInfo extends Component {
 							handleArchive={this.handleArchive}
 						/>
 					</Modal>
-
 					<Modal
 						open={this.state.openAdopt}
 						onClose={(e) => this.closeModal("openAdopt")}
@@ -181,24 +233,10 @@ class DogInfo extends Component {
 					>
 						<AdoptModal dogId={dogInfo.dogId} />
 					</Modal>
-
-					<DefaultDogInfo dogId={this.props.dogId} />
-
-					<div className='shots-information box-flex'>
-						<h3 className='info-title'>Shots Completed</h3>
-						<ul className='dog-info-text shot-container'>{shots}</ul>
-					</div>
+					<DogDetailsView dogId={this.props.dogId} />
+					{this.renderShots(shots)}
 				</div>
-				{!dogInfo.updated_by ? (
-					""
-				) : (
-					<div className='updated-by'>
-						<p>
-							Updated by {dogInfo.updated_by} on{" "}
-							{this.formatDate(dogInfo.notes_date_modified)}
-						</p>
-					</div>
-				)}
+				{this.renderUpdateByLine(dogInfo)}
 			</main>
 		);
 	}
