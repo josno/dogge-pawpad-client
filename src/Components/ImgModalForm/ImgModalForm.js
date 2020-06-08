@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import DogsApiService from "../../services/api-service";
+import "./ImgModalForm.css";
+
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-
-// import "./Modal.css";
 
 class ImgModalForm extends Component {
 	constructor(props) {
@@ -39,8 +38,16 @@ class ImgModalForm extends Component {
 		});
 	};
 
-	handleSubmit = (e) => {
-		//DogsApiService.delete
+	renderImgInput = () => {
+		return (
+			<input
+				className='block'
+				type='file'
+				name='img'
+				onChange={(e) => this.handleImgChange(e)}
+				accept='image/*'
+			/>
+		);
 	};
 
 	render() {
@@ -48,13 +55,7 @@ class ImgModalForm extends Component {
 			<form>
 				<h2> Update Dog Image</h2>
 				{this.renderPreview()}
-				<input
-					className='block'
-					type='file'
-					name='img'
-					onChange={(e) => this.handleImgChange(e)}
-					accept='image/*'
-				/>
+				{this.renderImgInput()}
 				<button
 					onClick={(e) => this.props.handleUpdate(e, this.state.profileImg)}
 				>
