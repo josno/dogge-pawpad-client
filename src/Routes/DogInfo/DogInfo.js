@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 import AdoptModal from "../../Components/AdoptModal/AdoptModal";
 import ArchiveModal from "../../Components/ArchiveModal/ArchiveModal";
 import ModalForm from "../../Components/ImgModalForm/ImgModalForm";
-// import EditDog from "../../Components/EditDog/EditDog";
-// import DogNamePhotoView from "../../Components/DogNamePhotoView/DogNamePhotoView.js";
+
 import DogDetailsView from "../../Components/DogDetailsView/DogDetailsView";
 import PawPadContext from "../../PawPadContext.js";
 import DogsApiService from "../../services/api-service";
@@ -30,6 +29,7 @@ class DogInfo extends Component {
 		this.renderShotsCompleted = this.renderShotsCompleted.bind(this);
 		this.handleDelete = this.handleDelete.bind(this);
 		this.handleArchive = this.handleArchive.bind(this);
+		this.updateDogImage = this.updateDogImage.bind(this);
 	}
 
 	formatDate(date) {
@@ -77,11 +77,40 @@ class DogInfo extends Component {
 			.catch((err) => this.setState({ error: "Can't archive dog." }));
 	};
 
-	handleProfileImgUpdate = (str) => {
-		//Delete then upload
-		// DogsApiService.uploadDogImg(data, tagNumber)
-		//
-	};
+	updateDogImage(e, profileImg) {
+		e.preventDefault(e);
+		const profile_img = profileImg;
+		console.log(profile_img, this.state.dogInfo.tag_number);
+
+		const formData = new FormData();
+		formData.append("profile_img", profile_img);
+
+		DogsApiService.deleteDogImg(formData, this.state.dogInfo.tag_number)
+			.then((res) => {
+				console.log(res);
+				return DogsApiService.uploadDogImg(
+					formData,
+					this.state.dogInfo.tag_number
+				);
+			})
+			.then((res) => {
+				const dogObj = {
+					dog_name: this.state.dogInfo.dog_name,
+					profile_img: res,
+				};
+				return DogsApiService.updateDog(dogObj, this.state.dogInfo.id);
+			})
+			.then((res) => {
+				return DogsApiService.getDogInfo(this.state.dogInfo.id);
+			})
+			.then((res) => {
+				this.setState({
+					dogInfo: res,
+					openProfileImg: false,
+				});
+			})
+			.catch((err) => this.setState({ error: err }));
+	}
 
 	renderNavButtons = (dogInfo) => {
 		return (
@@ -213,7 +242,7 @@ class DogInfo extends Component {
 						onClose={(e) => this.closeModal("openProfileImg")}
 						center
 					>
-						<ModalForm />
+						<ModalForm handleUpdate={this.updateDogImage} />
 					</Modal>
 					<Modal
 						open={this.state.openArchive}
