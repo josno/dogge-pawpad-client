@@ -81,7 +81,6 @@ class DogInfo extends Component {
 	updateDogImage(e, profileImg) {
 		e.preventDefault(e);
 		const profile_img = profileImg;
-		console.log(profile_img, this.state.dogInfo.tag_number);
 
 		const formData = new FormData();
 		formData.append("profile_img", profile_img);
@@ -158,6 +157,7 @@ class DogInfo extends Component {
 	};
 
 	renderModals = (dogInfo) => {
+		console.log(dogInfo);
 		return (
 			<>
 				<Modal
@@ -183,7 +183,7 @@ class DogInfo extends Component {
 					onClose={(e) => this.closeModal("openAdopt")}
 					center
 				>
-					<AdoptModal dogId={dogInfo.dogId} />
+					<AdoptModal dogId={dogInfo.id} />
 				</Modal>
 			</>
 		);
@@ -285,7 +285,8 @@ class DogInfo extends Component {
 					{this.renderModals(dogInfo)}
 					{this.renderDogDetailsView(this.props)}
 					{this.renderShots(shots)}
-					{this.renderAdoptionDetails()}
+					{dogInfo.dog_status === "Adopted" && this.renderAdoptionDetails()}
+					{/* update css for adoption section to be one less row */}
 				</div>
 				{this.renderUpdateByLine(dogInfo)}
 			</main>

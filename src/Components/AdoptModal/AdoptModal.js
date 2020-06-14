@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import "./AdoptModal.css";
+import DogsApiService from "../../services/api-service";
 
 class AdoptModal extends Component {
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			adopter_name: "",
 			adoption_date: "",
@@ -25,6 +27,12 @@ class AdoptModal extends Component {
 		});
 	};
 
+	handleImgChange = (e) => {
+		this.setState({
+			contract_img: e.target.files[0],
+		});
+	};
+
 	handleSubmit = () => {
 		const {
 			adopter_name,
@@ -33,18 +41,28 @@ class AdoptModal extends Component {
 			phone,
 			address,
 			country,
+			contract_img,
 		} = this.state;
 
-		const adoptionObj = {
-			adopter_name,
-			adoption_date,
-			email,
-			phone,
-			address,
-			country,
-		};
+		const adoptionObj = [
+			{ adoption_date: adoption_date },
+			{ adopter_name: adopter_name },
+			{ adopter_email: email },
+			{ adopter_phone: phone },
+			{ adopter_country: country },
+			{ adopter_address: address },
+			{ dog_id: this.props.dogId },
+		];
 
-		console.log(adoptionObj);
+		const newAdoptionObj = new FormData();
+		newAdoptionObj.append("contract_img", contract_img);
+		adoptionObj.forEach((i) => {
+			newAdoptionObj.append(Object.keys(i), Object.values(i));
+		});
+
+		DogsApiService.insertAdoption(newAdoptionObj).then((res) =>
+			console.log(res)
+		);
 	};
 	render(props) {
 		const {
@@ -54,7 +72,6 @@ class AdoptModal extends Component {
 			phone,
 			address,
 			country,
-			contract_img,
 			comment,
 		} = this.state;
 
@@ -118,9 +135,9 @@ class AdoptModal extends Component {
 						<input
 							className='adopt-input'
 							name='contract_img'
-							value={contract_img}
-							onChange={(e) => this.onChange(e)}
+							onChange={(e) => this.handleImgChange(e)}
 							type='file'
+							accept='image/*'
 						/>
 					</label>
 					<label className='country adopt-label'>

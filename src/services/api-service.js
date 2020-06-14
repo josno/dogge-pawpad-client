@@ -186,7 +186,6 @@ const DogsApiService = {
 			body: JSON.stringify(dogId),
 		});
 	},
-
 	archiveDog(dogId, date) {
 		return fetch(`${config.API_ENDPOINT}/dogs/${dogId}/archive`, {
 			method: "PATCH",
@@ -197,6 +196,25 @@ const DogsApiService = {
 		}).then((res) =>
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
 		);
+	},
+	insertAdoption(obj) {
+		return fetch(`${config.API_ENDPOINT}/adoption`, {
+			method: "POST",
+			headers: {
+				authorization: `Bearer ${TokenService.getAuthToken()}`,
+			},
+			body: obj,
+		}).then((res) =>
+			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+		);
+	},
+	deleteAdoption(dogId) {
+		return fetch(`${config.API_ENDPOINT}/adoption/${dogId}`, {
+			method: "DELETE",
+			headers: {
+				authorization: `Bearer ${TokenService.getAuthToken()}`,
+			},
+		});
 	},
 };
 
