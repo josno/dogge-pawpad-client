@@ -156,159 +156,174 @@ class DogDetailsView extends Component {
 			<div className='basic-dog-details box-flex'>
 				<h3 className='info-title'>Basic Details </h3>
 				<ul className='dog-info-text details-grid-container'>
-					<li className='gender align-details'>Gender: </li>
-					{gender.editMode === true ? (
-						<div className='gender-value align-details'>
-							<input
-								className='fade-in edit-input'
-								type='text'
-								name='gender'
-								defaultValue={gender.value}
-								onChange={(e) => this.handleChange(e)}
-							/>
-							<button value='gender' onClick={(e) => this.changeEditMode(e)}>
-								&#10008;{" "}
-							</button>
-							<button value='gender' onClick={(e) => this.updateValue(e)}>
-								&#10004;{" "}
-							</button>
-						</div>
-					) : (
-						<div className='gender-value align-details'>
-							{gender.value}
-							<button
-								className='edit-pencil'
-								value='gender'
-								onClick={(e) => this.changeEditMode(e)}
-							>
-								&#9998;
-							</button>
-						</div>
-					)}
-					<li className='age align-details'>Age: </li>
-					{age.editMode === true ? (
-						<div className='age-value align-details'>
-							<input
-								className='fade-in edit-input'
-								type='text'
-								name='age'
-								defaultValue={age.value}
-								onChange={(e) => this.handleChange(e)}
-							/>
-							<button value='age' onClick={(e) => this.changeEditMode(e)}>
-								&#10008;{" "}
-							</button>
-							<button value='age' onClick={(e) => this.updateValue(e)}>
-								&#10004;{" "}
-							</button>
-						</div>
-					) : (
-						<div className='age-value align-details'>
-							{age.value}
-							<button
-								className='edit-pencil'
-								value='age'
-								onClick={(e) => this.changeEditMode(e)}
-							>
-								&#9998;
-							</button>
-						</div>
-					)}
-					<li className='arrival_date align-details'>Arrival Date: </li>
+					<li className='gender align-details'>
+						Gender:
+						{gender.editMode === true ? (
+							<div className='gender-value align-details'>
+								<input
+									className='fade-in edit-input'
+									type='text'
+									name='gender'
+									defaultValue={gender.value}
+									onChange={(e) => this.handleChange(e)}
+								/>
+								<button value='gender' onClick={(e) => this.changeEditMode(e)}>
+									&#10008;{" "}
+								</button>
+								<button value='gender' onClick={(e) => this.updateValue(e)}>
+									&#10004;{" "}
+								</button>
+							</div>
+						) : (
+							<div className='gender-value align-details'>
+								{gender.value}
+								<button
+									className='edit-pencil'
+									value='gender'
+									onClick={(e) => this.changeEditMode(e)}
+								>
+									&#9998;
+								</button>
+							</div>
+						)}
+					</li>
+					<li className='age align-details'>
+						Age:
+						{age.editMode === true ? (
+							<div className='age-value align-details'>
+								<input
+									className='fade-in edit-input'
+									type='text'
+									name='age'
+									defaultValue={age.value}
+									onChange={(e) => this.handleChange(e)}
+								/>
+								<button value='age' onClick={(e) => this.changeEditMode(e)}>
+									&#10008;{" "}
+								</button>
+								<button value='age' onClick={(e) => this.updateValue(e)}>
+									&#10004;{" "}
+								</button>
+							</div>
+						) : (
+							<div className='age-value align-details'>
+								{age.value}
+								<button
+									className='edit-pencil'
+									value='age'
+									onClick={(e) => this.changeEditMode(e)}
+								>
+									&#9998;
+								</button>
+							</div>
+						)}
+					</li>
+					<li className='arrival_date align-details'>
+						Arrival Date:
+						{arrival_date.editMode === true ? (
+							<div className='arrival_date-value align-details'>
+								<input
+									className='fade-in edit-input'
+									type='date'
+									name='arrival_date'
+									defaultValue={this.formatEditDate(arrival_date.value)}
+									onChange={(e) => this.handleChange(e)}
+								/>
+								<button
+									value='arrival_date'
+									onClick={(e) => this.changeEditMode(e)}
+								>
+									&#10008;{" "}
+								</button>
+								<button
+									value='arrival_date'
+									onClick={(e) => this.updateValue(e)}
+								>
+									&#10004;{" "}
+								</button>
+							</div>
+						) : (
+							<div className='arrival_date-value align-details'>
+								{this.formatDate(arrival_date.value)}
+								<button
+									className='edit-pencil'
+									value='arrival_date'
+									onClick={(e) => this.changeEditMode(e)}
+								>
+									&#9998;
+								</button>
+							</div>
+						)}
+					</li>
+					<li className='tag_number align-details'>
+						Tag:
+						{tag_number.editMode === true ? (
+							<div className='tag_number-value align-details'>
+								<input
+									className='fade-in edit-input'
+									type='text'
+									name='tag_number'
+									defaultValue={tag_number.value}
+									onChange={(e) => this.handleChange(e)}
+								/>
+								<button
+									value='tag_number'
+									onClick={(e) => this.changeEditMode(e)}
+								>
+									&#10008;{" "}
+								</button>
+								<button value='tag_number' onClick={(e) => this.updateValue(e)}>
+									&#10004;{" "}
+								</button>
+							</div>
+						) : (
+							<div className='tag_number-value align-details'>
+								{tag_number.value}
+								<button
+									className='edit-pencil'
+									value='tag_number'
+									onClick={(e) => this.changeEditMode(e)}
+								>
+									&#9998;
+								</button>
+							</div>
+						)}
+					</li>
 
-					{arrival_date.editMode === true ? (
-						<div className='arrival_date-value align-details'>
-							<input
-								className='fade-in edit-input'
-								type='date'
-								name='arrival_date'
-								defaultValue={this.formatEditDate(arrival_date.value)}
-								onChange={(e) => this.handleChange(e)}
-							/>
-							<button
-								value='arrival_date'
-								onClick={(e) => this.changeEditMode(e)}
-							>
-								&#10008;{" "}
-							</button>
-							<button value='arrival_date' onClick={(e) => this.updateValue(e)}>
-								&#10004;{" "}
-							</button>
-						</div>
-					) : (
-						<div className='arrival_date-value align-details'>
-							{this.formatDate(arrival_date.value)}
-							<button
-								className='edit-pencil'
-								value='arrival_date'
-								onClick={(e) => this.changeEditMode(e)}
-							>
-								&#9998;
-							</button>
-						</div>
-					)}
-					<li className='tag_number align-details'>Tag: </li>
-					{tag_number.editMode === true ? (
-						<div className='tag_number-value align-details'>
-							<input
-								className='fade-in edit-input'
-								type='text'
-								name='tag_number'
-								defaultValue={tag_number.value}
-								onChange={(e) => this.handleChange(e)}
-							/>
-							<button
-								value='tag_number'
-								onClick={(e) => this.changeEditMode(e)}
-							>
-								&#10008;{" "}
-							</button>
-							<button value='tag_number' onClick={(e) => this.updateValue(e)}>
-								&#10004;{" "}
-							</button>
-						</div>
-					) : (
-						<div className='tag_number-value align-details'>
-							{tag_number.value}
-							<button
-								className='edit-pencil'
-								value='tag_number'
-								onClick={(e) => this.changeEditMode(e)}
-							>
-								&#9998;
-							</button>
-						</div>
-					)}
-					<li className='microchip align-details'>Microchip: </li>
-
-					{microchip.editMode === true ? (
-						<div className='microchip-value align-details'>
-							<input
-								className='fade-in edit-input'
-								type='text'
-								name='microchip'
-								defaultValue={microchip.value}
-								onChange={(e) => this.handleChange(e)}
-							/>
-							<button value='microchip' onClick={(e) => this.changeEditMode(e)}>
-								&#10008;{" "}
-							</button>
-							<button value='microchip' onClick={(e) => this.updateValue(e)}>
-								&#10004;{" "}
-							</button>
-						</div>
-					) : (
-						<div className='microchip-value align-details'>
-							{microchip.value}
-							<button
-								className='edit-pencil'
-								value='microchip'
-								onClick={(e) => this.changeEditMode(e)}
-							>
-								&#9998;
-							</button>
-						</div>
-					)}
+					<li className='microchip align-details'>
+						Microchip:
+						{microchip.editMode === true ? (
+							<div className='microchip-value align-details'>
+								<input
+									className='fade-in edit-input'
+									type='text'
+									name='microchip'
+									defaultValue={microchip.value}
+									onChange={(e) => this.handleChange(e)}
+								/>
+								<button
+									value='microchip'
+									onClick={(e) => this.changeEditMode(e)}
+								>
+									&#10008;{" "}
+								</button>
+								<button value='microchip' onClick={(e) => this.updateValue(e)}>
+									&#10004;{" "}
+								</button>
+							</div>
+						) : (
+							<div className='microchip-value align-details'>
+								{microchip.value}
+								<button
+									className='edit-pencil'
+									value='microchip'
+									onClick={(e) => this.changeEditMode(e)}
+								>
+									&#9998;
+								</button>
+							</div>
+						)}
+					</li>
 
 					<li className='spayedneutered align-details'>
 						{spayedneutered.editMode === true ? (

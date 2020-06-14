@@ -115,6 +115,39 @@ class DogInfo extends Component {
 	renderNavButtons = (dogInfo) => {
 		return (
 			<div className='nav-buttons'>
+				{dogInfo.dog_status === "Adopted" && (
+					<button
+						className='delete'
+						name='openAdopt'
+						onClick={(e) => this.openModal(e)}
+						disabled={
+							dogInfo.dog_status === "Adopted" ||
+							dogInfo.dog_status === "Archived"
+								? true
+								: false
+						}
+					>
+						Adoption Details
+					</button>
+				)}
+				{dogInfo.dog_status === "Current" && (
+					<button
+						className='delete'
+						name='openAdopt'
+						onClick={(e) => this.openModal(e)}
+					>
+						Adopted
+					</button>
+				)}
+
+				<button
+					className='delete'
+					name='openArchive'
+					onClick={(e) => this.openModal(e)}
+				>
+					Archive
+				</button>
+
 				<button className='see-notes'>
 					<Link
 						className='dog-link'
@@ -122,32 +155,6 @@ class DogInfo extends Component {
 					>
 						Notes
 					</Link>
-				</button>
-				<button
-					className='delete'
-					name='openAdopt'
-					onClick={(e) => this.openModal(e)}
-					disabled={
-						dogInfo.dog_status === "Adopted" ||
-						dogInfo.dog_status === "Archived"
-							? true
-							: false
-					}
-				>
-					Adopted
-				</button>
-				<button
-					className='delete'
-					name='openArchive'
-					onClick={(e) => this.openModal(e)}
-					disabled={
-						dogInfo.dog_status === "Adopted" ||
-						dogInfo.dog_status === "Archived"
-							? true
-							: false
-					}
-				>
-					Archive
 				</button>
 				<button className='delete' onClick={this.handleDelete}>
 					Delete
@@ -157,7 +164,6 @@ class DogInfo extends Component {
 	};
 
 	renderModals = (dogInfo) => {
-		console.log(dogInfo);
 		return (
 			<>
 				<Modal
@@ -211,10 +217,10 @@ class DogInfo extends Component {
 		return check;
 	}
 
-	renderAdoptionDetails = () => {
+	renderAdoptionDetails = (id) => {
 		return (
 			<div className='adoption-details box-flex'>
-				<AdoptionDetails />
+				<AdoptionDetails dogId={id} />
 			</div>
 		);
 	};
@@ -285,8 +291,6 @@ class DogInfo extends Component {
 					{this.renderModals(dogInfo)}
 					{this.renderDogDetailsView(this.props)}
 					{this.renderShots(shots)}
-					{dogInfo.dog_status === "Adopted" && this.renderAdoptionDetails()}
-					{/* update css for adoption section to be one less row */}
 				</div>
 				{this.renderUpdateByLine(dogInfo)}
 			</main>
