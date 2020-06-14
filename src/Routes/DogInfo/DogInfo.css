@@ -166,8 +166,11 @@
 		padding: 50px;
 		display: grid;
 		grid-template-columns: 1fr 1.1fr;
-		grid-template-rows: 1fr 0.8fr 1fr;
-		grid-template-areas: "dog-name nav-buttons" "basic-dog-details basic-dog-details" "shots-information shots-information";
+		grid-template-rows: 1fr 0.8fr 1fr 1fr;
+		grid-template-areas: "dog-name nav-buttons" "basic-dog-details basic-dog-details" "shots-information shots-information" "adoption-details adoption-details";
+	}
+	.adoption-details {
+		grid-area: adoption-details;
 	}
 
 	.basic-dog-details {

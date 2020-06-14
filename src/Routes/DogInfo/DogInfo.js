@@ -9,6 +9,7 @@ import ModalForm from "../../Components/ImgModalForm/ImgModalForm";
 import DogDetailsView from "../../Components/DogDetailsView/DogDetailsView";
 import PawPadContext from "../../PawPadContext.js";
 import DogsApiService from "../../services/api-service";
+import AdoptionDetails from "../../Components/AdoptionDetails/AdoptionDetails";
 
 import "./DogInfo.css";
 import moment from "moment";
@@ -156,6 +157,38 @@ class DogInfo extends Component {
 		);
 	};
 
+	renderModals = (dogInfo) => {
+		return (
+			<>
+				<Modal
+					open={this.state.openProfileImg}
+					onClose={(e) => this.closeModal("openProfileImg")}
+					center
+				>
+					<ModalForm handleUpdate={this.updateDogImage} />
+				</Modal>
+				<Modal
+					open={this.state.openArchive}
+					onClose={(e) => this.closeModal("openArchive")}
+					center
+				>
+					<ArchiveModal
+						dogName={dogInfo.dog_name}
+						dogId={dogInfo.dogId}
+						handleArchive={this.handleArchive}
+					/>
+				</Modal>
+				<Modal
+					open={this.state.openAdopt}
+					onClose={(e) => this.closeModal("openAdopt")}
+					center
+				>
+					<AdoptModal dogId={dogInfo.dogId} />
+				</Modal>
+			</>
+		);
+	};
+
 	renderShotsCompleted(list) {
 		const check = list.map((i) => {
 			if (i.shot_iscompleted === false) {
@@ -178,6 +211,14 @@ class DogInfo extends Component {
 		return check;
 	}
 
+	renderAdoptionDetails = () => {
+		return (
+			<div className='adoption-details box-flex'>
+				<AdoptionDetails />
+			</div>
+		);
+	};
+
 	renderDogImgName = (obj) => {
 		return (
 			<div className='dog-name'>
@@ -192,6 +233,10 @@ class DogInfo extends Component {
 				<h1 className='dog-name-text'>{obj.dog_name}</h1>
 			</div>
 		);
+	};
+
+	renderDogDetailsView = (props) => {
+		return <DogDetailsView dogId={props.dogId} />;
 	};
 
 	renderShots = (shotObj) => {
@@ -237,33 +282,10 @@ class DogInfo extends Component {
 				<div className='grid-container'>
 					{this.renderDogImgName(dogInfo)}
 					{this.renderNavButtons(dogInfo)}
-					<Modal
-						open={this.state.openProfileImg}
-						onClose={(e) => this.closeModal("openProfileImg")}
-						center
-					>
-						<ModalForm handleUpdate={this.updateDogImage} />
-					</Modal>
-					<Modal
-						open={this.state.openArchive}
-						onClose={(e) => this.closeModal("openArchive")}
-						center
-					>
-						<ArchiveModal
-							dogName={dogInfo.dog_name}
-							dogId={dogInfo.dogId}
-							handleArchive={this.handleArchive}
-						/>
-					</Modal>
-					<Modal
-						open={this.state.openAdopt}
-						onClose={(e) => this.closeModal("openAdopt")}
-						center
-					>
-						<AdoptModal dogId={dogInfo.dogId} />
-					</Modal>
-					<DogDetailsView dogId={this.props.dogId} />
+					{this.renderModals(dogInfo)}
+					{this.renderDogDetailsView(this.props)}
 					{this.renderShots(shots)}
+					{this.renderAdoptionDetails()}
 				</div>
 				{this.renderUpdateByLine(dogInfo)}
 			</main>
