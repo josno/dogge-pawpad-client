@@ -216,6 +216,16 @@ const DogsApiService = {
 			},
 		});
 	},
+	getAdoptionInfo(dogId) {
+		return fetch(`${config.API_ENDPOINT}/adoption/${dogId}`, {
+			method: "GET",
+			headers: {
+				authorization: `Bearer ${TokenService.getAuthToken()}`,
+			},
+		}).then((res) =>
+			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+		);
+	},
 };
 
 export default DogsApiService;

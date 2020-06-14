@@ -173,6 +173,8 @@ main {
 footer {
 	width: 100%;
 	height: 2.5em;
+	position: absolute;
+	bottom: 0;
 }
 
 @media (min-width: 500px) {

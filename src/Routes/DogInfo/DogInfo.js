@@ -116,19 +116,15 @@ class DogInfo extends Component {
 		return (
 			<div className='nav-buttons'>
 				{dogInfo.dog_status === "Adopted" && (
-					<button
+					<Link
 						className='delete'
-						name='openAdopt'
-						onClick={(e) => this.openModal(e)}
-						disabled={
-							dogInfo.dog_status === "Adopted" ||
-							dogInfo.dog_status === "Archived"
-								? true
-								: false
-						}
+						to={{
+							pathname: `/adoption-details-${dogInfo.dog_name}/${dogInfo.id}`,
+							state: dogInfo,
+						}}
 					>
 						Adoption Details
-					</button>
+					</Link>
 				)}
 				{dogInfo.dog_status === "Current" && (
 					<button

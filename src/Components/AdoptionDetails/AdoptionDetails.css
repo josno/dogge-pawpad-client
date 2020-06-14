@@ -1,0 +1,14 @@
+.adoption-grid-container {
+	padding-top: 60px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 90vw;
+}
+
+.wrapper {
+	height: 100vh;
+}
+
+.value-align {
+	padding-left: 20px;
+}

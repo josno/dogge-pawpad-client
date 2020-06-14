@@ -6,6 +6,7 @@ import DogsList from "./Routes/DogsList/DogsList";
 import AddNewDog from "./Routes/AddNewDog/AddNewDog";
 import DogInfo from "./Routes/DogInfo/DogInfo";
 import Notes from "./Routes/Notes/Notes";
+import Adoption from "./Routes/Adoption/Adoption";
 import Login from "./Routes/Login/Login";
 import SignUp from "./Routes/SignUp/SignUp";
 import PawPadContext from "./PawPadContext.js";
@@ -94,6 +95,16 @@ class App extends Component {
 										{...routeProps}
 									/>
 								)}
+							/>
+						) : (
+							<Redirect to='/' />
+						)}
+
+						{TokenService.hasAuthToken() ? (
+							<Route
+								exact
+								path='/adoption-details-:dogName/:dogId'
+								render={(routeProps) => <Adoption {...routeProps} />}
 							/>
 						) : (
 							<Redirect to='/' />
