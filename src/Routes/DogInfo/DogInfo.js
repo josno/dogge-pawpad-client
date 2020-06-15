@@ -31,6 +31,7 @@ class DogInfo extends Component {
 		this.handleDelete = this.handleDelete.bind(this);
 		this.handleArchive = this.handleArchive.bind(this);
 		this.updateDogImage = this.updateDogImage.bind(this);
+		this.updateDogInfo = this.updateDogInfo.bind(this);
 	}
 
 	formatDate(date) {
@@ -76,6 +77,17 @@ class DogInfo extends Component {
 				);
 			})
 			.catch((err) => this.setState({ error: "Can't archive dog." }));
+	};
+
+	updateDogInfo = () => {
+		DogsApiService.getDogInfo(this.state.dogInfo.id)
+			.then((res) => {
+				this.setState({
+					dogInfo: res,
+					openProfileImg: false,
+				});
+			})
+			.catch((err) => this.setState({ error: err }));
 	};
 
 	updateDogImage(e, profileImg) {
@@ -136,14 +148,6 @@ class DogInfo extends Component {
 					</button>
 				)}
 
-				<button
-					className='delete'
-					name='openArchive'
-					onClick={(e) => this.openModal(e)}
-				>
-					Archive
-				</button>
-
 				<button className='see-notes'>
 					<Link
 						className='dog-link'
@@ -152,9 +156,22 @@ class DogInfo extends Component {
 						Notes
 					</Link>
 				</button>
-				<button className='delete' onClick={this.handleDelete}>
-					Delete
-				</button>
+
+				{dogInfo.dog_status !== "Archived" && (
+					<button
+						className='delete'
+						name='openArchive'
+						onClick={(e) => this.openModal(e)}
+					>
+						Archive
+					</button>
+				)}
+
+				{dogInfo.dog_status !== "Adopted" && (
+					<button className='delete' onClick={this.handleDelete}>
+						Delete
+					</button>
+				)}
 			</div>
 		);
 	};
@@ -185,7 +202,7 @@ class DogInfo extends Component {
 					onClose={(e) => this.closeModal("openAdopt")}
 					center
 				>
-					<AdoptModal dogId={dogInfo.id} />
+					<AdoptModal dogId={dogInfo.id} updateDogInfo={this.updateDogInfo} />
 				</Modal>
 			</>
 		);
