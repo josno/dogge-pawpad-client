@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "./AdoptModal.css";
 import DogsApiService from "../../services/api-service";
 
+const CryptoJS = require("crypto-js");
+
 class AdoptModal extends Component {
 	constructor(props) {
 		super(props);
@@ -11,7 +13,6 @@ class AdoptModal extends Component {
 			adoption_date: "",
 			email: "",
 			phone: "",
-			address: "",
 			country: "",
 			contract_img: "",
 			comment: "",
@@ -33,35 +34,41 @@ class AdoptModal extends Component {
 		});
 	};
 
-	handleSubmit = () => {
+	makeAdoptionObj = () => {
 		const {
 			adopter_name,
 			adoption_date,
 			email,
 			phone,
-			address,
 			country,
 			contract_img,
 		} = this.state;
 
-		const adoptionObj = [
-			{ adoption_date: adoption_date },
-			{ adopter_name: adopter_name },
-			{ adopter_email: email },
-			{ adopter_phone: phone },
-			{ adopter_country: country },
-			{ adopter_address: address },
-			{ dog_id: this.props.dogId },
-		];
+		const objectToEncrypt = {
+			adopter_name,
+			adoption_date,
+			email,
+			phone,
+			country,
+			dog_id: this.props.dogId,
+		};
+
+		let ciphertext = CryptoJS.AES.encrypt(
+			JSON.stringify(objectToEncrypt),
+			"my-secret-key@123"
+		).toString();
 
 		const newAdoptionObj = new FormData();
 		newAdoptionObj.append("contract_img", contract_img);
-		adoptionObj.forEach((i) => {
-			newAdoptionObj.append(Object.keys(i), Object.values(i));
-		});
+		newAdoptionObj.append("data", ciphertext);
 
+		return newAdoptionObj;
+	};
+
+	handleSubmit = () => {
+		const newAdoptionObj = this.makeAdoptionObj();
 		DogsApiService.insertAdoption(newAdoptionObj).then((res) =>
-			console.log(res)
+			this.props.updateDogInfo()
 		);
 	};
 	render(props) {
@@ -70,7 +77,6 @@ class AdoptModal extends Component {
 			adoption_date,
 			email,
 			phone,
-			address,
 			country,
 			comment,
 		} = this.state;
@@ -120,16 +126,6 @@ class AdoptModal extends Component {
 						/>
 					</label>
 
-					<label className='address adopt-label'>
-						Adopter Address
-						<input
-							className='adopt-input'
-							name='address'
-							value={address}
-							onChange={(e) => this.onChange(e)}
-							type='text'
-						/>
-					</label>
 					<label className='contract adopt-label'>
 						Contract Image
 						<input
