@@ -84,7 +84,6 @@ class DogInfo extends Component {
 			.then((res) => {
 				this.setState({
 					dogInfo: res,
-					openProfileImg: false,
 				});
 			})
 			.catch((err) => this.setState({ error: err }));

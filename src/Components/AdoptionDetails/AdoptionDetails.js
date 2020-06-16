@@ -1,6 +1,5 @@
 import React from "react";
 import "./AdoptionDetails.css";
-import DogsApiService from "../../services/api-service";
 
 export default function AdoptionDetails(props) {
 	return (
@@ -40,9 +39,6 @@ export default function AdoptionDetails(props) {
 					</div>
 				</li>
 			</ul>
-			<button className='delete' onClick={() => props.undoAdoption()}>
-				Undo Adoption
-			</button>
 		</div>
 	);
 }
