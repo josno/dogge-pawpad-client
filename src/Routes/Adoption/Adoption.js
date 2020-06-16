@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import "./Adoption.css";
 import DogsApiService from "../../services/api-service";
 import AdoptionDetails from "../../Components/AdoptionDetails/AdoptionDetails";
 import Modal from "react-responsive-modal";
@@ -102,9 +103,14 @@ class Adoption extends Component {
 				open={this.state.showImageModal}
 				onClose={() => this.toggleImageModal()}
 				center
+				className='adoption-modal-container'
 			>
-				<div>
-					<img src={this.state.adoptionInfo.contract_img_url} alt='contract' />
+				<div className='adoption-img-modal'>
+					<img
+						id='adoption-img'
+						src={this.state.adoptionInfo.contract_img_url}
+						alt='contract'
+					/>
 				</div>
 			</Modal>
 		);

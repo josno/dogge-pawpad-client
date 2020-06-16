@@ -1,7 +1,13 @@
 import React from "react";
 import "./AdoptionDetails.css";
+import moment from "moment";
 
 export default function AdoptionDetails(props) {
+	const formatDate = (date) => {
+		const formattedDate = moment(date).format("LL");
+		return formattedDate;
+	};
+
 	return (
 		<div className='adoption-grid-container'>
 			<h3 className='info-title'>Adoption Details: {props.dogName} </h3>
@@ -9,7 +15,7 @@ export default function AdoptionDetails(props) {
 				<li className='adopter-name align-details'>
 					Adoption Date
 					<div className='adopter-date-value value-align align-details'>
-						{props.info.adoption_name}
+						{formatDate(props.info.adoption_name)}
 					</div>
 				</li>
 				<li className='adopter-name align-details'>
