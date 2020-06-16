@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
 import DogsApiService from "../../services/api-service";
 import AdoptionDetails from "../../Components/AdoptionDetails/AdoptionDetails";
+const CryptoJS = require("crypto-js");
 
 class Adoption extends Component {
 	constructor(props) {
@@ -38,9 +38,11 @@ class Adoption extends Component {
 		const { dogId } = this.props.match.params;
 		DogsApiService.getAdoptionInfo(dogId)
 			.then((res) => {
+				let bytes = CryptoJS.AES.decrypt(res.data, "my-secret-key@123");
+				let data = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 				this.setState({
-					adoptionInfo: res,
-					dog_status: res.dog_status,
+					adoptionInfo: data,
+					dog_status: data.dog_status,
 				});
 			})
 			.catch((resErr) => {

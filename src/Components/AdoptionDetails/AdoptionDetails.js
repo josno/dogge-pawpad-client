@@ -34,12 +34,6 @@ export default function AdoptionDetails(props) {
 					</div>
 				</li>
 				<li className='adopter-name align-details'>
-					Adopter Address
-					<div className='adopter-address-value value-align  align-details'>
-						{props.info.adopter_address}
-					</div>
-				</li>
-				<li className='adopter-name align-details'>
 					Adopter Country
 					<div className='adopter-country-value value-align align-details'>
 						{props.info.adopter_country}
