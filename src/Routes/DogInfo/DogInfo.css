@@ -96,6 +96,10 @@
 	border: 2px solid;
 }
 
+.react-responsive-modal-modal {
+	border-radius: 15px;
+}
+
 @media (min-width: 800px) {
 	.details-grid-container {
 		height: 300px;
@@ -193,10 +197,6 @@
 	.shot-check-container {
 		display: flex;
 		justify-content: space-evenly;
-	}
-
-	.react-responsive-modal-modal {
-		border-radius: 15px;
 	}
 }
 @media (min-width: 1200px) {
