@@ -12,35 +12,35 @@ export default function AdoptionDetails(props) {
 		<div className='adoption-grid-container'>
 			<h3 className='info-title'>Adoption Details: {props.dogName} </h3>
 			<ul className='adoption-info-text adoption-details-grid-container'>
-				<li className='adopter-name align-details'>
-					Adoption Date
-					<div className='adopter-date-value value-align align-details'>
-						{formatDate(props.info.adoption_name)}
+				<li className='adoption-label align-details'>
+					Adoption Date:
+					<div className='adopter-date-value adoption-value value-align align-details'>
+						{formatDate(props.info.adoption_date)}
 					</div>
 				</li>
-				<li className='adopter-name align-details'>
-					Adopter Name
-					<div className='adopter-name-value value-align align-details'>
+				<li className='adoption-label align-details'>
+					Adopter Name:
+					<div className='adopter-name-value adoption-value value-align align-details'>
 						{props.info.adopter_name}
 					</div>
 				</li>
 
-				<li className='adopter-name align-details'>
-					Adopter Email
-					<div className='adopter-email-value value-align align-details'>
+				<li className='adoption-label align-details'>
+					Adopter Email:
+					<div className='adopter-email-value adoption-value value-align align-details'>
 						{props.info.adopter_email}
 					</div>
 				</li>
 
-				<li className='adopter-name align-details'>
-					Adopter Phone Number
-					<div className='adopter-phone-value value-align align-details'>
+				<li className='adoption-label align-details'>
+					Adopter Phone Number:
+					<div className='adopter-phone-value adoption-value value-align align-details'>
 						{props.info.adopter_phone}
 					</div>
 				</li>
-				<li className='adopter-name align-details'>
-					Adopter Country
-					<div className='adopter-country-value value-align align-details'>
+				<li className='adoption-label align-details'>
+					Adopter Country:
+					<div className='adopter-country-value adoption-value value-align align-details'>
 						{props.info.adopter_country}
 					</div>
 				</li>

@@ -31,7 +31,7 @@ class DogInfo extends Component {
 		this.handleDelete = this.handleDelete.bind(this);
 		this.handleArchive = this.handleArchive.bind(this);
 		this.updateDogImage = this.updateDogImage.bind(this);
-		this.updateDogInfo = this.updateDogInfo.bind(this);
+		this.handleDogAdoption = this.handleDogAdoption.bind(this);
 	}
 
 	formatDate(date) {
@@ -79,11 +79,12 @@ class DogInfo extends Component {
 			.catch((err) => this.setState({ error: "Can't archive dog." }));
 	};
 
-	updateDogInfo = () => {
+	handleDogAdoption = () => {
 		DogsApiService.getDogInfo(this.state.dogInfo.id)
 			.then((res) => {
 				this.setState({
 					dogInfo: res,
+					openAdopt: false,
 				});
 			})
 			.catch((err) => this.setState({ error: err }));
@@ -201,7 +202,10 @@ class DogInfo extends Component {
 					onClose={(e) => this.closeModal("openAdopt")}
 					center
 				>
-					<AdoptModal dogId={dogInfo.id} updateDogInfo={this.updateDogInfo} />
+					<AdoptModal
+						dogId={dogInfo.id}
+						updateDogInfo={this.handleDogAdoption}
+					/>
 				</Modal>
 			</>
 		);

@@ -71,11 +71,15 @@ class Adoption extends Component {
 				</Link>
 			</div>
 		) : (
-			<AdoptionDetails
-				info={this.state.adoptionInfo}
-				dogName={this.props.match.params.dogName}
-				undoAdoption={this.undoAdoption}
-			/>
+			<>
+				<AdoptionDetails
+					info={this.state.adoptionInfo}
+					dogName={this.props.match.params.dogName}
+					undoAdoption={this.undoAdoption}
+				/>
+				{this.renderImageButton()}
+				{this.renderUndoAdoptionButton()}
+			</>
 		);
 	};
 
@@ -120,8 +124,6 @@ class Adoption extends Component {
 		return (
 			<div className='wrapper'>
 				{this.renderDetails()}
-				{this.renderImageButton()}
-				{this.renderUndoAdoptionButton()}
 				{this.renderImageModal()}
 			</div>
 		);
