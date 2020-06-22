@@ -48,7 +48,6 @@ class DogDetailsView extends Component {
 		const { value } = e.target;
 		const curVal = this.state[value].value;
 		const mode = this.state[value].editMode;
-		// console.log(currVal);
 		this.setState({
 			[value]: {
 				value: curVal,

@@ -58,6 +58,10 @@
 		justify-content: center;
 		align-items: center;
 	}
+
+	.edit-shot-line {
+		width: 200px;
+	}
 }
 
 @media (min-width: 1000px) {

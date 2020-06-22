@@ -170,7 +170,7 @@
 		padding: 50px;
 		display: grid;
 		grid-template-columns: 1fr 1.1fr;
-		grid-template-rows: 1fr 0.8fr 1fr;
+		grid-template-rows: 400px 450px 1fr;
 		grid-template-areas: "dog-name nav-buttons" "basic-dog-details basic-dog-details" "shots-information shots-information";
 	}
 	.adoption-details {
@@ -188,6 +188,11 @@
 
 	.shots-information {
 		grid-area: shots-information;
+	}
+
+	.edit-shot-pencil {
+		margin: auto;
+		width: fit-content;
 	}
 
 	.nav-buttons {

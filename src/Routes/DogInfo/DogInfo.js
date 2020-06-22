@@ -7,9 +7,11 @@ import ArchiveModal from "../../Components/ArchiveModal/ArchiveModal";
 import ModalForm from "../../Components/ImgModalForm/ImgModalForm";
 
 import DogDetailsView from "../../Components/DogDetailsView/DogDetailsView";
+import ShotDetailsView from "../../Components/ShotDetailsView/ShotDetailsView";
 import PawPadContext from "../../PawPadContext.js";
 import DogsApiService from "../../services/api-service";
 import AdoptionDetails from "../../Components/AdoptionDetails/AdoptionDetails";
+import EditShots from "../../Components/EditShots/EditShots";
 
 import "./DogInfo.css";
 import moment from "moment";
@@ -23,15 +25,18 @@ class DogInfo extends Component {
 			openAdopt: false,
 			openArchive: false,
 			openProfileImg: false,
+			editShotMode: false,
 			error: null,
 		};
 		this.formatDate = this.formatDate.bind(this);
 		// this.renderSpayedNeutered = this.renderSpayedNeutered.bind(this);
-		this.renderShotsCompleted = this.renderShotsCompleted.bind(this);
+
+		// this.renderShotsCompleted = this.renderShotsCompleted.bind(this);
 		this.handleDelete = this.handleDelete.bind(this);
 		this.handleArchive = this.handleArchive.bind(this);
 		this.updateDogImage = this.updateDogImage.bind(this);
 		this.handleDogAdoption = this.handleDogAdoption.bind(this);
+		this.changeShotEditMode = this.changeShotEditMode.bind(this);
 	}
 
 	formatDate(date) {
@@ -55,6 +60,13 @@ class DogInfo extends Component {
 			DogsApiService.deleteNotesByDogId(this.props.match.params.dogId);
 			DogsApiService.deleteShotsByDogId(this.props.match.params.dogId);
 			this.props.history.push("/dogs-list");
+		});
+	};
+
+	changeShotEditMode = () => {
+		const mode = this.state.editShotMode;
+		this.setState({
+			editShotMode: !mode,
 		});
 	};
 
@@ -211,28 +223,6 @@ class DogInfo extends Component {
 		);
 	};
 
-	renderShotsCompleted(list) {
-		const check = list.map((i) => {
-			if (i.shot_iscompleted === false) {
-				return (
-					<li className='shot-checkbox' key={i.shot_name + "-one"}>
-						<span className='indicator-no'>&#10008; </span>
-						{i.shot_name}
-					</li>
-				);
-			}
-			return (
-				<li className='shot-checkbox' key={i.shot_name + "one"}>
-					<span className='indicator-yes'>&#10004; </span> {i.shot_name}
-					<span className='last-shot-text'>
-						Date Completed: {this.formatDate(i.shot_date)}
-					</span>
-				</li>
-			);
-		});
-		return check;
-	}
-
 	renderAdoptionDetails = (id) => {
 		return (
 			<div className='adoption-details box-flex'>
@@ -261,11 +251,25 @@ class DogInfo extends Component {
 		return <DogDetailsView dogId={props.dogId} />;
 	};
 
-	renderShots = (shotObj) => {
+	renderShots = (shots) => {
 		return (
 			<div className='shots-information box-flex'>
 				<h3 className='info-title'>Shots Completed</h3>
-				<ul className='dog-info-text shot-container'>{shotObj}</ul>
+				<button
+					className='edit-shot-pencil edit-pencil'
+					onClick={(e) => this.changeShotEditMode(e)}
+				>
+					&#9998;
+				</button>
+				{!this.state.editShotMode ? (
+					<>
+						<ul className='dog-info-text shot-container'>
+							<ShotDetailsView shots={shots} />
+						</ul>
+					</>
+				) : (
+					<EditShots dogId={this.props.match.params.dogId} />
+				)}
 			</div>
 		);
 	};
@@ -286,13 +290,10 @@ class DogInfo extends Component {
 	async componentDidMount() {
 		const { dogId } = this.props;
 		const res = await DogsApiService.getDogInfo(dogId);
-		const resShots = res.shotsCompleted.sort((a, b) =>
-			a.shot_name > b.shot_name ? 1 : -1
-		);
 
 		this.setState({
 			dogInfo: res,
-			shots: this.renderShotsCompleted(resShots),
+			shots: res.shotsCompleted,
 		});
 	}
 
