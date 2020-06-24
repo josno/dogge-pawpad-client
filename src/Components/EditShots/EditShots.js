@@ -102,16 +102,15 @@ class EditShots extends Component {
 		};
 
 		DogsApiService.updateDogShot(shot, id).then((response) =>
-			DogsApiService.getShots(this.props.dogId)
-				.then((shots) => {
-					shots.sort((a, b) => a.id - b.id);
-					return shots;
-				})
-				.then((sortedShots) =>
-					this.setState({
-						shots: sortedShots,
-					})
-				)
+			DogsApiService.getShots(this.props.dogId).then((shots) => {
+				const sortedShots = shots.sort((a, b) =>
+					a.shot_name > b.shot_name ? 1 : -1
+				);
+				console.log(sortedShots);
+				this.setState({
+					shots: sortedShots,
+				});
+			})
 		);
 	}
 
@@ -162,8 +161,14 @@ class EditShots extends Component {
 		};
 
 		DogsApiService.insertNewShot(shot).then((res) => {
+			const combinedShots = [...this.state.shots, res];
+			const sortedShots = combinedShots.sort((a, b) =>
+				a.shot_name > b.shot_name ? 1 : -1
+			);
+			console.log(sortedShots);
+
 			this.setState({
-				shots: [...this.state.shots, res],
+				shots: sortedShots,
 				newShot: {
 					value: "",
 					touched: false,
@@ -184,19 +189,17 @@ class EditShots extends Component {
 			shot_iscompleted: value === "false" ? true : false,
 		};
 
-		console.log(shot);
-
 		DogsApiService.updateDogShot(shot, shotId).then((response) =>
-			DogsApiService.getShots(this.props.dogId)
-				.then((shots) => {
-					shots.sort((a, b) => (a.shot_name > b.shot_name ? 1 : -1));
-					return shots;
-				})
-				.then((sortedShots) =>
-					this.setState({
-						shots: sortedShots,
-					})
-				)
+			DogsApiService.getShots(this.props.dogId).then((shots) => {
+				const sorted = shots.sort((a, b) =>
+					a.shot_name > b.shot_name ? 1 : -1
+				);
+				console.log(sorted);
+
+				this.setState({
+					shots: sorted,
+				});
+			})
 		);
 	}
 
