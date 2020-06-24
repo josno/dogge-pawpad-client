@@ -67,9 +67,18 @@ class AdoptModal extends Component {
 
 	handleSubmit = () => {
 		const newAdoptionObj = this.makeAdoptionObj();
-		DogsApiService.insertAdoption(newAdoptionObj).then((res) =>
-			this.props.updateDogInfo()
-		);
+
+		const newNote = {
+			date_created: new Date(),
+			notes: this.state.comment,
+			type_of_note: "adoption",
+			dog_id: this.props.dogId,
+		};
+		console.log(newNote);
+		Promise.all[
+			(DogsApiService.insertAdoption(newAdoptionObj),
+			DogsApiService.insertNewNote(newNote))
+		].then((res) => this.props.updateDogInfo());
 	};
 	render(props) {
 		const {

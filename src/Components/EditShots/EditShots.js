@@ -106,7 +106,7 @@ class EditShots extends Component {
 				const sortedShots = shots.sort((a, b) =>
 					a.shot_name > b.shot_name ? 1 : -1
 				);
-				console.log(sortedShots);
+
 				this.setState({
 					shots: sortedShots,
 				});
@@ -165,7 +165,6 @@ class EditShots extends Component {
 			const sortedShots = combinedShots.sort((a, b) =>
 				a.shot_name > b.shot_name ? 1 : -1
 			);
-			console.log(sortedShots);
 
 			this.setState({
 				shots: sortedShots,
@@ -194,7 +193,6 @@ class EditShots extends Component {
 				const sorted = shots.sort((a, b) =>
 					a.shot_name > b.shot_name ? 1 : -1
 				);
-				console.log(sorted);
 
 				this.setState({
 					shots: sorted,
