@@ -189,7 +189,7 @@ class EditShots extends Component {
 		DogsApiService.updateDogShot(shot, shotId).then((response) =>
 			DogsApiService.getShots(this.props.dogId)
 				.then((shots) => {
-					shots.sort((a, b) => a.id - b.id);
+					shots.sort((a, b) => (a.shot_name > b.shot_name ? 1 : -1));
 					return shots;
 				})
 				.then((sortedShots) =>
@@ -218,7 +218,7 @@ class EditShots extends Component {
 			.then((response) => {
 				DogsApiService.getShots(this.props.dogId)
 					.then((shots) => {
-						shots.sort((a, b) => a.id - b.id);
+						shots.sort((a, b) => (a.shot_name > b.shot_name ? 1 : -1));
 						return shots;
 					})
 					.then((sortedShots) =>
@@ -247,8 +247,8 @@ class EditShots extends Component {
 		const { shots } = this.state;
 
 		return (
-			<>
-				<ul>
+			<div>
+				<ul className='edit-shots-container'>
 					{shots !== undefined && this.renderMandatoryShots(shots)}
 
 					{shots !== undefined && this.renderOptionShots(shots)}
@@ -309,7 +309,7 @@ class EditShots extends Component {
 						</button>
 					</li>
 				)}
-			</>
+			</div>
 		);
 	}
 }
