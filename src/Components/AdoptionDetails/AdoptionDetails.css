@@ -22,21 +22,3 @@
 .adoption-value {
 	font-size: 1rem;
 }
-
-/* @media (min-width: 800px) {
-	.adoption-info-text {
-		height: 300px;
-		background-clip: content-box;
-		display: grid;
-		grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-		grid-template-columns: 0.9fr 1fr;
-		grid-template-areas: "adoption-date adopter-date-value" "";
-	}
-
-	.adoption-date {
-		grid-area: adoption-date;
-	}
-	.adopter-date-value {
-		grid-area: adopter-date-value;
-	}
-} */
