@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./AdoptModal.css";
 import DogsApiService from "../../services/api-service";
-
+import config from "../../config";
 const CryptoJS = require("crypto-js");
 
 class AdoptModal extends Component {
@@ -55,7 +55,7 @@ class AdoptModal extends Component {
 
 		let ciphertext = CryptoJS.AES.encrypt(
 			JSON.stringify(objectToEncrypt),
-			"my-secret-key@123"
+			config.SECRET
 		).toString();
 
 		const newAdoptionObj = new FormData();

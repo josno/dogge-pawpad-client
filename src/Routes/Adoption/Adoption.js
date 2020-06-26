@@ -4,6 +4,7 @@ import "./Adoption.css";
 import DogsApiService from "../../services/api-service";
 import AdoptionDetails from "../../Components/AdoptionDetails/AdoptionDetails";
 import Modal from "react-responsive-modal";
+import config from "../../config";
 const CryptoJS = require("crypto-js");
 
 class Adoption extends Component {
@@ -12,6 +13,7 @@ class Adoption extends Component {
 		this.state = {
 			adoptionInfo: "",
 			showImageModal: false,
+			showUploadContract: false,
 			error: null,
 		};
 	}
@@ -20,6 +22,13 @@ class Adoption extends Component {
 		const { showImageModal } = this.state;
 		this.setState({
 			showImageModal: !showImageModal,
+		});
+	};
+
+	toggleUploadContract = () => {
+		const { showUploadContract } = this.state;
+		this.setState({
+			showUploadContract: !showUploadContract,
 		});
 	};
 
@@ -47,7 +56,7 @@ class Adoption extends Component {
 		const { dogId } = this.props.match.params;
 		DogsApiService.getAdoptionInfo(dogId)
 			.then((res) => {
-				let bytes = CryptoJS.AES.decrypt(res.data, "my-secret-key@123");
+				let bytes = CryptoJS.AES.decrypt(res.data, config.SECRET);
 				let data = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 				console.log(data.contract_img_url);
 				this.setState({
