@@ -32,6 +32,7 @@
 	object-position: bottom 0px right 30px;
 	width: 300px;
 	height: 200px;
+	object-fit: cover;
 }
 
 .options {

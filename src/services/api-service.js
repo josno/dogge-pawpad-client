@@ -98,7 +98,6 @@ const DogsApiService = {
 	uploadDogImg(data, tagNumber) {
 		const updatedDog = {
 			method: "PUT",
-			mode: "no-cors",
 			headers: {
 				Authorization: `Bearer ${TokenService.getAuthToken()}`,
 			},
@@ -186,6 +185,46 @@ const DogsApiService = {
 			},
 			body: JSON.stringify(dogId),
 		});
+	},
+	archiveDog(dogId, date) {
+		return fetch(`${config.API_ENDPOINT}/dogs/${dogId}/archive`, {
+			method: "PATCH",
+			headers: {
+				authorization: `Bearer ${TokenService.getAuthToken()}`,
+			},
+			body: JSON.stringify(date),
+		}).then((res) =>
+			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+		);
+	},
+	insertAdoption(obj) {
+		return fetch(`${config.API_ENDPOINT}/adoption`, {
+			method: "POST",
+			headers: {
+				authorization: `Bearer ${TokenService.getAuthToken()}`,
+			},
+			body: obj,
+		}).then((res) =>
+			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+		);
+	},
+	deleteAdoption(dogId) {
+		return fetch(`${config.API_ENDPOINT}/adoption/${dogId}`, {
+			method: "DELETE",
+			headers: {
+				authorization: `Bearer ${TokenService.getAuthToken()}`,
+			},
+		});
+	},
+	getAdoptionInfo(dogId) {
+		return fetch(`${config.API_ENDPOINT}/adoption/${dogId}`, {
+			method: "GET",
+			headers: {
+				authorization: `Bearer ${TokenService.getAuthToken()}`,
+			},
+		}).then((res) =>
+			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+		);
 	},
 };
 

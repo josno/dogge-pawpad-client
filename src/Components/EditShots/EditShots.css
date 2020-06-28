@@ -51,18 +51,17 @@
 	display: block;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 500px) {
 	.update-shot-date-box {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 	}
-}
 
-@media (min-width: 1000px) {
 	.edit-shot-line {
-		flex-wrap: wrap;
+		margin: auto;
+		max-width: 500px;
 	}
 }
 

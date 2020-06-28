@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import './DogListItem.css';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import "./DogListItem.css";
 
 class DogListItem extends Component {
 	constructor(props) {
@@ -11,16 +11,18 @@ class DogListItem extends Component {
 		return (
 			<div>
 				<ul>
-					<li className="dog-item">
+					<li className='dog-item'>
 						<Link
-							className="dogs-list-button"
+							className='dogs-list-button'
 							to={`/dog-info/${this.props.id}`}
 						>
-							<div className="dog-img-container">
-								<img alt="Winky Doggo" src={this.props.img} />
-								<p className="dogs-list-name">
-									{this.props.name}
-								</p>
+							<div className='dog-img-container'>
+								<img
+									className='dog-list-img'
+									alt='Winky Doggo'
+									src={this.props.img}
+								/>
+								<p className='dogs-list-name'>{this.props.name}</p>
 							</div>
 						</Link>
 					</li>

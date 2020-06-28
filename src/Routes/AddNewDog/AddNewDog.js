@@ -202,6 +202,7 @@ class AddNewDog extends Component {
 	}
 
 	render() {
+		console.log(this.state.arrivalDate);
 		let imgStyle = { display: "none" };
 
 		if (this.state.profileImgPreview.length > 0) {

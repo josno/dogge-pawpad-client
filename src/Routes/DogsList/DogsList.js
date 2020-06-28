@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import DogListItem from '../../Components/DogListItem/DogListItem';
-import DogsApiService from '../../services/api-service';
-import './DogsList.css';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import DogListItem from "../../Components/DogListItem/DogListItem";
+import DogsApiService from "../../services/api-service";
+import "./DogsList.css";
 
 class DogList extends Component {
 	constructor(props) {
@@ -10,71 +10,93 @@ class DogList extends Component {
 		this.state = {
 			error: null,
 			dogs: [],
-			dogSearch: ''
+			dogSearch: "",
+			view: "Current",
 		};
 		this.handleChange = this.handleChange.bind(this);
 	}
 
-	handleChange = e => {
+	handleChange = (e) => {
 		const { name, value } = e.target;
 		this.setState({
-			[name]: value
+			[name]: value,
 		});
 	};
 
 	componentDidMount() {
-		DogsApiService.getDogs().then(responsejson => {
+		DogsApiService.getDogs().then((responsejson) => {
 			if (responsejson.length === 0) {
 				this.setState({
-					error: 'Something went wrong, try again'
+					error: "Something went wrong, try again",
 				});
 			}
 
 			this.setState({
-				dogs: [...responsejson]
+				dogs: [...responsejson],
 			});
 		});
 	}
 
+	setFilter = (e) => {
+		this.setState({
+			view: e.target.value,
+		});
+	};
+
 	render() {
-		let filteredDogs = this.state.dogs.filter(d => {
+		const { view } = this.state;
+		let filteredDogs = this.state.dogs.filter((d) => {
 			return (
-				d.dog_name
-					.toLowerCase()
-					.indexOf(this.state.dogSearch.toLowerCase()) !== -1
+				d.dog_name.toLowerCase().indexOf(this.state.dogSearch.toLowerCase()) !==
+				-1
 			);
 		});
 
 		return (
-			<main className="dogslist">
-				<section className="list-container">
-					<h1 className="dogs-list-title"> Current Dogs </h1>
+			<main className='dogslist'>
+				<section className='list-container'>
+					<h1 className='dogs-list-title'> Current Dogs </h1>
 					<div>
-						<label className="search-box">
-							Search By Dog Name{' '}
+						<label className='search-box'>
+							Search By Dog Name{" "}
 							<input
-								className="search-dog"
-								type="text"
-								name="dogSearch"
+								className='search-dog'
+								type='text'
+								name='dogSearch'
 								value={this.state.dogSearch}
 								onChange={this.handleChange}
 							/>
 						</label>
 					</div>
-					<div className="dogs-list">
-						{filteredDogs.map(d => (
-							<DogListItem
-								name={d.dog_name}
-								id={d.id}
-								key={d.id}
-								img={d.profile_img}
-							/>
-						))}
+					<div>
+						<ul className='filter-links'>
+							{["Current", "Adopted", "Archived"].map((i) => (
+								<li>
+									<button value={i} onClick={(e) => this.setFilter(e)}>
+										{i}
+									</button>
+								</li>
+							))}
+						</ul>
+					</div>
+					<div className='dogs-list'>
+						{filteredDogs.map((d) => {
+							return (
+								d.dog_status === view && (
+									<DogListItem
+										name={d.dog_name}
+										id={d.id}
+										key={d.id}
+										img={d.profile_img}
+									/>
+								)
+							);
+						})}
 					</div>
 				</section>
 
-				<button className="add-a-dog-button add-dog">
-					<Link className="add-dog-link" to={'/add-new-dog'}>
+				<button className='add-a-dog-button add-dog'>
+					<Link className='add-dog-link' to={"/add-new-dog"}>
 						Add Dog
 					</Link>
 				</button>
