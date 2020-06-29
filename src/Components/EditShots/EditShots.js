@@ -17,7 +17,7 @@ class EditShots extends Component {
 			},
 			newShotDate: "",
 			requiredShots: [
-				"Rabies I",
+				"Rabies",
 				"Rabies Yearly Booster",
 				"Complex I",
 				"Complex II",
