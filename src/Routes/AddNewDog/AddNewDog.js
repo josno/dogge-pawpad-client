@@ -32,14 +32,6 @@ class AddNewDog extends Component {
 			arrivalDate: null,
 			error: null,
 		};
-		this.handleImgChange = this.handleImgChange.bind(this);
-		this.handleCheckbox = this.handleCheckbox.bind(this);
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.setShotsObject = this.setShotsObject.bind(this);
-		this.setDogObject = this.setDogObject.bind(this);
-		this.setFormData = this.setFormData.bind(this);
-		this.setLoading = this.setLoading.bind(this);
 	}
 
 	handleImgChange = (e) => {
@@ -229,7 +221,7 @@ class AddNewDog extends Component {
 			<main className='add-dog-container'>
 				<h1 className='form-title'>Add New Dog</h1>
 
-				<form className='form-container' onSubmit={this.handleSubmit}>
+				<form className='form-container' onSubmit={(e) => this.handleSubmit(e)}>
 					<div className='field-item'>
 						<label htmlFor='name' className='bold'>
 							Name
@@ -257,7 +249,7 @@ class AddNewDog extends Component {
 							className='block'
 							type='file'
 							name='profileImg'
-							onChange={this.handleImgChange}
+							onChange={(e) => this.handleImgChange(e)}
 							accept='image/*'
 							required
 						/>
@@ -276,7 +268,7 @@ class AddNewDog extends Component {
 								type='radio'
 								name='gender'
 								value='Male'
-								onChange={this.handleChange}
+								onChange={(e) => this.handleChange(e)}
 								id='male'
 								required
 							/>
@@ -288,7 +280,7 @@ class AddNewDog extends Component {
 								type='radio'
 								name='gender'
 								value='Female'
-								onChange={this.handleChange}
+								onChange={(e) => this.handleChange(e)}
 								id='female'
 							/>
 							Female
@@ -330,7 +322,7 @@ class AddNewDog extends Component {
 						id='tag-number'
 						type='text'
 						name='tagNumber'
-						onChange={this.handleChange}
+						onChange={(e) => this.handleChange(e)}
 					/>
 
 					<label htmlFor='microchip' className='bold'>
@@ -341,7 +333,7 @@ class AddNewDog extends Component {
 						id='microchip'
 						type='text'
 						name='microchip'
-						onChange={this.handleChange}
+						onChange={(e) => this.handleChange(e)}
 					/>
 
 					<fieldset className='field-item'>
@@ -351,7 +343,7 @@ class AddNewDog extends Component {
 								id='yes'
 								type='radio'
 								name='spayedNeutered'
-								onChange={this.handleCheckbox}
+								onChange={(e) => this.handleCheckbox(e)}
 								required
 							/>
 							Yes
@@ -362,7 +354,7 @@ class AddNewDog extends Component {
 								id='no'
 								type='radio'
 								name='spayedNeutered'
-								onChange={this.handleCheckbox}
+								onChange={(e) => this.handleCheckbox(e)}
 							/>
 							No
 						</label>
@@ -381,14 +373,6 @@ class AddNewDog extends Component {
 								name='rabies'
 								className='shot-date-input'
 							/>
-							{/* <input
-								className='shot-date-input'
-								id='rabies'
-								type='date'
-								name='rabies'
-								value={this.state.rabies}
-								onChange={this.handleChange}
-							/> */}
 						</label>
 
 						<label htmlFor='rabiesBooster'>
@@ -403,14 +387,6 @@ class AddNewDog extends Component {
 								name='rabiesBooster'
 								className='shot-date-input'
 							/>
-							{/* <input
-								className='shot-date-input'
-								id='rabiesBooster'
-								type='date'
-								name='rabiesBooster'
-								value={this.state.rabiesBooster}
-								onChange={this.handleChange}
-							/> */}
 						</label>
 
 						<label htmlFor='complexOne'>
@@ -423,14 +399,6 @@ class AddNewDog extends Component {
 								name='complexOne'
 								className='shot-date-input'
 							/>
-							{/* <input
-								className='shot-date-input'
-								id='complexOne'
-								type='date'
-								name='complexOne'
-								value={this.state.complexOne}
-								onChange={this.handleChange}
-							/> */}
 						</label>
 
 						<label htmlFor='complexTwo'>
@@ -443,14 +411,6 @@ class AddNewDog extends Component {
 								name='complexTwo'
 								className='shot-date-input'
 							/>
-							{/* <input
-								className='shot-date-input'
-								id='complexTwo'
-								type='date'
-								name='complexTwo'
-								value={this.state.complexTwo}
-								onChange={this.handleChange}
-							/> */}
 						</label>
 
 						<label htmlFor='complexBooster'>
@@ -465,14 +425,6 @@ class AddNewDog extends Component {
 								name='complexBooster'
 								className='shot-date-input'
 							/>
-							{/* <input
-								className='shot-date-input'
-								id='complexBooster'
-								type='date'
-								name='complexBooster'
-								value={this.state.complexBooster}
-								onChange={this.handleChange}
-							/> */}
 						</label>
 					</fieldset>
 
