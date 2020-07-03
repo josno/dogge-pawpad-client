@@ -70,8 +70,8 @@ class DogList extends Component {
 					</div>
 					<div>
 						<ul className='filter-links'>
-							{["Current", "Adopted", "Archived"].map((i) => (
-								<li>
+							{["Current", "Adopted", "Archived"].map((i, index) => (
+								<li key={index}>
 									<button value={i} onClick={(e) => this.setFilter(e)}>
 										{i}
 									</button>
