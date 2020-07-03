@@ -38,6 +38,10 @@
 	bottom: 50vh;
 }
 
+.img-preview {
+	width: 250px;
+}
+
 .loader {
 	border: 16px solid gray;
 	border-radius: 50%;
