@@ -7,7 +7,6 @@ import ValidationError from "../../Components/ValidationError/ValidationError";
 import Validate from "../../Utils/validation";
 
 import DatePicker from "react-datepicker";
-
 import "react-datepicker/dist/react-datepicker.css";
 
 class AddNewDog extends Component {

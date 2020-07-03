@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import DogsApiService from "../../services/api-service";
 import "./DogDetailsView.css";
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 import moment from "moment";
 
 class DogDetailsView extends Component {
@@ -17,22 +21,38 @@ class DogDetailsView extends Component {
 		};
 	}
 
+	handleSpayedNeuteredCheckbox = () => {
+		const { editMode } = this.state.spayedneutered;
+		this.setState((prevState) => ({
+			spayedneutered: { editMode, value: !prevState.spayedneutered.value },
+		}));
+	};
+
 	formatDate(date) {
 		const formattedDate = moment(date).format("LL");
 		return formattedDate;
 	}
 
+	handleDateChange = (name, date) => {
+		const curVal = this.state[name];
+		this.setState({
+			[name]: { ...curVal, newVal: date },
+		});
+	};
+
 	renderSpayedNeutered(boolean) {
 		if (boolean) {
 			return (
 				<>
-					<span className='indicator-yes'>&#10004; </span> Spayed/Neutered
+					{" "}
+					<span className='indicator-yes'>&#10004; </span>
 				</>
 			);
 		} else {
 			return (
 				<>
-					<span className='indicator-no'> &#10008; </span> Spayed/Neutered
+					{" "}
+					<span className='indicator-no'> &#10008; </span>
 				</>
 			);
 		}
@@ -83,6 +103,24 @@ class DogDetailsView extends Component {
 					[value]: {
 						value: newStateValue,
 						editMode: !currMode,
+					},
+				})
+			//set error handling
+		);
+	};
+
+	updateSpayedNeutered = () => {
+		const newObj = {
+			spayedneutered: this.state.spayedneutered.value,
+			dog_name: this.state.dog_name,
+		};
+
+		DogsApiService.updateDog(newObj, this.props.dogId).then(
+			(response) =>
+				this.setState({
+					spayedneutered: {
+						value: this.state.spayedneutered.value,
+						editMode: !this.state.spayedneutered.editMode,
 					},
 				})
 			//set error handling
@@ -159,13 +197,35 @@ class DogDetailsView extends Component {
 						Gender:
 						{gender.editMode === true ? (
 							<div className='gender-value align-details'>
-								<input
+								<label htmlFor='male'>
+									<input
+										type='radio'
+										name='gender'
+										value='Male'
+										onChange={(e) => this.handleChange(e)}
+										id='male'
+										required
+									/>
+									Male
+								</label>
+
+								<label htmlFor='female'>
+									<input
+										type='radio'
+										name='gender'
+										value='Female'
+										onChange={(e) => this.handleChange(e)}
+										id='female'
+									/>
+									Female
+								</label>
+								{/* <input
 									className='fade-in edit-input'
 									type='text'
 									name='gender'
 									defaultValue={gender.value}
 									onChange={(e) => this.handleChange(e)}
-								/>
+								/> */}
 								<button value='gender' onClick={(e) => this.changeEditMode(e)}>
 									&#10008;{" "}
 								</button>
@@ -190,13 +250,14 @@ class DogDetailsView extends Component {
 						Age:
 						{age.editMode === true ? (
 							<div className='age-value align-details'>
-								<input
+								<DatePicker
+									dateFormat='dd/MM/yyyy'
+									selected={this.state.age.newVal}
+									placeholderText='dd/mm/yyyy'
+									onChange={(date) => this.handleDateChange("age", date)}
 									className='fade-in edit-input'
-									type='text'
-									name='age'
-									defaultValue={age.value}
-									onChange={(e) => this.handleChange(e)}
 								/>
+
 								<button value='age' onClick={(e) => this.changeEditMode(e)}>
 									&#10008;{" "}
 								</button>
@@ -206,7 +267,8 @@ class DogDetailsView extends Component {
 							</div>
 						) : (
 							<div className='age-value align-details'>
-								{age.value}
+								{this.formatDate(age.value)}
+
 								<button
 									className='edit-pencil'
 									value='age'
@@ -221,13 +283,22 @@ class DogDetailsView extends Component {
 						Arrival Date:
 						{arrival_date.editMode === true ? (
 							<div className='arrival_date-value align-details'>
-								<input
+								<DatePicker
+									dateFormat='dd/MM/yyyy'
+									selected={this.state.arrival_date.newVal}
+									placeholderText='dd/mm/yyyy'
+									onChange={(date) =>
+										this.handleDateChange("arrival_date", date)
+									}
+									className='fade-in edit-input'
+								/>
+								{/* <input
 									className='fade-in edit-input'
 									type='date'
 									name='arrival_date'
 									defaultValue={this.formatEditDate(arrival_date.value)}
 									onChange={(e) => this.handleChange(e)}
-								/>
+								/> */}
 								<button
 									value='arrival_date'
 									onClick={(e) => this.changeEditMode(e)}
@@ -325,15 +396,36 @@ class DogDetailsView extends Component {
 					</li>
 
 					<li className='spayedneutered align-details'>
+						Spayed/Neutered:
 						{spayedneutered.editMode === true ? (
 							<div className='spayedneutered-value align-details'>
-								<input
+								<label htmlFor='yes'>
+									<input
+										id='yes'
+										type='radio'
+										name='spayedneutered'
+										onChange={(e) => this.handleSpayedNeuteredCheckbox(e)}
+										required
+									/>
+									Yes
+								</label>
+
+								<label htmlFor='no'>
+									<input
+										id='no'
+										type='radio'
+										name='spayedneutered'
+										onChange={(e) => this.handleSpayedNeuteredCheckbox(e)}
+									/>
+									No
+								</label>
+								{/* <input
 									className='fade-in edit-input'
 									type='text'
 									name='spayedneutered'
 									defaultValue={spayedneutered.value}
 									onChange={(e) => this.handleChange(e)}
-								/>
+								/> */}
 								<button
 									value='spayedneutered'
 									onClick={(e) => this.changeEditMode(e)}
