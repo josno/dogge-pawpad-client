@@ -6,6 +6,10 @@ import "./AddNewDog.css";
 import ValidationError from "../../Components/ValidationError/ValidationError";
 import Validate from "../../Utils/validation";
 
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
+
 class AddNewDog extends Component {
 	static contextType = PawPadContext;
 	constructor(props) {
@@ -24,7 +28,7 @@ class AddNewDog extends Component {
 			tagNumber: null,
 			gender: null,
 			loading: false,
-			age: { value: "", touched: false },
+			age: { value: null, touched: false },
 			arrivalDate: null,
 			error: null,
 		};
@@ -52,10 +56,20 @@ class AddNewDog extends Component {
 		});
 	};
 
-	updateAge(str) {
-		const age = str.trim();
+	stringifyDate = (date) => {
+		const event = new Date(`${date}`);
+		return JSON.stringify(event).slice(1, 11);
+	};
+
+	handleDateChange = (date) => {
 		this.setState({
-			age: { value: age, touched: true },
+			arrivalDate: date,
+		});
+	};
+
+	updateAge(date) {
+		this.setState({
+			age: { value: date, touched: true },
 		});
 	}
 
@@ -131,14 +145,16 @@ class AddNewDog extends Component {
 		age,
 		dogName
 	) => {
+		const arrivalDateString = this.stringifyDate(arrivalDate);
+		const ageDateString = this.stringifyDate(age);
 		const newDog = [
 			{ dog_name: dogName },
 			{ spayedneutered: spayedNeutered },
 			{ gender: gender },
 			{ microchip: microchip },
 			{ tag_number: tagNumber },
-			{ age: age },
-			{ arrival_date: arrivalDate },
+			{ age: ageDateString },
+			{ arrival_date: arrivalDateString },
 		];
 
 		return newDog;
@@ -284,7 +300,19 @@ class AddNewDog extends Component {
 					<label htmlFor='estimated-age' className='bold'>
 						Estimated Birthdate
 					</label>
-					<input
+					<DatePicker
+						dateFormat='dd/MM/yyyy'
+						selected={this.state.age.value}
+						onChange={(e) => this.updateAge(e)}
+						placeholderText='Click to select a date'
+						id='arrival'
+						className='block'
+						showYearDropdown
+						dateFormatCalendar='MMMM'
+						yearDropdownItemNumber={5}
+						scrollableYearDropdown
+					/>
+					{/* <input
 						className='block'
 						id='age'
 						type='text'
@@ -292,19 +320,19 @@ class AddNewDog extends Component {
 						placeholder='example: 12/14/2019 or 12/xx/2019'
 						onChange={(e) => this.updateAge(e.target.value)}
 						required
-					/>
+					/> */}
 					<label htmlFor='arrival' className='bold'>
 						Estimated Arrival
 					</label>
-					<input
-						className='block'
-						id='arrival'
-						type='date'
-						name='arrivalDate'
-						onChange={this.handleChange}
-						required
-					/>
 
+					<DatePicker
+						dateFormat='dd/MM/yyyy'
+						selected={this.state.arrivalDate}
+						placeholderText='Click to select a date'
+						onChange={(e) => this.handleDateChange(e)}
+						id='arrival'
+						className='block'
+					/>
 					<label htmlFor='tag-number' className='bold'>
 						Tag Number
 					</label>
