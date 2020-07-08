@@ -23,11 +23,10 @@ class Notes extends Component {
 		this.handleTextChange = this.handleTextChange.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		// this.handleDelete = this.handleDelete.bind(this);
 	}
 
 	formatDate(date) {
-		const formattedDate = moment(date).format("MM/DD/YYYY");
+		const formattedDate = moment(date).format("DD/MM/YYYY");
 		return formattedDate;
 	}
 
