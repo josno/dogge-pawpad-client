@@ -29,8 +29,12 @@ class DogDetailsView extends Component {
 	};
 
 	formatDate(date) {
-		const formattedDate = moment(date).format("LL");
-		return formattedDate;
+		let formattedDate = moment(date).format("LL");
+		if (formattedDate === "Invalid date") {
+			return moment(date, "DD-MM-YYYY").format("LL");
+		} else {
+			return formattedDate;
+		}
 	}
 
 	handleDateChange = (name, date) => {
@@ -129,12 +133,6 @@ class DogDetailsView extends Component {
 			//set error handling
 		);
 	};
-
-	// formatEditDate = (date) => {
-	// 	const formattedDate = moment(date).format("YYYY-MM-DD");
-
-	// 	return formattedDate;
-	// };
 
 	renderDetails = (str) => {
 		return str.editMode === true ? (
@@ -243,7 +241,7 @@ class DogDetailsView extends Component {
 						)}
 					</li>
 					<li className='age align-details'>
-						Age:
+						Birthdate:
 						{age.editMode === true ? (
 							<div className='age-value align-details'>
 								<DatePicker
