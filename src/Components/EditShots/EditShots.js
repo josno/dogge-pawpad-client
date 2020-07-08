@@ -40,15 +40,7 @@ class EditShots extends Component {
 	}
 
 	handleUpdateDateChange = (shotName, date, id) => {
-		// const { shots } = this.state;
 		const dateString = moment(date).format("YYYY-MM-DD");
-
-		// const updatedShots = shots.map((shot) => {
-		// 	if (shot.id === id) {
-		// 		shot.shot_date = dateString;
-		// 	}
-		// 	return shot;
-		// });
 
 		const shot = {
 			shot_name: shotName,
@@ -56,10 +48,6 @@ class EditShots extends Component {
 			id: id,
 			shot_iscompleted: true,
 		};
-
-		// this.setState({
-		// 	shots: updatedShots,
-		// });
 
 		DogsApiService.updateDogShot(shot, id).then((response) =>
 			DogsApiService.getShots(this.props.dogId).then((shots) => {
@@ -72,8 +60,6 @@ class EditShots extends Component {
 				});
 			})
 		);
-
-		// this.handleUpdateShotDate(shotName, id);
 	};
 
 	makeDate = (date) => {
@@ -83,6 +69,12 @@ class EditShots extends Component {
 			return new Date(date);
 		}
 	};
+
+	handleNewShotDateChange(date) {
+		this.setState({
+			newShotDate: date,
+		});
+	}
 
 	renderMandatoryShots(shotsArray) {
 		const { requiredShots } = this.state;
@@ -116,31 +108,6 @@ class EditShots extends Component {
 				</label>
 			</li>
 		));
-	}
-
-	handleUpdateShotDate(shotName, id) {
-		const dateString = moment(this.state.shots[id].shot_date).format(
-			"YYYY-MM-DD"
-		);
-
-		const shot = {
-			shot_name: shotName,
-			shot_date: dateString,
-			id: id,
-			shot_iscompleted: true,
-		};
-
-		DogsApiService.updateDogShot(shot, id).then((response) =>
-			DogsApiService.getShots(this.props.dogId).then((shots) => {
-				const sortedShots = shots.sort((a, b) =>
-					a.shot_name > b.shot_name ? 1 : -1
-				);
-
-				this.setState({
-					shots: sortedShots,
-				});
-			})
-		);
 	}
 
 	renderOptionShots(shotsArray) {
@@ -182,8 +149,9 @@ class EditShots extends Component {
 	}
 
 	handleSubmitNewShot() {
+		const dateString = moment(this.state.newShotDate).format("YYYY-MM-DD");
 		const shot = {
-			shot_date: this.state.newShotDate,
+			shot_date: dateString,
 			shot_name: this.state.newShot.value,
 			shot_iscompleted: true,
 			dog_id: this.props.dogId,
@@ -297,14 +265,14 @@ class EditShots extends Component {
 							required
 						/>
 
-						<input
+						<DatePicker
+							dateFormat='dd/MM/yyyy'
+							placeholderText='Pick A Date'
+							selected={this.state.newShotDate}
 							className='edit-shot-date-input'
-							type='date'
-							name='newShotDate'
-							onChange={this.handleDateChange}
-							min='2018-01-01'
-							max='2030-12-31'
+							onChange={(date) => this.handleNewShotDateChange(date)}
 						/>
+
 						{this.state.newShot.touched && (
 							<ValidationError
 								message={Validate.validateShotName(this.state.newShot.value)}
