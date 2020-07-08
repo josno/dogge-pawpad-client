@@ -18,10 +18,6 @@ class EditShots extends Component {
 				value: "",
 				touched: false,
 			},
-			// requiredShotInput: {
-			// 	shot_name: null,
-			// 	shot_date: null,
-			// },
 			newShotDate: "",
 			requiredShots: [
 				"Rabies",
@@ -40,13 +36,52 @@ class EditShots extends Component {
 		this.handleSubmitNewShot = this.handleSubmitNewShot.bind(this);
 		this.deleteShot = this.deleteShot.bind(this);
 		this.formatDate = this.formatDate.bind(this);
-		this.handleUpdateShotDate = this.handleUpdateShotDate.bind(this);
+		this.makeDate = this.makeDate.bind(this);
 	}
 
-	handleUpdateDateChange = (shotName, date) => {
-		this.setState({
-			[shotName]: date,
-		});
+	handleUpdateDateChange = (shotName, date, id) => {
+		// const { shots } = this.state;
+		const dateString = moment(date).format("YYYY-MM-DD");
+
+		// const updatedShots = shots.map((shot) => {
+		// 	if (shot.id === id) {
+		// 		shot.shot_date = dateString;
+		// 	}
+		// 	return shot;
+		// });
+
+		const shot = {
+			shot_name: shotName,
+			shot_date: dateString,
+			id: id,
+			shot_iscompleted: true,
+		};
+
+		// this.setState({
+		// 	shots: updatedShots,
+		// });
+
+		DogsApiService.updateDogShot(shot, id).then((response) =>
+			DogsApiService.getShots(this.props.dogId).then((shots) => {
+				const sortedShots = shots.sort((a, b) =>
+					a.shot_name > b.shot_name ? 1 : -1
+				);
+
+				this.setState({
+					shots: sortedShots,
+				});
+			})
+		);
+
+		// this.handleUpdateShotDate(shotName, id);
+	};
+
+	makeDate = (date) => {
+		if (!date) {
+			return new Date();
+		} else {
+			return new Date(date);
+		}
 	};
 
 	renderMandatoryShots(shotsArray) {
@@ -56,7 +91,7 @@ class EditShots extends Component {
 			requiredShots.some((b) => a.shot_name === b)
 		);
 
-		return shotsToMap.map((i) => (
+		return shotsToMap.map((i, index) => (
 			<li className='edit-shot-line' key={i.id}>
 				<label htmlFor={i.id}>
 					<input
@@ -72,39 +107,25 @@ class EditShots extends Component {
 					<span className='shot-date-text'>{this.formatDate(i.shot_date)}</span>
 					<DatePicker
 						dateFormat='dd/MM/yyyy'
-						// selected={this.state.requiredShotInput.date}
+						selected={this.makeDate(this.state.shots[index].shot_date)}
 						className='edit-shot-date-input'
-						onChange={(date) => this.handleUpdateDateChange(i.shot_name, date)}
+						onChange={(date) =>
+							this.handleUpdateDateChange(i.shot_name, date, i.id)
+						}
 					/>
-					{/* <input
-						className='edit-shot-date-input'
-						type='date'
-						name={i.shot_name}
-						onChange={this.handleDateChange}
-						min='2018-01-01'
-						max='2030-12-31'
-					/> */}
-					<button
-						type='button'
-						className='shot-date-button'
-						id={i.id}
-						name={i.shot_name}
-						onClick={this.handleUpdateShotDate}
-					>
-						{" "}
-						Update
-					</button>
 				</label>
 			</li>
 		));
 	}
 
-	handleUpdateShotDate(e) {
-		e.preventDefault();
-		const { name, id } = e.target;
+	handleUpdateShotDate(shotName, id) {
+		const dateString = moment(this.state.shots[id].shot_date).format(
+			"YYYY-MM-DD"
+		);
+
 		const shot = {
-			shot_name: name,
-			shot_date: this.state[e.target.name],
+			shot_name: shotName,
+			shot_date: dateString,
 			id: id,
 			shot_iscompleted: true,
 		};
@@ -213,7 +234,7 @@ class EditShots extends Component {
 		let formattedDate = "";
 
 		if (date === null) {
-			formattedDate = `N/A`;
+			formattedDate = "Pick A Date";
 		} else {
 			formattedDate = moment(date).format("LL");
 		}
