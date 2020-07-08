@@ -9,6 +9,8 @@ import Validate from "../../Utils/validation";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import moment from "moment";
+
 class AddNewDog extends Component {
 	static contextType = PawPadContext;
 	constructor(props) {
@@ -47,8 +49,9 @@ class AddNewDog extends Component {
 	};
 
 	stringifyDate = (date) => {
-		const event = new Date(`${date}`);
-		return JSON.stringify(event).slice(1, 11);
+		const dateString = moment(new Date(date)).format("YYYY-MM-DD");
+
+		return dateString;
 	};
 
 	handleChange = (e) => {
@@ -137,6 +140,7 @@ class AddNewDog extends Component {
 	) => {
 		const arrivalDateString = this.stringifyDate(arrivalDate);
 		const ageDateString = this.stringifyDate(age);
+
 		const newDog = [
 			{ dog_name: dogName },
 			{ spayedneutered: spayedNeutered },

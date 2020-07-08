@@ -35,6 +35,7 @@ class DogDetailsView extends Component {
 
 	handleDateChange = (name, date) => {
 		const curVal = this.state[name];
+
 		this.setState({
 			[name]: { ...curVal, newVal: date },
 		});
@@ -92,8 +93,10 @@ class DogDetailsView extends Component {
 			: this.state[value].value;
 		const currMode = this.state[value].editMode;
 
+		const dateString = moment(newStateValue).format("YYYY-MM-DD");
+
 		const newObj = {
-			[value]: newStateValue,
+			[value]: dateString,
 			dog_name: this.state.dog_name,
 		};
 
@@ -101,7 +104,7 @@ class DogDetailsView extends Component {
 			(response) =>
 				this.setState({
 					[value]: {
-						value: newStateValue,
+						value: dateString,
 						editMode: !currMode,
 					},
 				})
@@ -127,11 +130,11 @@ class DogDetailsView extends Component {
 		);
 	};
 
-	formatEditDate = (date) => {
-		const formattedDate = moment(date).format("YYYY-MM-DD");
+	// formatEditDate = (date) => {
+	// 	const formattedDate = moment(date).format("YYYY-MM-DD");
 
-		return formattedDate;
-	};
+	// 	return formattedDate;
+	// };
 
 	renderDetails = (str) => {
 		return str.editMode === true ? (
@@ -219,13 +222,6 @@ class DogDetailsView extends Component {
 									/>
 									Female
 								</label>
-								{/* <input
-									className='fade-in edit-input'
-									type='text'
-									name='gender'
-									defaultValue={gender.value}
-									onChange={(e) => this.handleChange(e)}
-								/> */}
 								<button value='gender' onClick={(e) => this.changeEditMode(e)}>
 									&#10008;{" "}
 								</button>
@@ -292,13 +288,6 @@ class DogDetailsView extends Component {
 									}
 									className='fade-in edit-input'
 								/>
-								{/* <input
-									className='fade-in edit-input'
-									type='date'
-									name='arrival_date'
-									defaultValue={this.formatEditDate(arrival_date.value)}
-									onChange={(e) => this.handleChange(e)}
-								/> */}
 								<button
 									value='arrival_date'
 									onClick={(e) => this.changeEditMode(e)}

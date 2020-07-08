@@ -5,6 +5,9 @@ import DogsApiService from "../../services/api-service";
 import Validate from "../../Utils/validation";
 import ValidationError from "../../Components/ValidationError/ValidationError";
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 class EditShots extends Component {
 	constructor(props) {
 		super(props);
@@ -15,6 +18,10 @@ class EditShots extends Component {
 				value: "",
 				touched: false,
 			},
+			// requiredShotInput: {
+			// 	shot_name: null,
+			// 	shot_date: null,
+			// },
 			newShotDate: "",
 			requiredShots: [
 				"Rabies",
@@ -33,9 +40,14 @@ class EditShots extends Component {
 		this.handleSubmitNewShot = this.handleSubmitNewShot.bind(this);
 		this.deleteShot = this.deleteShot.bind(this);
 		this.formatDate = this.formatDate.bind(this);
-		this.handleDateChange = this.handleDateChange.bind(this);
 		this.handleUpdateShotDate = this.handleUpdateShotDate.bind(this);
 	}
+
+	handleUpdateDateChange = (shotName, date) => {
+		this.setState({
+			[shotName]: date,
+		});
+	};
 
 	renderMandatoryShots(shotsArray) {
 		const { requiredShots } = this.state;
@@ -58,15 +70,20 @@ class EditShots extends Component {
 					{i.shot_name}
 
 					<span className='shot-date-text'>{this.formatDate(i.shot_date)}</span>
-
-					<input
+					<DatePicker
+						dateFormat='dd/MM/yyyy'
+						// selected={this.state.requiredShotInput.date}
+						className='edit-shot-date-input'
+						onChange={(date) => this.handleUpdateDateChange(i.shot_name, date)}
+					/>
+					{/* <input
 						className='edit-shot-date-input'
 						type='date'
 						name={i.shot_name}
 						onChange={this.handleDateChange}
 						min='2018-01-01'
 						max='2030-12-31'
-					/>
+					/> */}
 					<button
 						type='button'
 						className='shot-date-button'
@@ -80,15 +97,6 @@ class EditShots extends Component {
 				</label>
 			</li>
 		));
-	}
-
-	handleDateChange(e) {
-		const { name, value } = e.target;
-		if (moment(value).isValid()) {
-			this.setState({
-				[name]: value,
-			});
-		}
 	}
 
 	handleUpdateShotDate(e) {
