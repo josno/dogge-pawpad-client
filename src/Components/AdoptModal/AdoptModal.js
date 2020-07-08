@@ -142,7 +142,7 @@ class AdoptModal extends Component {
 						/>
 					</label>
 
-					<label className='contract adopt-label'>
+					{/* <label className='contract adopt-label'>
 						Contract Image
 						<input
 							className='adopt-input'
@@ -151,7 +151,7 @@ class AdoptModal extends Component {
 							type='file'
 							accept='image/*'
 						/>
-					</label>
+					</label> */}
 					<label className='country adopt-label'>
 						Adopter Country
 						<input
