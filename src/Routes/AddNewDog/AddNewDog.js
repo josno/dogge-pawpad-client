@@ -6,6 +6,11 @@ import "./AddNewDog.css";
 import ValidationError from "../../Components/ValidationError/ValidationError";
 import Validate from "../../Utils/validation";
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+import moment from "moment";
+
 class AddNewDog extends Component {
 	static contextType = PawPadContext;
 	constructor(props) {
@@ -15,27 +20,19 @@ class AddNewDog extends Component {
 			profileImgPreview: "",
 			profileImg: null,
 			spayedneutered: false,
-			rabies: "",
-			rabiesBooster: "",
-			complexOne: "",
-			complexTwo: "",
-			complexBooster: "",
+			rabies: null,
+			rabiesBooster: null,
+			complexOne: null,
+			complexTwo: null,
+			complexBooster: null,
 			microchip: null,
 			tagNumber: null,
 			gender: null,
 			loading: false,
-			age: { value: "", touched: false },
+			age: { value: null, touched: false },
 			arrivalDate: null,
 			error: null,
 		};
-		this.handleImgChange = this.handleImgChange.bind(this);
-		this.handleCheckbox = this.handleCheckbox.bind(this);
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.setShotsObject = this.setShotsObject.bind(this);
-		this.setDogObject = this.setDogObject.bind(this);
-		this.setFormData = this.setFormData.bind(this);
-		this.setLoading = this.setLoading.bind(this);
 	}
 
 	handleImgChange = (e) => {
@@ -45,17 +42,28 @@ class AddNewDog extends Component {
 		});
 	};
 
+	handleDateChange = (name, date) => {
+		this.setState({
+			[name]: date,
+		});
+	};
+
+	stringifyDate = (date) => {
+		const dateString = moment(new Date(date)).format("YYYY-MM-DD");
+
+		return dateString;
+	};
+
 	handleChange = (e) => {
-		const { name, value } = e.target;
+		const { value, name } = e.target;
 		this.setState({
 			[name]: value,
 		});
 	};
 
-	updateAge(str) {
-		const age = str.trim();
+	updateAge(date) {
 		this.setState({
-			age: { value: age, touched: true },
+			age: { value: date, touched: true },
 		});
 	}
 
@@ -82,31 +90,30 @@ class AddNewDog extends Component {
 			rabiesBooster,
 			complexBooster,
 		} = this.state;
-
 		const shots = [
 			{
 				shot_name: "Rabies",
-				shot_date: rabies.length > 0 ? rabies : null,
+				shot_date: !rabies ? null : this.stringifyDate(rabies),
 				dog_id: "",
 			},
 			{
 				shot_name: "Rabies Yearly Booster",
-				shot_date: rabiesBooster.length > 0 ? rabiesBooster : null,
+				shot_date: !rabiesBooster ? null : this.stringifyDate(rabiesBooster),
 				dog_id: "",
 			},
 			{
 				shot_name: "Complex I",
-				shot_date: complexOne.length > 0 ? complexOne : null,
+				shot_date: !complexOne ? null : this.stringifyDate(complexOne),
 				dog_id: "",
 			},
 			{
 				shot_name: "Complex II",
-				shot_date: complexTwo.length > 0 ? complexTwo : null,
+				shot_date: !complexTwo ? null : this.stringifyDate(complexTwo),
 				dog_id: "",
 			},
 			{
 				shot_name: "Complex Yearly Booster",
-				shot_date: complexBooster.length > 0 ? complexBooster : null,
+				shot_date: !complexBooster ? null : this.stringifyDate(complexBooster),
 				dog_id: "",
 			},
 		];
@@ -131,14 +138,17 @@ class AddNewDog extends Component {
 		age,
 		dogName
 	) => {
+		const arrivalDateString = this.stringifyDate(arrivalDate);
+		const ageDateString = this.stringifyDate(age);
+
 		const newDog = [
 			{ dog_name: dogName },
 			{ spayedneutered: spayedNeutered },
 			{ gender: gender },
 			{ microchip: microchip },
 			{ tag_number: tagNumber },
-			{ age: age },
-			{ arrival_date: arrivalDate },
+			{ age: ageDateString },
+			{ arrival_date: arrivalDateString },
 		];
 
 		return newDog;
@@ -202,7 +212,6 @@ class AddNewDog extends Component {
 	}
 
 	render() {
-		console.log(this.state.arrivalDate);
 		let imgStyle = { display: "none" };
 
 		if (this.state.profileImgPreview.length > 0) {
@@ -215,7 +224,7 @@ class AddNewDog extends Component {
 			<main className='add-dog-container'>
 				<h1 className='form-title'>Add New Dog</h1>
 
-				<form className='form-container' onSubmit={this.handleSubmit}>
+				<form className='form-container' onSubmit={(e) => this.handleSubmit(e)}>
 					<div className='field-item'>
 						<label htmlFor='name' className='bold'>
 							Name
@@ -243,12 +252,12 @@ class AddNewDog extends Component {
 							className='block'
 							type='file'
 							name='profileImg'
-							onChange={this.handleImgChange}
+							onChange={(e) => this.handleImgChange(e)}
 							accept='image/*'
 							required
 						/>
 						<img
-							id='img-preview'
+							className='img-preview'
 							src={this.state.profileImgPreview}
 							alt='your-pic'
 							style={imgStyle}
@@ -262,7 +271,7 @@ class AddNewDog extends Component {
 								type='radio'
 								name='gender'
 								value='Male'
-								onChange={this.handleChange}
+								onChange={(e) => this.handleChange(e)}
 								id='male'
 								required
 							/>
@@ -274,7 +283,7 @@ class AddNewDog extends Component {
 								type='radio'
 								name='gender'
 								value='Female'
-								onChange={this.handleChange}
+								onChange={(e) => this.handleChange(e)}
 								id='female'
 							/>
 							Female
@@ -284,27 +293,30 @@ class AddNewDog extends Component {
 					<label htmlFor='estimated-age' className='bold'>
 						Estimated Birthdate
 					</label>
-					<input
-						className='block'
+					<DatePicker
+						dateFormat='dd/MM/yyyy'
+						selected={this.state.age.value}
+						onChange={(date) => this.updateAge(date)}
+						placeholderText='Click to select a date'
 						id='age'
-						type='text'
-						name='age'
-						placeholder='example: 12/14/2019 or 12/xx/2019'
-						onChange={(e) => this.updateAge(e.target.value)}
-						required
+						className='block'
+						showYearDropdown
+						dateFormatCalendar='MMMM'
+						yearDropdownItemNumber={5}
+						scrollableYearDropdown
 					/>
 					<label htmlFor='arrival' className='bold'>
 						Estimated Arrival
 					</label>
-					<input
-						className='block'
-						id='arrival'
-						type='date'
-						name='arrivalDate'
-						onChange={this.handleChange}
-						required
-					/>
 
+					<DatePicker
+						dateFormat='dd/MM/yyyy'
+						selected={this.state.arrivalDate}
+						placeholderText='Click to select a date'
+						onChange={(date) => this.handleDateChange("arrivalDate", date)}
+						id='arrival'
+						className='block'
+					/>
 					<label htmlFor='tag-number' className='bold'>
 						Tag Number
 					</label>
@@ -313,7 +325,7 @@ class AddNewDog extends Component {
 						id='tag-number'
 						type='text'
 						name='tagNumber'
-						onChange={this.handleChange}
+						onChange={(e) => this.handleChange(e)}
 					/>
 
 					<label htmlFor='microchip' className='bold'>
@@ -324,7 +336,7 @@ class AddNewDog extends Component {
 						id='microchip'
 						type='text'
 						name='microchip'
-						onChange={this.handleChange}
+						onChange={(e) => this.handleChange(e)}
 					/>
 
 					<fieldset className='field-item'>
@@ -334,7 +346,7 @@ class AddNewDog extends Component {
 								id='yes'
 								type='radio'
 								name='spayedNeutered'
-								onChange={this.handleCheckbox}
+								onChange={(e) => this.handleCheckbox(e)}
 								required
 							/>
 							Yes
@@ -345,7 +357,7 @@ class AddNewDog extends Component {
 								id='no'
 								type='radio'
 								name='spayedNeutered'
-								onChange={this.handleCheckbox}
+								onChange={(e) => this.handleCheckbox(e)}
 							/>
 							No
 						</label>
@@ -356,61 +368,65 @@ class AddNewDog extends Component {
 
 						<label htmlFor='rabies'>
 							Rabies{" "}
-							<input
-								className='shot-date-input'
-								id='rabies'
-								type='date'
+							<DatePicker
+								dateFormat='dd/MM/yyyy'
+								selected={this.state.rabies}
+								placeholderText='Click to select a date'
+								onChange={(date) => this.handleDateChange("rabies", date)}
 								name='rabies'
-								value={this.state.rabies}
-								onChange={this.handleChange}
+								className='shot-date-input'
 							/>
 						</label>
 
 						<label htmlFor='rabiesBooster'>
 							Rabies Yearly Booster{" "}
-							<input
-								className='shot-date-input'
-								id='rabiesBooster'
-								type='date'
+							<DatePicker
+								dateFormat='dd/MM/yyyy'
+								selected={this.state.rabiesBooster}
+								placeholderText='Click to select a date'
+								onChange={(date) =>
+									this.handleDateChange("rabiesBooster", date)
+								}
 								name='rabiesBooster'
-								value={this.state.rabiesBooster}
-								onChange={this.handleChange}
+								className='shot-date-input'
 							/>
 						</label>
 
 						<label htmlFor='complexOne'>
 							Complex I
-							<input
-								className='shot-date-input'
-								id='complexOne'
-								type='date'
+							<DatePicker
+								dateFormat='dd/MM/yyyy'
+								selected={this.state.complexOne}
+								placeholderText='Click to select a date'
+								onChange={(date) => this.handleDateChange("complexOne", date)}
 								name='complexOne'
-								value={this.state.complexOne}
-								onChange={this.handleChange}
+								className='shot-date-input'
 							/>
 						</label>
 
 						<label htmlFor='complexTwo'>
 							Complex II
-							<input
-								className='shot-date-input'
-								id='complexTwo'
-								type='date'
+							<DatePicker
+								dateFormat='dd/MM/yyyy'
+								selected={this.state.complexTwo}
+								placeholderText='Click to select a date'
+								onChange={(date) => this.handleDateChange("complexTwo", date)}
 								name='complexTwo'
-								value={this.state.complexTwo}
-								onChange={this.handleChange}
+								className='shot-date-input'
 							/>
 						</label>
 
 						<label htmlFor='complexBooster'>
 							Complex Yearly Booster
-							<input
-								className='shot-date-input'
-								id='complexBooster'
-								type='date'
+							<DatePicker
+								dateFormat='dd/MM/yyyy'
+								selected={this.state.complexBooster}
+								placeholderText='Click to select a date'
+								onChange={(date) =>
+									this.handleDateChange("complexBooster", date)
+								}
 								name='complexBooster'
-								value={this.state.complexBooster}
-								onChange={this.handleChange}
+								className='shot-date-input'
 							/>
 						</label>
 					</fieldset>

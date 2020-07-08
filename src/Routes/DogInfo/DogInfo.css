@@ -111,10 +111,7 @@
 	.details-grid-container {
 		height: 300px;
 		background-clip: content-box;
-		display: grid;
-		grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
-		grid-template-columns: 0.9fr 1fr;
-		grid-template-areas: "gender gender-value" "age age-value" "arrival_date arrival_date-value" "tag_number tag_number-value" "microchip microchip-value" "spayedneutered spayedneutered";
+		line-height: 50px;
 	}
 
 	.align-details {
@@ -122,50 +119,6 @@
 		align-items: center;
 		display: flex;
 		font-size: 0.7em;
-	}
-
-	.gender {
-		grid-area: gender;
-	}
-
-	.gender-value {
-		grid-area: gender-value;
-	}
-
-	.age {
-		grid-area: age;
-	}
-
-	.age-value {
-		grid-area: age-value;
-	}
-
-	.arrival_date {
-		grid-area: arrival_date;
-	}
-
-	.arrival_date-value {
-		grid-area: arrival_date-value;
-	}
-
-	.tag_number {
-		grid-area: tag_number;
-	}
-
-	.tag_number-value {
-		grid-area: tag_number-value;
-	}
-
-	.microchip {
-		grid-area: microchip;
-	}
-
-	.microchip-value {
-		grid-area: microchip-value;
-	}
-
-	.spayedneutered {
-		grid-area: spayedneutered;
 	}
 
 	.align-details {
@@ -176,6 +129,7 @@
 		background-clip: content-box;
 		padding: 50px;
 		display: grid;
+		line-height: 50px;
 		grid-template-columns: 1fr 1.1fr;
 		grid-template-rows: 400px 450px 1fr;
 		grid-template-areas: "dog-name nav-buttons" "basic-dog-details basic-dog-details" "shots-information shots-information";

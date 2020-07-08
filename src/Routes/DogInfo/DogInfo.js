@@ -29,9 +29,6 @@ class DogInfo extends Component {
 			error: null,
 		};
 		this.formatDate = this.formatDate.bind(this);
-		// this.renderSpayedNeutered = this.renderSpayedNeutered.bind(this);
-
-		// this.renderShotsCompleted = this.renderShotsCompleted.bind(this);
 		this.handleDelete = this.handleDelete.bind(this);
 		this.handleArchive = this.handleArchive.bind(this);
 		this.updateDogImage = this.updateDogImage.bind(this);

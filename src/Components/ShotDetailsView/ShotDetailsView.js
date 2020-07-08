@@ -52,7 +52,7 @@ class ShotDetailsView extends Component {
 					{this.props.shots &&
 						this.props.shots
 							.sort((a, b) => (a.shot_name > b.shot_name ? 1 : -1))
-							.map((i) => <div>{this.renderShots(i)}</div>)}
+							.map((i, index) => <div key={index}>{this.renderShots(i)}</div>)}
 				</ul>
 			</div>
 		);

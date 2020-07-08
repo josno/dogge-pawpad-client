@@ -26,10 +26,9 @@
 	width: 80%;
 }
 
-/* input[type='radio'],
-input[type='checkbox'] {
-	margin-left: 20px;
-} */
+.react-datepicker-wrapper {
+	width: 100%;
+}
 
 .loader-container {
 	width: 100%;
@@ -37,6 +36,10 @@ input[type='checkbox'] {
 	justify-content: center;
 	position: relative;
 	bottom: 50vh;
+}
+
+.img-preview {
+	width: 250px;
 }
 
 .loader {
