@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "./AdoptModal.css";
 import DogsApiService from "../../services/api-service";
 import config from "../../config";
+
+import DatePicker from "react-datepicker";
 const CryptoJS = require("crypto-js");
 
 class AdoptModal extends Component {
@@ -25,6 +27,12 @@ class AdoptModal extends Component {
 
 		this.setState({
 			[name]: value,
+		});
+	};
+
+	handleDateChange = (date) => {
+		this.setState({
+			adoption_date: date,
 		});
 	};
 
@@ -106,12 +114,11 @@ class AdoptModal extends Component {
 					</label>
 					<label className='adoption-date adopt-label'>
 						Adoption Date
-						<input
+						<DatePicker
 							className='adopt-input'
-							name='adoption_date'
-							value={adoption_date}
-							onChange={(e) => this.onChange(e)}
-							type='date'
+							selected={adoption_date}
+							dateFormat='dd/MM/yyyy'
+							onChange={(date) => this.handleDateChange(date)}
 						/>
 					</label>
 					<label className='email adopt-label'>
