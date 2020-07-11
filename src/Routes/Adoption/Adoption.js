@@ -58,7 +58,7 @@ class Adoption extends Component {
 			.then((res) => {
 				let bytes = CryptoJS.AES.decrypt(res.data, config.SECRET);
 				let data = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-				console.log(data.contract_img_url);
+
 				this.setState({
 					adoptionInfo: data,
 					dog_status: data.dog_status,
@@ -104,38 +104,26 @@ class Adoption extends Component {
 
 	renderImageButton = () => {
 		return (
-			<button className='delete' onClick={() => this.toggleImageModal()}>
-				View Contract
+			<button className='delete'>
+				<a href={this.state.adoptionInfo.contract_img_url} download>
+					View Contract
+				</a>
 			</button>
 		);
 	};
 
 	renderImageModal = () => {
 		return (
-			<Modal
-				open={this.state.showImageModal}
-				onClose={() => this.toggleImageModal()}
-				center
-				className='adoption-modal-container'
-			>
-				<div className='adoption-img-modal'>
-					<img
-						id='adoption-img'
-						src={this.state.adoptionInfo.contract_img_url}
-						alt='contract'
-					/>
-				</div>
-			</Modal>
+			<div className='adoption-img-modal'>
+				<a href={this.state.adoptionInfo.contract_img_url} download>
+					Download
+				</a>
+			</div>
 		);
 	};
 
 	render() {
-		return (
-			<div className='wrapper'>
-				{this.renderDetails()}
-				{this.renderImageModal()}
-			</div>
-		);
+		return <div className='wrapper'>{this.renderDetails()}</div>;
 	}
 }
 

@@ -16,7 +16,7 @@ class AdoptModal extends Component {
 			email: "",
 			phone: "",
 			country: "",
-			contract_img: "",
+			contract: "",
 			comment: "",
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,9 +36,9 @@ class AdoptModal extends Component {
 		});
 	};
 
-	handleImgChange = (e) => {
+	handleFileChange = (e) => {
 		this.setState({
-			contract_img: e.target.files[0],
+			contract: e.target.files[0],
 		});
 	};
 
@@ -49,7 +49,7 @@ class AdoptModal extends Component {
 			email,
 			phone,
 			country,
-			contract_img,
+			contract,
 		} = this.state;
 
 		const objectToEncrypt = {
@@ -67,7 +67,7 @@ class AdoptModal extends Component {
 		).toString();
 
 		const newAdoptionObj = new FormData();
-		newAdoptionObj.append("contract_img", contract_img);
+		newAdoptionObj.append("contract", contract);
 		newAdoptionObj.append("data", ciphertext);
 
 		return newAdoptionObj;
@@ -88,6 +88,7 @@ class AdoptModal extends Component {
 			DogsApiService.insertNewNote(newNote)),
 		]).then((res) => this.props.updateDogInfo());
 	};
+
 	render(props) {
 		const {
 			adopter_name,
@@ -100,6 +101,7 @@ class AdoptModal extends Component {
 
 		return (
 			<div className='modal-inner'>
+				{console.log(this.state.contract)}
 				<h1> Adoption Info</h1>
 				<form className='adopter-grid'>
 					<label className='name adopt-label'>
@@ -142,16 +144,16 @@ class AdoptModal extends Component {
 						/>
 					</label>
 
-					{/* <label className='contract adopt-label'>
-						Contract Image
+					<label className='contract adopt-label'>
+						Contract
 						<input
 							className='adopt-input'
-							name='contract_img'
-							onChange={(e) => this.handleImgChange(e)}
+							name='contract'
+							onChange={(e) => this.handleFileChange(e)}
 							type='file'
-							accept='image/*'
+							// accept='image/*'
 						/>
-					</label> */}
+					</label>
 					<label className='country adopt-label'>
 						Adopter Country
 						<input
