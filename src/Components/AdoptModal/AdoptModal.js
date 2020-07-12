@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import "./AdoptModal.css";
 import DogsApiService from "../../services/api-service";
 import config from "../../config";
-
 import DatePicker from "react-datepicker";
+import Validate from "../../Utils/validation";
+import ValidationError from "../../Components/ValidationError/ValidationError";
 const CryptoJS = require("crypto-js");
 
 class AdoptModal extends Component {
@@ -11,10 +12,19 @@ class AdoptModal extends Component {
 		super(props);
 
 		this.state = {
-			adopter_name: "",
+			adopter_name: {
+				touched: false,
+				value: "",
+			},
 			adoption_date: "",
-			email: "",
-			phone: "",
+			email: {
+				touched: false,
+				value: "",
+			},
+			phone: {
+				touched: false,
+				value: "",
+			},
 			country: "",
 			contract: "",
 			comment: "",
@@ -26,7 +36,10 @@ class AdoptModal extends Component {
 		const { value, name } = e.target;
 
 		this.setState({
-			[name]: value,
+			[name]: {
+				touched: true,
+				value: value,
+			},
 		});
 	};
 
@@ -73,7 +86,8 @@ class AdoptModal extends Component {
 		return newAdoptionObj;
 	};
 
-	handleSubmit = () => {
+	handleSubmit = (e) => {
+		e.preventDefault();
 		const newAdoptionObj = this.makeAdoptionObj();
 
 		const newNote = {
@@ -89,6 +103,14 @@ class AdoptModal extends Component {
 		]).then((res) => this.props.updateDogInfo());
 	};
 
+	validateInput = (touched, value) => {
+		if (touched) {
+			return <ValidationError message={Validate.validateName(value)} />;
+		} else {
+			return;
+		}
+	};
+
 	render(props) {
 		const {
 			adopter_name,
@@ -101,19 +123,22 @@ class AdoptModal extends Component {
 
 		return (
 			<div className='modal-inner'>
-				{console.log(this.state.contract)}
 				<h1> Adoption Info</h1>
-				<form className='adopter-grid'>
+
+				<form className='adopter-grid' onSubmit={(e) => this.handleSubmit(e)}>
 					<label className='name adopt-label'>
 						Adopter Name
+						{this.validateInput(adopter_name.touched, adopter_name.value)}
 						<input
 							className='adopt-input'
 							name='adopter_name'
-							value={adopter_name}
+							value={adopter_name.value}
 							onChange={(e) => this.onChange(e)}
 							type='text'
+							required
 						/>
 					</label>
+
 					<label className='adoption-date adopt-label'>
 						Adoption Date
 						<DatePicker
@@ -121,6 +146,7 @@ class AdoptModal extends Component {
 							selected={adoption_date}
 							dateFormat='dd/MM/yyyy'
 							onChange={(date) => this.handleDateChange(date)}
+							required
 						/>
 					</label>
 					<label className='email adopt-label'>
@@ -128,9 +154,10 @@ class AdoptModal extends Component {
 						<input
 							className='adopt-input'
 							name='email'
-							value={email}
+							value={email.value}
 							onChange={(e) => this.onChange(e)}
 							type='text'
+							required
 						/>
 					</label>
 					<label className='phone adopt-label'>
@@ -138,7 +165,7 @@ class AdoptModal extends Component {
 						<input
 							className='adopt-input'
 							name='phone'
-							value={phone}
+							value={phone.value}
 							onChange={(e) => this.onChange(e)}
 							type='text'
 						/>
@@ -151,7 +178,7 @@ class AdoptModal extends Component {
 							name='contract'
 							onChange={(e) => this.handleFileChange(e)}
 							type='file'
-							// accept='image/*'
+							accept='application/pdf'
 						/>
 					</label>
 					<label className='country adopt-label'>
@@ -162,23 +189,22 @@ class AdoptModal extends Component {
 							value={country}
 							onChange={(e) => this.onChange(e)}
 							type='text'
+							required
 						/>
 					</label>
 
-					<label className='comment adopt-label'>
+					<label className='comment adopt-label '>
 						Comments
 						<input
-							className='adopt-input'
+							className='adopt-comment-input'
 							name='comment'
 							value={comment}
 							onChange={(e) => this.onChange(e)}
 							type='text'
 						/>
 					</label>
+					<button className='adoption-submit-button'>Submit</button>
 				</form>
-				<button type='submit' onClick={() => this.handleSubmit()}>
-					Submit
-				</button>
 			</div>
 		);
 	}
