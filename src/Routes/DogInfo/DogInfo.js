@@ -106,7 +106,7 @@ class DogInfo extends Component {
 
 		DogsApiService.deleteDogImg(formData, this.state.dogInfo.tag_number)
 			.then((res) => {
-				console.log(res);
+
 				return DogsApiService.uploadDogImg(
 					formData,
 					this.state.dogInfo.tag_number
