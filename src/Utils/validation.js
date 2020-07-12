@@ -55,12 +55,6 @@ const Validate = {
 			return `Mobile format invalid.`;
 		}
 	},
-	validateCountry(country) {
-		if (!country) {
-			console.log(true);
-		}
-		// return !!country;
-	},
 };
 
 export default Validate;

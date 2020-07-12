@@ -226,6 +226,22 @@ const DogsApiService = {
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
 		);
 	},
+	uploadContract(data, dogId) {
+		const updatedContract = {
+			method: "PUT",
+			headers: {
+				Authorization: `Bearer ${TokenService.getAuthToken()}`,
+			},
+			body: data,
+		};
+
+		return fetch(
+			`${config.API_ENDPOINT}/adoption/contract-upload/${dogId}`,
+			updatedContract
+		).then((res) =>
+			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+		);
+	},
 };
 
 export default DogsApiService;

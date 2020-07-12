@@ -1,18 +1,13 @@
-.adoption-img-modal {
+.adoption-contract-modal {
+	width: 300px;
+	height: 150px;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
-	align-items: center;
+	margin-top: 40px;
 }
 
-#adoption-img {
-	max-width: 100%;
-	max-height: 100%;
-	object-fit: contain;
-}
-
-@media (min-width: 800px) {
-	.adoption-img-modal {
-		height: 700px;
-		width: 500px;
-	}
+.contract-upload-button {
+	width: 100px;
+	margin: 10px auto;
 }

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./ImgModalForm.css";
 
-import ReactCrop from "react-image-crop";
+// import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 
 class ImgModalForm extends Component {
