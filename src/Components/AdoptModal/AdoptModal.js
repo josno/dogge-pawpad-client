@@ -166,7 +166,7 @@ class AdoptModal extends Component {
 			comment,
 			country,
 		} = this.state;
-		Validate.validateCountry(country);
+
 		const disabled =
 			Validate.validateName(adopterName.value) ||
 			Validate.validateEmail(email.value) ||
