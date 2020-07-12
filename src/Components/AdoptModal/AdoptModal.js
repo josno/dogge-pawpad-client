@@ -100,7 +100,6 @@ class AdoptModal extends Component {
 		e.preventDefault();
 
 		const newAdoptionObj = this.makeAdoptionObj();
-		// Validate.validateAllAdoptionEntries(this.state);
 
 		const newNote = {
 			date_created: new Date(),
