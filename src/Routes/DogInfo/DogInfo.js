@@ -89,14 +89,12 @@ class DogInfo extends Component {
 	};
 
 	handleDogAdoption = () => {
-		DogsApiService.getDogInfo(this.state.dogInfo.id)
-			.then((res) => {
-				this.setState({
-					dogInfo: res,
-					openAdopt: false,
-				});
-			})
-			.catch((err) => this.setState({ error: err }));
+		const { dogInfo } = this.state;
+
+		this.setState({
+			dogInfo: { ...dogInfo, dog_status: "Adopted" },
+			openAdopt: false,
+		});
 	};
 
 	updateDogImage(e, profileImg) {

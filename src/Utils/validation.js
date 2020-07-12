@@ -1,3 +1,5 @@
+import validator from "validator";
+
 const Validate = {
 	validateShotName(shotName) {
 		if (shotName.length < 2) {
@@ -42,7 +44,23 @@ const Validate = {
 		if (!hasSymbols || hasSymbols === null) {
 			return "Password has to include at least one symbol.";
 		}
-	}
+	},
+	validateEmail(email) {
+		if (!validator.isEmail(email)) {
+			return `Email format invalid.`;
+		}
+	},
+	validatePhone(num) {
+		if (!validator.isMobilePhone(num)) {
+			return `Mobile format invalid.`;
+		}
+	},
+	validateCountry(country) {
+		if (!country) {
+			console.log(true);
+		}
+		// return !!country;
+	},
 };
 
 export default Validate;

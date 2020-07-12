@@ -5,8 +5,8 @@
 		padding: 5px;
 		display: grid;
 		grid-template-columns: 1fr 1.1fr;
-		grid-template-rows: 1fr 1fr 1fr;
-		grid-template-areas: "name adoption-date" "email phone" "address country";
+		grid-template-rows: 1fr 1fr 1fr 1.2fr 0.5fr;
+		grid-template-areas: "name adoption-date" "email phone" "address country" "comment comment" "adoption-submit-button adoption-submit-button";
 	}
 
 	.name {
@@ -33,11 +33,29 @@
 		grid-area: country;
 	}
 
+	.comment {
+		grid-area: comment;
+	}
+
+	.adoption-submit-button {
+		grid-area: adoption-submit-button;
+		width: 20%;
+		height: 40px;
+		margin: 0px auto 0px auto;
+	}
+
 	.modal-inner {
 		margin: 10px;
 		width: 700px;
 		padding: 10px;
 	}
+}
+
+.adopt-comment-input {
+	margin-left: 20px;
+	padding-left: 4px;
+	width: 95%;
+	height: 60%;
 }
 
 .adopt-label {
@@ -58,4 +76,17 @@
 	padding-left: 4px;
 	height: 40px;
 	width: 90%;
+}
+
+.adopt-input-style {
+	border: 1px solid #cccccc;
+	border-radius: 5px;
+}
+
+.adopt-error-style {
+	padding-left: 20px;
+}
+
+.center-error {
+	text-align: center;
 }
