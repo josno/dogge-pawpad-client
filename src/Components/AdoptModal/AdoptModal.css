@@ -77,3 +77,16 @@
 	height: 40px;
 	width: 90%;
 }
+
+.adopt-input-style {
+	border: 1px solid #cccccc;
+	border-radius: 5px;
+}
+
+.adopt-error-style {
+	padding-left: 20px;
+}
+
+.center-error {
+	text-align: center;
+}

@@ -22,7 +22,7 @@ class DogInfo extends Component {
 		super(props);
 		this.state = {
 			dogInfo: "",
-			openAdopt: false,
+			openAdopt: true,
 			openArchive: false,
 			openProfileImg: false,
 			editShotMode: false,
