@@ -28,7 +28,10 @@ class AdoptModal extends Component {
 			},
 			country: "",
 			contract: "",
-			comment: "",
+			comment: {
+				touched: false,
+				value: "",
+			},
 			error: null,
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -103,7 +106,7 @@ class AdoptModal extends Component {
 
 		const newNote = {
 			date_created: new Date(),
-			notes: this.state.comment,
+			notes: this.state.comment.value,
 			type_of_note: "adoption",
 			dog_id: this.props.dogId,
 		};
