@@ -171,7 +171,6 @@ class AdoptModal extends Component {
 			Validate.validateName(adopterName.value) ||
 			Validate.validateEmail(email.value) ||
 			Validate.validatePhone(phone.value) ||
-			Validate.validateCountry(country) ||
 			!country
 				? true
 				: false;
