@@ -20,7 +20,6 @@ class App extends Component {
 		super(props);
 		this.state = {
 			isLoggedIn: false,
-			firstName: "",
 		};
 	}
 
@@ -30,18 +29,10 @@ class App extends Component {
 		});
 	};
 
-	saveFirstName = (name) => {
-		this.setState({
-			firstName: name,
-		});
-	};
-
 	render() {
 		const contextValue = {
 			isLoggedIn: this.state.isLoggedIn,
 			handleLogInState: this.handleLogInState,
-			firstName: this.state.firstName,
-			savedFirstName: this.saveFirstName,
 		};
 
 		return (

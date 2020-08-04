@@ -16,6 +16,9 @@ PawPad helps dog-shelter runners keep track of essential information for each do
   - Edit dog information
   - See/write/submit notes for each dog
   - Update/delete shot information
+  - Set adoption information
+  - Delete dog
+  - Archive dog
 
 ## How is this helpful?
 

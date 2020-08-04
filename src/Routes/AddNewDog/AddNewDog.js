@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PawPadContext from "../../PawPadContext.js";
 import { Link } from "react-router-dom";
 import DogsApiService from "../../services/api-service";
 import "./AddNewDog.css";
@@ -13,7 +12,6 @@ import moment from "moment";
 import TokenService from "../../services/token-service.js";
 
 class AddNewDog extends Component {
-	static contextType = PawPadContext;
 	constructor(props) {
 		super(props);
 		this.state = {

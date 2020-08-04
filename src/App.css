@@ -174,7 +174,7 @@ footer {
 @media (min-width: 500px) {
 	.homepage,
 	.dogslist {
-		height: 100%;
+		height: 100vh;
 	}
 
 	.form-container {
