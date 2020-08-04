@@ -99,14 +99,15 @@ const DogsApiService = {
 		const updatedDog = {
 			method: "PUT",
 			headers: {
-				"Access-Control-Allow-Origin": "https://www.usepawpad.com",
 				Authorization: `Bearer ${TokenService.getAuthToken()}`,
 			},
 			body: data,
 		};
 
+		const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+
 		return fetch(
-			`${config.API_ENDPOINT}/dogs/images/${tagNumber}`,
+			`${proxyUrl}+${config.API_ENDPOINT}/dogs/images/${tagNumber}`,
 			updatedDog
 		).then((res) =>
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
@@ -116,14 +117,15 @@ const DogsApiService = {
 		const updatedDog = {
 			method: "DELETE",
 			headers: {
-				"Access-Control-Allow-Origin": "https://www.usepawpad.com",
 				Authorization: `Bearer ${TokenService.getAuthToken()}`,
 			},
 			body: data,
 		};
 
+		const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+
 		return fetch(
-			`${config.API_ENDPOINT}/dogs/images/${tagNumber}`,
+			`${proxyUrl}+${config.API_ENDPOINT}/dogs/images/${tagNumber}`,
 			updatedDog
 		).then((res) =>
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : null
