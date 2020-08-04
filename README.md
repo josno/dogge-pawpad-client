@@ -2,16 +2,17 @@
 
 PawPad helps dog-shelter runners keep track of essential information for each dog. It allows users stay on top of each dog's record to ensure dogs are happy and healthy.
 
-## Demo [Here](https://www.usepawpad.com/)
+## Demo [Here](https://pawpad.now.sh/)
 
 ## See API Repo [Here](https://github.com/josno/pawpad-server)
 
 ## How Do I Use This?
 
-- Create an account and log in
-- See a list of dogs and click on their pictures for additional information
-- You can do the following:
+-   Create an account and log in
+-   See a list of dogs and click on their pictures for additional information
+-   You can do the following:
 
+<<<<<<< HEAD
   - Add a new dog
   - Edit dog information
   - See/write/submit notes for each dog
@@ -19,6 +20,12 @@ PawPad helps dog-shelter runners keep track of essential information for each do
   - Set adoption information
   - Delete dog
   - Archive dog
+=======
+    -   Add a new dog
+    -   Edit dog information
+    -   See/write/submit notes for each dog
+    -   Update/delete shot information
+>>>>>>> parent of f942fa5... Updated readme
 
 ## How is this helpful?
 
@@ -28,24 +35,24 @@ This is a **_supplemental and intermediary solution_** to help keep records upda
 
 ## Technology Used
 
-- Frontend:
+-   Frontend:
 
-  - Javascript
-  - React
-  - JQuery
-  - HTML5
-  - CSS3
+    -   Javascript
+    -   React
+    -   JQuery
+    -   HTML5
+    -   CSS3
 
-- Backend:
+-   Backend:
 
-  - Javascript
-  - Node
-  - Express
-  - Knex
+    -   Javascript
+    -   Node
+    -   Express
+    -   Knex
 
-- Databases:
-  - SQL
-  - PostgreSQL
+-   Databases:
+    -   SQL
+    -   PostgreSQL
 
 ![Homepage](https://github.com/josno/pawpad-client/blob/master/src/assets/home-page.png?raw=true)
 ![Dogs List](https://github.com/josno/pawpad-client/blob/master/src/assets/dogs-list.png?raw=true)
