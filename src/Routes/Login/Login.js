@@ -21,12 +21,11 @@ class Login extends Component {
 			loading: true,
 		});
 
-		const { username, password, shelterUsername } = e.target;
+		const { username, password } = e.target;
 
 		AuthApiService.postLogin({
 			user_name: username.value.toLowerCase(),
 			password: password.value,
-			shelter_username: shelterUsername.value,
 		})
 			.then((res) => {
 				username.value = "";
@@ -49,19 +48,9 @@ class Login extends Component {
 				<form className='input-form' onSubmit={this.handleSubmit}>
 					<h2 className='login-title'> Account Login</h2>
 					<ul className='demo-info'>
-						<li className='demo-info'>Shelter: demo</li>
 						<li className='demo-info'>Username: demo</li>
 						<li className='demo-info'>Password: password</li>
 					</ul>
-
-					<input
-						className='form-input'
-						type='text'
-						aria-label='shelter-username'
-						placeholder='shelter code'
-						name='shelterUsername'
-						required
-					/>
 
 					<input
 						className='form-input'
