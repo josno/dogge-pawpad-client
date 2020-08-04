@@ -1,4 +1,4 @@
-import config from '../config';
+import config from "../config";
 
 const TokenService = {
 	saveAuthToken(token) {
@@ -14,7 +14,13 @@ const TokenService = {
 	hasAuthToken() {
 		//boolean
 		return !!TokenService.getAuthToken();
-	}
+	},
+	saveShelterToken(token) {
+		window.localStorage.setItem("shelter", token);
+	},
+	getShelterToken() {
+		return window.localStorage.getItem("shelter");
+	},
 };
 
 export default TokenService;
