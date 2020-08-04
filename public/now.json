@@ -1,7 +1,7 @@
 {
 	"version": 2,
-	"name": "dogge-pawpad",
-	"alias": "dogge-pawpad",
+	"name": "Pawpad App",
+	"alias": "pawpad",
 	"routes": [
 		{ "handle": "filesystem" },
 		{ "src": "/.*", "dest": "/index.html" }
