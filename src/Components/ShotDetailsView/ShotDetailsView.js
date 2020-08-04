@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import moment from "moment";
 
-import DogsApiService from "../../services/api-service";
-
 class ShotDetailsView extends Component {
 	constructor(props) {
 		super(props);
