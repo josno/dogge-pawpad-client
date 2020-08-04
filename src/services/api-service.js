@@ -2,8 +2,8 @@ import TokenService from "../services/token-service";
 import config from "../config";
 
 const DogsApiService = {
-	getDogs() {
-		return fetch(`${config.API_ENDPOINT}/dogs`, {
+	getDogs(shelterId) {
+		return fetch(`${config.API_ENDPOINT}/dogs/?shelterId=${shelterId}`, {
 			headers: {
 				Authorization: `Bearer ${TokenService.getAuthToken()}`,
 			},
