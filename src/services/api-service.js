@@ -107,7 +107,7 @@ const DogsApiService = {
 		const proxyUrl = "https://cors-anywhere.herokuapp.com/";
 
 		return fetch(
-			`${proxyUrl}+${config.API_ENDPOINT}/dogs/images/${tagNumber}`,
+			`${proxyUrl}${config.API_ENDPOINT}/dogs/images/${tagNumber}`,
 			updatedDog
 		).then((res) =>
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
@@ -125,7 +125,7 @@ const DogsApiService = {
 		const proxyUrl = "https://cors-anywhere.herokuapp.com/";
 
 		return fetch(
-			`${proxyUrl}+${config.API_ENDPOINT}/dogs/images/${tagNumber}`,
+			`${proxyUrl}${config.API_ENDPOINT}/dogs/images/${tagNumber}`,
 			updatedDog
 		).then((res) =>
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : null
