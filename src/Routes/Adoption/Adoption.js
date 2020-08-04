@@ -4,8 +4,7 @@ import "./Adoption.css";
 import DogsApiService from "../../services/api-service";
 import AdoptionDetails from "../../Components/AdoptionDetails/AdoptionDetails";
 import Modal from "react-responsive-modal";
-import config from "../../config";
-const CryptoJS = require("crypto-js");
+import Encryption from "../../Utils/encryption";
 
 class Adoption extends Component {
 	constructor(props) {
@@ -94,8 +93,7 @@ class Adoption extends Component {
 				DogsApiService.getAdoptionInfo(this.props.match.params.dogId)
 			)
 			.then((res) => {
-				let bytes = CryptoJS.AES.decrypt(res.data, config.SECRET);
-				let data = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+				let data = Encryption.decryptData(res.data);
 
 				this.setState({
 					adoptionInfo: data,
@@ -159,8 +157,7 @@ class Adoption extends Component {
 		const { dogId } = this.props.match.params;
 		DogsApiService.getAdoptionInfo(dogId)
 			.then((res) => {
-				let bytes = CryptoJS.AES.decrypt(res.data, config.SECRET);
-				let data = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+				let data = Encryption.decryptData(res.data);
 
 				this.setState({
 					adoptionInfo: data,

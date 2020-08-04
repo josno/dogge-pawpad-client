@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import "./AdoptModal.css";
 import DogsApiService from "../../services/api-service";
-import config from "../../config";
 import DatePicker from "react-datepicker";
 import Validate from "../../Utils/validation";
 import CountrySelect from "../../Components/CountrySelect/CountrySelect";
 import ValidationError from "../../Components/ValidationError/ValidationError";
-const CryptoJS = require("crypto-js");
+
+import Encryption from "../../Utils/encryption";
 
 class AdoptModal extends Component {
 	constructor(props) {
@@ -87,14 +87,11 @@ class AdoptModal extends Component {
 			country,
 		};
 
-		let ciphertext = CryptoJS.AES.encrypt(
-			JSON.stringify(objectToEncrypt),
-			config.SECRET
-		).toString();
+		let data = Encryption.encryptData(objectToEncrypt);
 
 		const newAdoptionObj = new FormData();
 		newAdoptionObj.append("contract", contract);
-		newAdoptionObj.append("data", ciphertext);
+		newAdoptionObj.append("data", data);
 
 		return newAdoptionObj;
 	};
