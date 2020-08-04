@@ -21,6 +21,9 @@ const TokenService = {
 	getShelterToken() {
 		return window.localStorage.getItem("shelter");
 	},
+	clearShelterToken() {
+		window.localStorage.removeItem("shelter");
+	},
 };
 
 export default TokenService;
