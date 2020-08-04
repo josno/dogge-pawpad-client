@@ -10,6 +10,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import moment from "moment";
+import TokenService from "../../services/token-service.js";
 
 class AddNewDog extends Component {
 	static contextType = PawPadContext;
@@ -140,6 +141,7 @@ class AddNewDog extends Component {
 	) => {
 		const arrivalDateString = this.stringifyDate(arrivalDate);
 		const ageDateString = this.stringifyDate(age);
+		const shelterId = TokenService.getShelterToken();
 
 		const newDog = [
 			{ dog_name: dogName },
@@ -149,6 +151,7 @@ class AddNewDog extends Component {
 			{ tag_number: tagNumber },
 			{ age: ageDateString },
 			{ arrival_date: arrivalDateString },
+			{ shelter_id: shelterId },
 		];
 
 		return newDog;
