@@ -48,16 +48,17 @@ class Login extends Component {
 			<div className='login-container'>
 				<form className='input-form' onSubmit={this.handleSubmit}>
 					<h2 className='login-title'> Account Login</h2>
-					{/* <ul className='demo-info'>
-						{/* <li className="demo-info">Username: demo</li>
-						<li className="demo-info">Password: password</li> 
-					</ul> */}
+					<ul className='demo-info'>
+						<li className='demo-info'>Shelter: demo</li>
+						<li className='demo-info'>Username: demo</li>
+						<li className='demo-info'>Password: password</li>
+					</ul>
 
 					<input
 						className='form-input'
 						type='text'
 						aria-label='shelter-username'
-						placeholder='Shelter'
+						placeholder='shelter code'
 						name='shelterUsername'
 						required
 					/>
