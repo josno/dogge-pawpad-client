@@ -99,6 +99,7 @@ const DogsApiService = {
 		const updatedDog = {
 			method: "PUT",
 			headers: {
+				"Access-Control-Allow-Origin": "https://www.usepawpad.com",
 				Authorization: `Bearer ${TokenService.getAuthToken()}`,
 			},
 			body: data,
@@ -115,6 +116,7 @@ const DogsApiService = {
 		const updatedDog = {
 			method: "DELETE",
 			headers: {
+				"Access-Control-Allow-Origin": "https://www.usepawpad.com",
 				Authorization: `Bearer ${TokenService.getAuthToken()}`,
 			},
 			body: data,
