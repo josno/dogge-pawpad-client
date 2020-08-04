@@ -99,6 +99,7 @@ const DogsApiService = {
 		const updatedDog = {
 			method: "PUT",
 			headers: {
+				"Access-Control-Allow-Origin": "*",
 				Authorization: `Bearer ${TokenService.getAuthToken()}`,
 			},
 			body: data,
@@ -121,11 +122,8 @@ const DogsApiService = {
 			},
 			body: data,
 		};
-
-		const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-
 		return fetch(
-			`${proxyUrl}${config.API_ENDPOINT}/dogs/images/${tagNumber}`,
+			`${config.API_ENDPOINT}/dogs/images/${tagNumber}`,
 			updatedDog
 		).then((res) =>
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : null
