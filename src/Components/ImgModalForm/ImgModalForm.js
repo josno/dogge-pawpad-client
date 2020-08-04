@@ -24,7 +24,11 @@ class ImgModalForm extends Component {
 		const { profileImgPreview } = this.state;
 		return profileImgPreview !== null ? (
 			<div>
-				<img src={profileImgPreview} alt='preview of profile' />
+				<img
+					className='image-upload-preview'
+					src={profileImgPreview}
+					alt='preview of profile'
+				/>
 			</div>
 		) : (
 			""
