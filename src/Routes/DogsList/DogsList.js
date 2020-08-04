@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import DogListItem from "../../Components/DogListItem/DogListItem";
 import DogsApiService from "../../services/api-service";
 import "./DogsList.css";
+import TokenService from "../../services/token-service";
 
 class DogList extends Component {
 	constructor(props) {
@@ -24,7 +25,8 @@ class DogList extends Component {
 	};
 
 	componentDidMount() {
-		DogsApiService.getDogs().then((responsejson) => {
+		const shelterId = TokenService.getShelterToken();
+		DogsApiService.getDogs(shelterId).then((responsejson) => {
 			if (responsejson.length === 0) {
 				this.setState({
 					error: "Something went wrong, try again",
