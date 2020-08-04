@@ -21,23 +21,25 @@ class Login extends Component {
 			loading: true,
 		});
 
-		const { username, password } = e.target;
+		const { username, password, shelterUsername } = e.target;
 
 		AuthApiService.postLogin({
 			user_name: username.value.toLowerCase(),
 			password: password.value,
+			shelter_username: shelterUsername.value,
 		})
 			.then((res) => {
 				username.value = "";
 				password.value = "";
 				TokenService.saveAuthToken(res.authToken);
+				TokenService.saveShelterToken(res.shelterId);
 			})
 			.then((res) => {
 				this.context.handleLogInState();
 				this.props.history.push("/");
 			})
 			.catch((res) => {
-				this.setState({ error: res });
+				this.setState({ error: res.error });
 			});
 	};
 
@@ -50,6 +52,15 @@ class Login extends Component {
 						{/* <li className="demo-info">Username: demo</li>
 						<li className="demo-info">Password: password</li> 
 					</ul> */}
+
+					<input
+						className='form-input'
+						type='text'
+						aria-label='shelter-username'
+						placeholder='Shelter'
+						name='shelterUsername'
+						required
+					/>
 
 					<input
 						className='form-input'
@@ -69,7 +80,7 @@ class Login extends Component {
 					/>
 					{this.state.error !== null && (
 						<ValidationError
-							message={"Something wrong happened. Refresh and try again."}
+							message={`${this.state.error}. Refresh and try again.`}
 						/>
 					)}
 					<button
