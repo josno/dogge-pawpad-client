@@ -50,7 +50,7 @@ exports[`<AddNewDog /> renders as expected 1`] = `
       />
       <img
         alt="your-pic"
-        id="img-preview"
+        className="img-preview"
         src=""
         style={
           Object {
@@ -99,29 +99,56 @@ exports[`<AddNewDog /> renders as expected 1`] = `
     >
       Estimated Birthdate
     </label>
-    <input
-      className="block"
-      id="age"
-      name="age"
-      onChange={[Function]}
-      placeholder="example: 12/14/2019 or 12/xx/2019"
-      required={true}
-      type="text"
-    />
+    <div
+      className="react-datepicker-wrapper"
+    >
+      <div
+        className="react-datepicker__input-container"
+      >
+        <input
+          className="block"
+          disabled={false}
+          id="age"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          placeholder="Click to select a date"
+          readOnly={false}
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
     <label
       className="bold"
       htmlFor="arrival"
     >
       Estimated Arrival
     </label>
-    <input
-      className="block"
-      id="arrival"
-      name="arrivalDate"
-      onChange={[Function]}
-      required={true}
-      type="date"
-    />
+    <div
+      className="react-datepicker-wrapper"
+    >
+      <div
+        className="react-datepicker__input-container"
+      >
+        <input
+          className="block"
+          disabled={false}
+          id="arrival"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          placeholder="Click to select a date"
+          readOnly={false}
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
     <label
       className="bold"
       htmlFor="tag-number"
@@ -193,67 +220,137 @@ exports[`<AddNewDog /> renders as expected 1`] = `
       >
         Rabies
          
-        <input
-          className="shot-date-input"
-          id="rabies"
-          name="rabies"
-          onChange={[Function]}
-          type="date"
-          value=""
-        />
+        <div
+          className="react-datepicker-wrapper"
+        >
+          <div
+            className="react-datepicker__input-container"
+          >
+            <input
+              className="shot-date-input"
+              disabled={false}
+              name="rabies"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              placeholder="Click to select a date"
+              readOnly={false}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
       </label>
       <label
         htmlFor="rabiesBooster"
       >
         Rabies Yearly Booster
          
-        <input
-          className="shot-date-input"
-          id="rabiesBooster"
-          name="rabiesBooster"
-          onChange={[Function]}
-          type="date"
-          value=""
-        />
+        <div
+          className="react-datepicker-wrapper"
+        >
+          <div
+            className="react-datepicker__input-container"
+          >
+            <input
+              className="shot-date-input"
+              disabled={false}
+              name="rabiesBooster"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              placeholder="Click to select a date"
+              readOnly={false}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
       </label>
       <label
         htmlFor="complexOne"
       >
         Complex I
-        <input
-          className="shot-date-input"
-          id="complexOne"
-          name="complexOne"
-          onChange={[Function]}
-          type="date"
-          value=""
-        />
+        <div
+          className="react-datepicker-wrapper"
+        >
+          <div
+            className="react-datepicker__input-container"
+          >
+            <input
+              className="shot-date-input"
+              disabled={false}
+              name="complexOne"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              placeholder="Click to select a date"
+              readOnly={false}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
       </label>
       <label
         htmlFor="complexTwo"
       >
         Complex II
-        <input
-          className="shot-date-input"
-          id="complexTwo"
-          name="complexTwo"
-          onChange={[Function]}
-          type="date"
-          value=""
-        />
+        <div
+          className="react-datepicker-wrapper"
+        >
+          <div
+            className="react-datepicker__input-container"
+          >
+            <input
+              className="shot-date-input"
+              disabled={false}
+              name="complexTwo"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              placeholder="Click to select a date"
+              readOnly={false}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
       </label>
       <label
         htmlFor="complexBooster"
       >
         Complex Yearly Booster
-        <input
-          className="shot-date-input"
-          id="complexBooster"
-          name="complexBooster"
-          onChange={[Function]}
-          type="date"
-          value=""
-        />
+        <div
+          className="react-datepicker-wrapper"
+        >
+          <div
+            className="react-datepicker__input-container"
+          >
+            <input
+              className="shot-date-input"
+              disabled={false}
+              name="complexBooster"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              placeholder="Click to select a date"
+              readOnly={false}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
       </label>
     </fieldset>
     <div
@@ -273,6 +370,7 @@ exports[`<AddNewDog /> renders as expected 1`] = `
       <button
         className="submit"
         disabled="Name should have more than one letter."
+        onClick={[Function]}
         type="submit"
       >
         Submit

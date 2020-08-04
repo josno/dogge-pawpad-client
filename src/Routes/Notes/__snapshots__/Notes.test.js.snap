@@ -51,6 +51,16 @@ exports[`<Notes /> renders as expected 1`] = `
       >
         Additional
       </option>
+      <option
+        value="adoption"
+      >
+        Adoption
+      </option>
+      <option
+        value="archive"
+      >
+        Archive
+      </option>
     </select>
     <div
       className="text-area-container"

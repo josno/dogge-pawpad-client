@@ -27,6 +27,36 @@ exports[`<DogsList /> renders as expected 1`] = `
         />
       </label>
     </div>
+    <div>
+      <ul
+        className="filter-links"
+      >
+        <li>
+          <button
+            onClick={[Function]}
+            value="Current"
+          >
+            Current
+          </button>
+        </li>
+        <li>
+          <button
+            onClick={[Function]}
+            value="Adopted"
+          >
+            Adopted
+          </button>
+        </li>
+        <li>
+          <button
+            onClick={[Function]}
+            value="Archived"
+          >
+            Archived
+          </button>
+        </li>
+      </ul>
+    </div>
     <div
       className="dogs-list"
     />

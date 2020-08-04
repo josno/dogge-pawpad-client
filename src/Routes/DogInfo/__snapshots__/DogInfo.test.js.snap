@@ -10,17 +10,48 @@ exports[`<DogInfo /> renders as expected 1`] = `
     <div
       className="dog-name"
     >
+      <img
+        alt="dog-name"
+        className="info-img"
+      />
+      <button
+        className="edit-pencil edit-pencil-img"
+        name="openProfileImg"
+        onClick={[Function]}
+      >
+        ✎
+      </button>
       <h1
         className="dog-name-text"
       />
     </div>
     <div
-      className="dog-img"
+      className="nav-buttons"
     >
-      <img
-        alt="dog-name"
-        className="info-img"
-      />
+      <button
+        className="see-notes"
+      >
+        <a
+          className="dog-link"
+          href="/notes-undefined/undefined"
+          onClick={[Function]}
+        >
+          Notes
+        </a>
+      </button>
+      <button
+        className="delete"
+        name="openArchive"
+        onClick={[Function]}
+      >
+        Archive
+      </button>
+      <button
+        className="delete"
+        onClick={[Function]}
+      >
+        Delete
+      </button>
     </div>
     <div
       className="basic-dog-details box-flex"
@@ -36,57 +67,140 @@ exports[`<DogInfo /> renders as expected 1`] = `
         <li
           className="gender align-details"
         >
-          Gender: 
+          Gender:
+          <div
+            className="gender-value align-details"
+          >
+            <label
+              htmlFor="male"
+            >
+              <input
+                id="male"
+                name="gender"
+                onChange={[Function]}
+                required={true}
+                type="radio"
+                value="Male"
+              />
+              Male
+            </label>
+            <label
+              htmlFor="female"
+            >
+              <input
+                id="female"
+                name="gender"
+                onChange={[Function]}
+                type="radio"
+                value="Female"
+              />
+              Female
+            </label>
+            <button
+              onClick={[Function]}
+              value="gender"
+            >
+              ✘
+               
+            </button>
+            <button
+              onClick={[Function]}
+              value="gender"
+            >
+              ✔
+               
+            </button>
+          </div>
         </li>
-        <li
-          className="gender-value align-details"
-        />
         <li
           className="age align-details"
         >
-          Age: 
+          Birthdate:
+          <div
+            className="age-value align-details"
+          >
+            Invalid date
+            <button
+              className="edit-pencil"
+              onClick={[Function]}
+              value="age"
+            >
+              ✎
+            </button>
+          </div>
         </li>
         <li
-          className="age-value align-details"
-        />
-        <li
-          className="arrival align-details"
+          className="arrival_date align-details"
         >
           Arrival Date:
-           
+          <div
+            className="arrival_date-value align-details"
+          >
+            Invalid date
+            <button
+              className="edit-pencil"
+              onClick={[Function]}
+              value="arrival_date"
+            >
+              ✎
+            </button>
+          </div>
         </li>
         <li
-          className="arrival-value align-details"
+          className="tag_number align-details"
         >
-          April 8, 2020
+          Tag:
+          <div
+            className="tag_number-value align-details"
+          >
+            
+            <button
+              className="edit-pencil"
+              onClick={[Function]}
+              value="tag_number"
+            >
+              ✎
+            </button>
+          </div>
         </li>
-        <li
-          className="tag align-details"
-        >
-          Tag: 
-        </li>
-        <li
-          className="tag-value align-details"
-        />
         <li
           className="microchip align-details"
         >
           Microchip:
-           
+          <div
+            className="microchip-value align-details"
+          >
+            
+            <button
+              className="edit-pencil"
+              onClick={[Function]}
+              value="microchip"
+            >
+              ✎
+            </button>
+          </div>
         </li>
         <li
-          className="microchip-value align-details"
-        />
-        <li
-          className="spayed-neutered align-details"
+          className="spayedneutered align-details"
         >
-          <span
-            className="indicator-no"
+          Spayed/Neutered:
+          <div
+            className="spayedneutered-value align-details"
           >
-             ✘ 
-          </span>
-           
-          Spayed/Neutered
+             
+            <span
+              className="indicator-no"
+            >
+               ✘ 
+            </span>
+            <button
+              className="edit-pencil"
+              onClick={[Function]}
+              value="spayedneutered"
+            >
+              ✎
+            </button>
+          </div>
         </li>
       </ul>
     </div>
@@ -98,48 +212,23 @@ exports[`<DogInfo /> renders as expected 1`] = `
       >
         Shots Completed
       </h3>
+      <button
+        className="edit-shot-pencil edit-pencil"
+        onClick={[Function]}
+      >
+        ✎
+      </button>
       <ul
         className="dog-info-text shot-container"
-      />
+      >
+        <div>
+          <ul
+            className="dog-info-text shot-container"
+          />
+        </div>
+      </ul>
     </div>
   </div>
   
-  <div
-    className="nav-buttons"
-  >
-    <button
-      className="go-back"
-    >
-      <a
-        className="dog-link"
-        href="/dogs-list"
-        onClick={[Function]}
-      >
-        Back To List
-      </a>
-    </button>
-    <button
-      className="see-notes"
-    >
-      <a
-        className="dog-link"
-        href="/notes-undefined/undefined"
-        onClick={[Function]}
-      >
-        Notes On 
-      </a>
-    </button>
-    <button
-      className="edit cancel"
-    >
-      <a
-        className="dog-link"
-        href="/edit-dog/undefined"
-        onClick={[Function]}
-      >
-        Edit Information
-      </a>
-    </button>
-  </div>
 </main>
 `;
