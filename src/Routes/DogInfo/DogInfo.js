@@ -8,6 +8,7 @@ import ModalForm from "../../Components/ImgModalForm/ImgModalForm";
 
 import DogDetailsView from "../../Components/DogDetailsView/DogDetailsView";
 import ShotDetailsView from "../../Components/ShotDetailsView/ShotDetailsView";
+import PawPadContext from "../../PawPadContext.js";
 import DogsApiService from "../../services/api-service";
 import AdoptionDetails from "../../Components/AdoptionDetails/AdoptionDetails";
 import EditShots from "../../Components/EditShots/EditShots";
@@ -16,6 +17,7 @@ import "./DogInfo.css";
 import moment from "moment";
 
 class DogInfo extends Component {
+	static contextType = PawPadContext;
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -104,6 +106,7 @@ class DogInfo extends Component {
 
 		DogsApiService.deleteDogImg(formData, this.state.dogInfo.tag_number)
 			.then((res) => {
+
 				return DogsApiService.uploadDogImg(
 					formData,
 					this.state.dogInfo.tag_number
