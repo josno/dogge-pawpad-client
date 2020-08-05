@@ -50,7 +50,7 @@ class SignUp extends Component {
 		AuthApiService.postUser(newUser)
 			.then((res) => {
 				TokenService.saveAuthToken(res.authToken);
-				TokenService.saveShelterToken(res.shelterId);
+				TokenService.saveShelterToken(res.shelter_id);
 				this.context.handleLogInState();
 				this.props.history.push("/");
 			})
