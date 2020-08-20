@@ -49,7 +49,7 @@ class Login extends Component {
 					<h2 className='login-title'> Account Login</h2>
 					<ul className='demo-info'>
 						<li className='demo-info'>Username: demo</li>
-						<li className='demo-info'>Password: password</li>
+						<li className='demo-info'>Password: !password123</li>
 					</ul>
 
 					<input
