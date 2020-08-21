@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Home from "./Routes/Home/Home";
 import Navigation from "./Components/Navigation/Navigation";
+import SideNav from "./Components/SideNav";
 import DogsList from "./Routes/DogsList/DogsList";
 import AddNewDog from "./Routes/AddNewDog/AddNewDog";
 import DogInfo from "./Routes/DogInfo/DogInfo";
@@ -20,8 +21,13 @@ class App extends Component {
 		super(props);
 		this.state = {
 			isLoggedIn: false,
+			isOpen: false,
 		};
 	}
+
+	handleIsOpen = () => {
+		this.setState({ isOpen: !this.state.isOpen });
+	};
 
 	handleLogInState = () => {
 		this.setState({
@@ -36,11 +42,16 @@ class App extends Component {
 		};
 
 		return (
-			<div className='App'>
+			<>
 				<PawPadContext.Provider value={contextValue}>
-					<header className='nav'>
-						<Navigation />
-					</header>
+					<Navigation
+						handleOpen={() => this.handleIsOpen()}
+						open={this.state.isOpen}
+					/>
+					<SideNav
+						handleOpen={() => this.handleIsOpen()}
+						open={this.state.isOpen}
+					/>
 
 					<Switch>
 						<Route exact path='/' component={Home} />
@@ -103,7 +114,7 @@ class App extends Component {
 					</Switch>
 				</PawPadContext.Provider>
 				<Footer />
-			</div>
+			</>
 		);
 	}
 }
