@@ -5,7 +5,11 @@ import styled from "styled-components";
 const NavItem = (props) => {
 	return (
 		<NavItemStyles>
-			<Link className='link-text' onClick={props.onClick} to={props.to}>
+			<Link
+				className={`link-text ${props.className}`}
+				onClick={props.onClick}
+				to={props.to}
+			>
 				{props.children}
 			</Link>
 		</NavItemStyles>
@@ -13,8 +17,6 @@ const NavItem = (props) => {
 };
 
 const NavItemStyles = styled.div`
-	display: none;
-
 	@media (min-width: 768px) {
 		flex-direction: row;
 		display: flex;

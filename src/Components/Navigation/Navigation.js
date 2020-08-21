@@ -1,13 +1,11 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { GiHamburgerMenu } from "react-icons/gi";
 import {
 	IoMdLogIn,
 	IoMdLogOut,
 	IoIosAddCircleOutline,
 	IoMdHome,
 } from "react-icons/io";
-// import "./Navigation.css";
 import styled from "styled-components";
 import TokenService from "../../services/token-service";
 import PawPadContext from "../../PawPadContext";
@@ -26,13 +24,17 @@ const Navigation = (props) => {
 	const loggedInNavIcons = (
 		<>
 			<NavItem to='/dogs-list'>
-				<IoMdHome className='nav-icon' fill='white' />
+				<IoMdHome className='top-nav-icon' size={"1.3em"} fill='white' />
 			</NavItem>
 			<NavItem to='/add-new-dog'>
-				<IoIosAddCircleOutline className='nav-icon' fill='white' />
+				<IoIosAddCircleOutline
+					className='top-nav-icon'
+					size={"1.3em"}
+					fill='white'
+				/>
 			</NavItem>
-			<NavItem onClick={handleLogoutClick}>
-				<IoMdLogOut className='nav-icon' width='1.15em' fill='white' />
+			<NavItem to={"/"} onClick={handleLogoutClick}>
+				<IoMdLogOut className='top-nav-icon' size={"1.3em"} fill='white' />
 			</NavItem>
 		</>
 	);
@@ -40,7 +42,7 @@ const Navigation = (props) => {
 	const loggedOutNavIcons = (
 		<>
 			<NavItem to={"/login"}>
-				<IoMdLogIn className='nav-icon' width='1.15em' fill='white' />
+				<IoMdLogIn className='top-nav-icon' size={"1.3em"} fill='white' />
 			</NavItem>
 		</>
 	);
@@ -48,7 +50,16 @@ const Navigation = (props) => {
 	return (
 		<header>
 			<NavigationStyles>
-				<GiHamburgerMenu className='menu-icon' fill='white' />
+				<Hamburger
+					className='hamburger'
+					open={props.open}
+					onClick={props.handleOpen}
+				>
+					<span />
+					<span />
+					<span />
+				</Hamburger>
+
 				<Link className='nav-title' to='/'>
 					Pawpad
 				</Link>
@@ -63,14 +74,16 @@ const Navigation = (props) => {
 const NavigationStyles = styled.div`
 	 {
 		height: 50px;
+		position: fixed;
 		background-color: #009fb7;
+		width: 100%;
 		padding-left: 10px;
+		z-index: 9999;
 	}
 	,
 	nav {
 		display: flex;
 		align-items: center;
-		height: 50px;
 	}
 	,
 	.nav-title {
@@ -82,6 +95,56 @@ const NavigationStyles = styled.div`
 		font-size: 1.15em;
 		padding-bottom: 5px;
 		-webkit-text-stroke: 1px black;
+	}
+
+	.top-nav-icon {
+		display: none;
+	}
+	@media (min-width: 768px) {
+		position: static;
+
+		.top-nav-icon {
+			display: flex;
+		}
+	}
+`;
+
+const Hamburger = styled.button`
+	top: 5%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	width: 1.5rem;
+	height: 1.5rem;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	z-index: 10;
+	:focus {
+		outline: none;
+	}
+	@media (min-width: 768px) {
+		display: none;
+	}
+
+	span {
+		width: 28px;
+		height: 0.25rem;
+		background: white;
+		transition: all 0.3s linear;
+		position: relative;
+		transform-origin: 1px;
+		:first-child {
+			transform: ${({ open }) => (open ? "rotate(40deg)" : "rotate(0)")};
+		}
+		:nth-child(2) {
+			opacity: ${({ open }) => (open ? "0" : "1")};
+			transform: ${({ open }) => (open ? "translateX(20px)" : "translateX(0)")};
+		}
+		:nth-child(3) {
+			transform: ${({ open }) => (open ? "rotate(-40deg)" : "rotate(0)")};
+		}
 	}
 `;
 
