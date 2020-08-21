@@ -1,61 +1,88 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import "./Navigation.css";
+import { GiHamburgerMenu } from "react-icons/gi";
+import {
+	IoMdLogIn,
+	IoMdLogOut,
+	IoIosAddCircleOutline,
+	IoMdHome,
+} from "react-icons/io";
+// import "./Navigation.css";
+import styled from "styled-components";
 import TokenService from "../../services/token-service";
 import PawPadContext from "../../PawPadContext";
 
-class Navigation extends Component {
-	static contextType = PawPadContext;
-	handleLogoutClick = () => {
-		this.context.handleLogInState();
+import NavItem from "../NavItem";
+
+const Navigation = (props) => {
+	const context = useContext(PawPadContext);
+
+	const handleLogoutClick = () => {
+		context.handleLogInState();
 		TokenService.clearAuthToken();
 		TokenService.clearShelterToken();
 	};
 
-	renderLogoutLink() {
-		return (
-			<>
-				<Link className='link-text' to={"/dogs-list"}>
-					Dogs List
-				</Link>
-				<Link className='link-text' onClick={this.handleLogoutClick} to={"/"}>
-					Logout
-				</Link>
-			</>
-		);
-	}
+	const loggedInNavIcons = (
+		<>
+			<NavItem to='/dogs-list'>
+				<IoMdHome className='nav-icon' fill='white' />
+			</NavItem>
+			<NavItem to='/add-new-dog'>
+				<IoIosAddCircleOutline className='nav-icon' fill='white' />
+			</NavItem>
+			<NavItem onClick={handleLogoutClick}>
+				<IoMdLogOut className='nav-icon' width='1.15em' fill='white' />
+			</NavItem>
+		</>
+	);
 
-	renderLoginLink() {
-		return (
-			<>
-				<Link className='link-text' to={"/login"}>
-					Log in
-				</Link>
-				<Link className='link-text' to={"/signup"}>
-					Sign up
-				</Link>
-			</>
-		);
-	}
+	const loggedOutNavIcons = (
+		<>
+			<NavItem to={"/login"}>
+				<IoMdLogIn className='nav-icon' width='1.15em' fill='white' />
+			</NavItem>
+		</>
+	);
 
-	render() {
-		return (
-			<nav className='responsive-nav-wrapper'>
-				<label id='responsive-menu' htmlFor='toggle'>
-					&#9776;
-				</label>
-				<input type='checkbox' id='toggle' />
-				<div className='menu'>
-					<Link id='nav-title' to='/'>
-						PawPad
-					</Link>
-					{TokenService.hasAuthToken()
-						? this.renderLogoutLink()
-						: this.renderLoginLink()}
-				</div>
-			</nav>
-		);
+	return (
+		<header>
+			<NavigationStyles>
+				<GiHamburgerMenu className='menu-icon' fill='white' />
+				<Link className='nav-title' to='/'>
+					Pawpad
+				</Link>
+				<nav className='nav-wrapper'>
+					{TokenService.hasAuthToken() ? loggedInNavIcons : loggedOutNavIcons}
+				</nav>
+			</NavigationStyles>
+		</header>
+	);
+};
+
+const NavigationStyles = styled.div`
+	 {
+		height: 50px;
+		background-color: #009fb7;
+		padding-left: 10px;
 	}
-}
+	,
+	nav {
+		display: flex;
+		align-items: center;
+		height: 50px;
+	}
+	,
+	.nav-title {
+		padding-left: 10px;
+		text-align: left;
+		flex-grow: 1;
+		color: #fcfcfc;
+		font-family: Candal, sans-serif;
+		font-size: 1.15em;
+		padding-bottom: 5px;
+		-webkit-text-stroke: 1px black;
+	}
+`;
 
 export default Navigation;

@@ -36,11 +36,9 @@ class App extends Component {
 		};
 
 		return (
-			<div className='App'>
+			<>
 				<PawPadContext.Provider value={contextValue}>
-					<header className='nav'>
-						<Navigation />
-					</header>
+					<Navigation />
 
 					<Switch>
 						<Route exact path='/' component={Home} />
@@ -103,7 +101,7 @@ class App extends Component {
 					</Switch>
 				</PawPadContext.Provider>
 				<Footer />
-			</div>
+			</>
 		);
 	}
 }
