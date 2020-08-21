@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Home from "./Routes/Home/Home";
-import Navigation from "./Components/Navigation/Navigation";
+import Navigation from "./Components/Navigation";
 import SideNav from "./Components/SideNav";
 import DogsList from "./Routes/DogsList/DogsList";
 import AddNewDog from "./Routes/AddNewDog/AddNewDog";

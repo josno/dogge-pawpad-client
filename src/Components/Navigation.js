@@ -7,10 +7,10 @@ import {
 	IoMdHome,
 } from "react-icons/io";
 import styled from "styled-components";
-import TokenService from "../../services/token-service";
-import PawPadContext from "../../PawPadContext";
+import TokenService from "../services/token-service";
+import PawPadContext from "../PawPadContext";
 
-import NavItem from "../NavItem";
+import NavItem from "./NavItem";
 
 const Navigation = (props) => {
 	const context = useContext(PawPadContext);
