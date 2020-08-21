@@ -41,6 +41,9 @@ const Navigation = (props) => {
 
 	const loggedOutNavIcons = (
 		<>
+			<NavItem className='sign-up' to={"/sign-up"}>
+				Sign up
+			</NavItem>
 			<NavItem to={"/login"}>
 				<IoMdLogIn className='top-nav-icon' size={"1.3em"} fill='white' />
 			</NavItem>
@@ -97,14 +100,24 @@ const NavigationStyles = styled.div`
 		-webkit-text-stroke: 1px black;
 	}
 
-	.top-nav-icon {
+	.top-nav-icon,
+	.sign-up {
 		display: none;
 	}
+
 	@media (min-width: 768px) {
 		position: static;
 
-		.top-nav-icon {
+		.top-nav-icon,
+		.sign-up {
 			display: flex;
+		}
+		.sign-up {
+			font-size: 0.75em;
+			color: white;
+			size: 12px;
+			-webkit-text-stroke: 0px;
+			margin-right: 10px;
 		}
 	}
 `;

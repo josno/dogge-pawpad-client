@@ -4,6 +4,7 @@ import NavItem from "./NavItem";
 import {
 	IoMdLogIn,
 	IoMdLogOut,
+	IoIosPersonAdd,
 	IoIosAddCircleOutline,
 	IoMdHome,
 } from "react-icons/io";
@@ -36,6 +37,9 @@ const SideNav = (props) => {
 					<IoMdLogOut size={"1.5em"} fill='white' /> Log Out
 				</NavItem>
 			)}
+			<NavItem to='/signup' className='side-nav-item'>
+				<IoIosPersonAdd size={"1.5em"} fill='white' /> Sign Up
+			</NavItem>
 		</SideNavStyles>
 	);
 };

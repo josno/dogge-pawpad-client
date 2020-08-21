@@ -6,7 +6,7 @@ const NavItem = (props) => {
 	return (
 		<NavItemStyles>
 			<Link
-				className={`link-text ${props.className}`}
+				className={`${props.className}`}
 				onClick={props.onClick}
 				to={props.to}
 			>
