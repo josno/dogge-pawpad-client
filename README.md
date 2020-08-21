@@ -8,24 +8,17 @@ PawPad helps dog-shelter runners keep track of essential information for each do
 
 ## How Do I Use This?
 
--   Create an account and log in
--   See a list of dogs and click on their pictures for additional information
--   You can do the following:
+- Create an account and log in
+- See a list of dogs and click on their pictures for additional information
+- You can do the following:
 
-<<<<<<< HEAD
-  - Add a new dog
-  - Edit dog information
-  - See/write/submit notes for each dog
-  - Update/delete shot information
-  - Set adoption information
-  - Delete dog
-  - Archive dog
-=======
-    -   Add a new dog
-    -   Edit dog information
-    -   See/write/submit notes for each dog
-    -   Update/delete shot information
->>>>>>> parent of f942fa5... Updated readme
+- Add a new dog
+- Edit dog information
+- See/write/submit notes for each dog
+- Update/delete shot information
+- Set adoption information
+- Delete dog
+- Archive dog
 
 ## How is this helpful?
 
@@ -35,24 +28,24 @@ This is a **_supplemental and intermediary solution_** to help keep records upda
 
 ## Technology Used
 
--   Frontend:
+- Frontend:
 
-    -   Javascript
-    -   React
-    -   JQuery
-    -   HTML5
-    -   CSS3
+  - Javascript
+  - React
+  - JQuery
+  - HTML5
+  - CSS3
 
--   Backend:
+- Backend:
 
-    -   Javascript
-    -   Node
-    -   Express
-    -   Knex
+  - Javascript
+  - Node
+  - Express
+  - Knex
 
--   Databases:
-    -   SQL
-    -   PostgreSQL
+- Databases:
+  - SQL
+  - PostgreSQL
 
 ![Homepage](https://github.com/josno/pawpad-client/blob/master/src/assets/home-page.png?raw=true)
 ![Dogs List](https://github.com/josno/pawpad-client/blob/master/src/assets/dogs-list.png?raw=true)
