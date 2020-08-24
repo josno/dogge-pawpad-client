@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import propTypes from "prop-types";
 import styled from "styled-components";
 
 const NavItem = (props) => {
@@ -14,6 +15,13 @@ const NavItem = (props) => {
 			</Link>
 		</NavItemStyles>
 	);
+};
+
+NavItem.propTypes = {
+	className: propTypes.string,
+	onClick: propTypes.func,
+	to: propTypes.string,
+	children: propTypes.any.isRequired,
 };
 
 const NavItemStyles = styled.div`
