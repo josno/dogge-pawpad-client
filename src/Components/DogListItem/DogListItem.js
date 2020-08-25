@@ -12,6 +12,11 @@ class DogListItem extends Component {
 			<div>
 				<ul>
 					<li className='dog-item'>
+						<input
+							value={this.props.id}
+							type='checkbox'
+							className='dog-selection-checkbox'
+						/>
 						<Link
 							className='dogs-list-button'
 							to={`/dog-info/${this.props.id}`}
