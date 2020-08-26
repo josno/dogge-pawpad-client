@@ -1,19 +1,37 @@
-import React, { Component, useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
+
+import styled from "styled-components";
 import DogListItem from "../../Components/DogListItem/DogListItem";
+
+import DropDown from "../../Components/DropDown";
 import DogsApiService from "../../services/api-service";
-import "./DogsList.css";
 import TokenService from "../../services/token-service";
 
 const DogList = (props) => {
 	const [error, setError] = useState("");
 	const [dogs, setDogs] = useState([]);
 	const [dogSearch, setDogSearch] = useState("");
-	const [view, setView] = useState("Current");
+	const [view, setView] = useState("");
 
 	let filteredDogs = dogs.filter((d) => {
 		return d.dog_name.toLowerCase().indexOf(dogSearch.toLowerCase()) !== -1;
 	});
+
+	const handleSort = (sortType) => {
+		let sorted;
+		if (sortType === "A-Z") {
+			sorted = dogs.sort((a, b) =>
+				a.dog_name > b.dog_name ? 1 : a.dog_name < b.dog_name ? -1 : 0
+			);
+		} else if (sortType === "Z-A") {
+			sorted = dogs.sort((a, b) =>
+				a.dog_name > b.dog_name ? -1 : a.dog_name < b.dog_name ? 1 : 0
+			);
+		}
+
+		setDogs([...sorted]);
+	};
 
 	useLayoutEffect((filteredDogs) => {
 		const shelterId = TokenService.getShelterToken();
@@ -35,12 +53,12 @@ const DogList = (props) => {
 		setDogSearch(value);
 	};
 
-	const setFilter = (e) => {
-		setView(e.target.value);
+	const setFilter = (value) => {
+		value === "None" ? setView("") : setView(value);
 	};
 
 	return (
-		<main className='dogslist'>
+		<DogListStyles>
 			<section className='search-filter-container'>
 				<label className='search-box ' aria-label='search'>
 					<input
@@ -52,33 +70,48 @@ const DogList = (props) => {
 						placeholder='Search by name...'
 					/>
 				</label>
-
-				<ul className='filter-links'>
-					{["Current", "Adopted", "Archived"].map((i, index) => (
-						<li key={index}>
-							<button value={i} onClick={(e) => setFilter(e)}>
-								{i}
-							</button>
-						</li>
-					))}
-				</ul>
+				<div className='filters-container'>
+					<DropDown
+						label='Filter'
+						list={["Current", "Adopted", "Archived", "None"]}
+						listType='multi'
+						onClick={(value) => setFilter(value)}
+					/>
+					<DropDown
+						label='Sort'
+						list={["A-Z", "Z-A"]}
+						list-type='single'
+						onClick={(sortType) => handleSort(sortType)}
+					/>
+				</div>
 			</section>
 			<section className='list-container'>
-				<div className='dogs-list'>
-					{!error &&
-						filteredDogs.map((d) => {
-							return (
-								d.dog_status === view && (
+				<ul className='dogs-list'>
+					{/* Fix THIS */}
+					{view === "" && !error
+						? filteredDogs.map((d) => {
+								return (
 									<DogListItem
 										name={d.dog_name}
 										id={d.id}
 										key={d.id}
 										img={d.profile_img}
 									/>
-								)
-							);
-						})}
-				</div>
+								);
+						  })
+						: filteredDogs.map((d) => {
+								return (
+									d.dog_status === view && (
+										<DogListItem
+											name={d.dog_name}
+											id={d.id}
+											key={d.id}
+											img={d.profile_img}
+										/>
+									)
+								);
+						  })}
+				</ul>
 			</section>
 
 			<button className='add-a-dog-button add-dog'>
@@ -86,8 +119,119 @@ const DogList = (props) => {
 					Add Dog
 				</Link>
 			</button>
-		</main>
+		</DogListStyles>
 	);
 };
+
+const DogListStyles = styled.main`
+	padding-top: 60px;
+	width: 100%;
+
+	.add-a-dog-button {
+		background-color: #009fb7;
+		border: 2px solid black;
+		border-radius: 50%;
+		height: 100px;
+		width: 100px;
+		font-size: 1em;
+		position: fixed;
+		bottom: 0px;
+		right: 0px;
+		margin: 20px;
+	}
+
+	.add-dog-link:hover {
+		color: white;
+		font-weight: bolder;
+	}
+
+	.add-a-dog-button:hover {
+		cursor: pointer;
+	}
+
+	.add-a-dog-button a {
+		color: white;
+	}
+
+	.dog-list-container {
+		padding-top: 40px;
+	}
+
+	.dogs-list {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.dog-list-container {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-evenly;
+		height: 80vh;
+	}
+
+	.dog-list-actions {
+		border: 1px solid black;
+		background-color: #fcfcfc;
+	}
+
+	.search-dog {
+		padding-left: 10px;
+		height: 40px;
+		display: block;
+		margin: 0px auto 0px auto;
+		width: 90%;
+		font-size: 0.8em;
+	}
+
+	.filter-links {
+		display: inline-block;
+	}
+
+	.filter-links li {
+		display: inline-block;
+		list-style: none;
+		margin: 10px;
+	}
+
+	.search-filter-container {
+		width: 100%;
+		height: 150px;
+		padding-top: 10px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.filters-container {
+		display: flex;
+		/* border: 1px solid black; */
+		padding: 10px;
+		justify-content: space-around;
+		height: 150px;
+		font-size: 0.8em;
+	}
+
+	.drop-down {
+		flex-grow: 1;
+		margin: 20px;
+	}
+
+	@media (min-width: 500px) {
+		.search-filter-container {
+			flex-direction: row;
+			justify-content: space-around;
+		}
+
+		.filters-container {
+			padding: 0px;
+		}
+	}
+
+	@media (min-width: 768px) {
+		.search-dog {
+			width: 30vw;
+		}
+	}
+`;
 
 export default DogList;
