@@ -2,36 +2,24 @@ import React, { useState, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
-import DogListItem from "../../Components/DogListItem/DogListItem";
+import DogListItem from "../../Components/DogListItem";
+import DogItemImage from "../../Components/DogItemImage";
 
 import DropDown from "../../Components/DropDown";
 import DogsApiService from "../../services/api-service";
 import TokenService from "../../services/token-service";
+import UpdateBar from "../../Components/UpdateBar";
+import { Modal } from "react-responsive-modal";
+import UpdateModal from "../../Components/UpdateModal";
 
 const DogList = (props) => {
 	const [error, setError] = useState("");
 	const [dogs, setDogs] = useState([]);
 	const [dogSearch, setDogSearch] = useState("");
 	const [view, setView] = useState("");
-
-	let filteredDogs = dogs.filter((d) => {
-		return d.dog_name.toLowerCase().indexOf(dogSearch.toLowerCase()) !== -1;
-	});
-
-	const handleSort = (sortType) => {
-		let sorted;
-		if (sortType === "A-Z") {
-			sorted = dogs.sort((a, b) =>
-				a.dog_name > b.dog_name ? 1 : a.dog_name < b.dog_name ? -1 : 0
-			);
-		} else if (sortType === "Z-A") {
-			sorted = dogs.sort((a, b) =>
-				a.dog_name > b.dog_name ? -1 : a.dog_name < b.dog_name ? 1 : 0
-			);
-		}
-
-		setDogs([...sorted]);
-	};
+	const [selected, setSelected] = useState([]);
+	const [updateType, setType] = useState("");
+	const [isOpen, setIsOpen] = useState(false);
 
 	useLayoutEffect((filteredDogs) => {
 		const shelterId = TokenService.getShelterToken();
@@ -48,6 +36,35 @@ const DogList = (props) => {
 			});
 	}, []);
 
+	let filteredDogs = dogs.filter((d) => {
+		return d.dog_name.toLowerCase().indexOf(dogSearch.toLowerCase()) !== -1;
+	});
+
+	const updateSelected = (id) => {
+		let newList;
+
+		selected.includes(id)
+			? (newList = selected.filter((i) => i !== id))
+			: (newList = [...selected, id]);
+
+		setSelected([...newList]);
+	};
+
+	const handleSort = (sortType) => {
+		let sorted;
+		if (sortType === "A-Z") {
+			sorted = dogs.sort((a, b) =>
+				a.dog_name > b.dog_name ? 1 : a.dog_name < b.dog_name ? -1 : 0
+			);
+		} else if (sortType === "Z-A") {
+			sorted = dogs.sort((a, b) =>
+				a.dog_name > b.dog_name ? -1 : a.dog_name < b.dog_name ? 1 : 0
+			);
+		}
+
+		setDogs([...sorted]);
+	};
+
 	const handleChange = (e) => {
 		const { value } = e.target;
 		setDogSearch(value);
@@ -57,9 +74,21 @@ const DogList = (props) => {
 		value === "None" ? setView("") : setView(value);
 	};
 
+	const setUpdateType = (type) => {
+		setType(type);
+		setIsOpen(true);
+	};
+
 	return (
 		<DogListStyles>
 			<section className='search-filter-container'>
+				{selected.length > 0 && (
+					<UpdateBar onClick={(type) => setUpdateType(type)} />
+				)}
+				<Modal open={isOpen} onClose={() => setIsOpen(!isOpen)} center>
+					<UpdateModal title={updateType} />
+				</Modal>
+
 				<label className='search-box ' aria-label='search'>
 					<input
 						className='search-dog dog-list-actions'
@@ -85,6 +114,7 @@ const DogList = (props) => {
 					/>
 				</div>
 			</section>
+
 			<section className='list-container'>
 				<ul className='dogs-list'>
 					{/* Fix THIS */}
@@ -92,22 +122,20 @@ const DogList = (props) => {
 						? filteredDogs.map((d) => {
 								return (
 									<DogListItem
-										name={d.dog_name}
 										id={d.id}
 										key={d.id}
-										img={d.profile_img}
-									/>
+										onChange={(id) => updateSelected(id)}
+									>
+										<DogItemImage img={d.profile_img} name={d.dog_name} />
+									</DogListItem>
 								);
 						  })
 						: filteredDogs.map((d) => {
 								return (
 									d.dog_status === view && (
-										<DogListItem
-											name={d.dog_name}
-											id={d.id}
-											key={d.id}
-											img={d.profile_img}
-										/>
+										<DogListItem id={d.id} key={d.id}>
+											<DogItemImage img={d.profile_img} name={d.dog_name} />
+										</DogListItem>
 									)
 								);
 						  })}
