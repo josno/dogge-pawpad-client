@@ -2,7 +2,8 @@ import React, { useState, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
-import DogListItem from "../../Components/DogListItem/DogListItem";
+import DogListItem from "../../Components/DogListItem";
+import DogItemImage from "../../Components/DogItemImage";
 
 import DropDown from "../../Components/DropDown";
 import DogsApiService from "../../services/api-service";
@@ -13,25 +14,7 @@ const DogList = (props) => {
 	const [dogs, setDogs] = useState([]);
 	const [dogSearch, setDogSearch] = useState("");
 	const [view, setView] = useState("");
-
-	let filteredDogs = dogs.filter((d) => {
-		return d.dog_name.toLowerCase().indexOf(dogSearch.toLowerCase()) !== -1;
-	});
-
-	const handleSort = (sortType) => {
-		let sorted;
-		if (sortType === "A-Z") {
-			sorted = dogs.sort((a, b) =>
-				a.dog_name > b.dog_name ? 1 : a.dog_name < b.dog_name ? -1 : 0
-			);
-		} else if (sortType === "Z-A") {
-			sorted = dogs.sort((a, b) =>
-				a.dog_name > b.dog_name ? -1 : a.dog_name < b.dog_name ? 1 : 0
-			);
-		}
-
-		setDogs([...sorted]);
-	};
+	const [selected, setSelected] = useState([]);
 
 	useLayoutEffect((filteredDogs) => {
 		const shelterId = TokenService.getShelterToken();
@@ -47,6 +30,35 @@ const DogList = (props) => {
 				setError(err.message);
 			});
 	}, []);
+
+	let filteredDogs = dogs.filter((d) => {
+		return d.dog_name.toLowerCase().indexOf(dogSearch.toLowerCase()) !== -1;
+	});
+
+	const updateSelected = (id) => {
+		let newList;
+
+		selected.includes(id)
+			? (newList = selected.filter((i) => i !== id))
+			: (newList = [...selected, id]);
+
+		setSelected([...newList]);
+	};
+
+	const handleSort = (sortType) => {
+		let sorted;
+		if (sortType === "A-Z") {
+			sorted = dogs.sort((a, b) =>
+				a.dog_name > b.dog_name ? 1 : a.dog_name < b.dog_name ? -1 : 0
+			);
+		} else if (sortType === "Z-A") {
+			sorted = dogs.sort((a, b) =>
+				a.dog_name > b.dog_name ? -1 : a.dog_name < b.dog_name ? 1 : 0
+			);
+		}
+
+		setDogs([...sorted]);
+	};
 
 	const handleChange = (e) => {
 		const { value } = e.target;
@@ -92,22 +104,20 @@ const DogList = (props) => {
 						? filteredDogs.map((d) => {
 								return (
 									<DogListItem
-										name={d.dog_name}
 										id={d.id}
 										key={d.id}
-										img={d.profile_img}
-									/>
+										onChange={(id) => updateSelected(id)}
+									>
+										<DogItemImage img={d.profile_img} name={d.dog_name} />
+									</DogListItem>
 								);
 						  })
 						: filteredDogs.map((d) => {
 								return (
 									d.dog_status === view && (
-										<DogListItem
-											name={d.dog_name}
-											id={d.id}
-											key={d.id}
-											img={d.profile_img}
-										/>
+										<DogListItem id={d.id} key={d.id}>
+											<DogItemImage img={d.profile_img} name={d.dog_name} />
+										</DogListItem>
 									)
 								);
 						  })}
