@@ -15,7 +15,7 @@ class DogListItem extends Component {
 					className='dog-selection-checkbox'
 					onChange={(id) => this.props.onChange(this.props.id)}
 				/>
-				<span className='circl-checkbox' />
+				<span className='circle-checkbox' />
 				<Link className='dogs-list-button' to={`/dog-info/${this.props.id}`}>
 					{this.props.children}
 				</Link>

@@ -8,6 +8,9 @@ import DogItemImage from "../../Components/DogItemImage";
 import DropDown from "../../Components/DropDown";
 import DogsApiService from "../../services/api-service";
 import TokenService from "../../services/token-service";
+import UpdateBar from "../../Components/UpdateBar";
+import { Modal } from "react-responsive-modal";
+import UpdateModal from "../../Components/UpdateModal";
 
 const DogList = (props) => {
 	const [error, setError] = useState("");
@@ -15,6 +18,8 @@ const DogList = (props) => {
 	const [dogSearch, setDogSearch] = useState("");
 	const [view, setView] = useState("");
 	const [selected, setSelected] = useState([]);
+	const [updateType, setType] = useState("");
+	const [isOpen, setIsOpen] = useState(false);
 
 	useLayoutEffect((filteredDogs) => {
 		const shelterId = TokenService.getShelterToken();
@@ -69,9 +74,21 @@ const DogList = (props) => {
 		value === "None" ? setView("") : setView(value);
 	};
 
+	const setUpdateType = (type) => {
+		setType(type);
+		setIsOpen(true);
+	};
+
 	return (
 		<DogListStyles>
 			<section className='search-filter-container'>
+				{selected.length > 0 && (
+					<UpdateBar onClick={(type) => setUpdateType(type)} />
+				)}
+				<Modal open={isOpen} onClose={() => setIsOpen(!isOpen)} center>
+					<UpdateModal title={updateType} />
+				</Modal>
+
 				<label className='search-box ' aria-label='search'>
 					<input
 						className='search-dog dog-list-actions'
@@ -97,6 +114,7 @@ const DogList = (props) => {
 					/>
 				</div>
 			</section>
+
 			<section className='list-container'>
 				<ul className='dogs-list'>
 					{/* Fix THIS */}
