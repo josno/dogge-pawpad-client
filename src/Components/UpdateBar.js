@@ -15,7 +15,7 @@ const UpdateBar = (props) => {
 					</button>
 				</li>
 				<li>
-					<button onClick={() => props.onClick("shots")}>
+					<button onClick={() => props.onClick("shot")}>
 						<FaSyringe fill='white' size={"20px"} />
 						<span className='button-text'>Update Shots</span>
 					</button>

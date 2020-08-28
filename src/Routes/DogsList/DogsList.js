@@ -86,7 +86,7 @@ const DogList = (props) => {
 					<UpdateBar onClick={(type) => setUpdateType(type)} />
 				)}
 				<Modal open={isOpen} onClose={() => setIsOpen(!isOpen)} center>
-					<UpdateModal title={updateType} />
+					<UpdateModal type={updateType} />
 				</Modal>
 
 				<label className='search-box ' aria-label='search'>
@@ -103,13 +103,11 @@ const DogList = (props) => {
 					<DropDown
 						label='Filter'
 						list={["Current", "Adopted", "Archived", "None"]}
-						listType='multi'
 						onClick={(value) => setFilter(value)}
 					/>
 					<DropDown
 						label='Sort'
 						list={["A-Z", "Z-A"]}
-						list-type='single'
 						onClick={(sortType) => handleSort(sortType)}
 					/>
 				</div>
