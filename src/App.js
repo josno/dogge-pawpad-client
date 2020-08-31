@@ -43,7 +43,10 @@ const App = () => {
 					<Route path='/login' component={Login} />
 					<Route path='/signup' component={SignUp} />
 					{TokenService.hasAuthToken() ? (
-						<Route path='/dogs-list' component={DogsList} />
+						<Route
+							path='/dogs-list'
+							render={(routeProps) => <DogsList {...routeProps} />}
+						/>
 					) : (
 						<Redirect to='/' />
 					)}
