@@ -10,7 +10,7 @@ import DogsApiService from "../../services/api-service";
 import TokenService from "../../services/token-service";
 import UpdateBar from "../../Components/UpdateBar";
 import { Modal } from "react-responsive-modal";
-import UpdateModal from "../../Components/UpdateModal";
+import UpdateStatusForm from "../../Components/BatchUpdateForms/UpdateStatusForm";
 
 const DogList = (props) => {
 	const [error, setError] = useState("");
@@ -21,7 +21,7 @@ const DogList = (props) => {
 	const [updateType, setType] = useState("");
 	const [isOpen, setIsOpen] = useState(false);
 
-	useLayoutEffect((filteredDogs) => {
+	const getDogs = () => {
 		const shelterId = TokenService.getShelterToken();
 		DogsApiService.getDogs(shelterId)
 			.then((responsejson) => {
@@ -29,11 +29,19 @@ const DogList = (props) => {
 					setError("Something went wrong, try again");
 				}
 
+				responsejson
+					.map((dog) => (dog.checked = false))
+					.sort((a, b) => (a.id > b.id ? 1 : a.id < b.id ? -1 : 0));
+
 				setDogs([...responsejson]);
 			})
 			.catch((err) => {
 				setError(err.message);
 			});
+	};
+
+	useLayoutEffect(() => {
+		getDogs();
 	}, []);
 
 	let filteredDogs = dogs.filter((d) => {
@@ -48,6 +56,12 @@ const DogList = (props) => {
 			: (newList = [...selected, id]);
 
 		setSelected([...newList]);
+
+		dogs.map((dog) => {
+			if (dog.id === id) {
+				dog.checked = !dog.checked;
+			}
+		});
 	};
 
 	const handleSort = (sortType) => {
@@ -79,6 +93,10 @@ const DogList = (props) => {
 		setIsOpen(true);
 	};
 
+	const setChecked = () => {
+		dogs.map((dog) => (dog.checked = false));
+	};
+
 	return (
 		<DogListStyles>
 			<section className='search-filter-container'>
@@ -86,7 +104,17 @@ const DogList = (props) => {
 					<UpdateBar onClick={(type) => setUpdateType(type)} />
 				)}
 				<Modal open={isOpen} onClose={() => setIsOpen(!isOpen)} center>
-					<UpdateModal type={updateType} />
+					{updateType === "status" ? (
+						<UpdateStatusForm
+							selectedDogs={selected}
+							setModal={() => setIsOpen()}
+							updateDogs={() => getDogs()}
+							setChecked={() => setChecked()}
+							resetSelected={setSelected}
+							{...props}
+						/>
+					) : null}
+					{/* Based on status type put update modal here */}
 				</Modal>
 
 				<label className='search-box ' aria-label='search'>
@@ -116,6 +144,7 @@ const DogList = (props) => {
 			<section className='list-container'>
 				<ul className='dogs-list'>
 					{/* Fix THIS */}
+
 					{view === "" && !error
 						? filteredDogs.map((d) => {
 								return (
@@ -123,6 +152,7 @@ const DogList = (props) => {
 										id={d.id}
 										key={d.id}
 										onChange={(id) => updateSelected(id)}
+										checked={d.checked}
 									>
 										<DogItemImage img={d.profile_img} name={d.dog_name} />
 									</DogListItem>
@@ -131,7 +161,12 @@ const DogList = (props) => {
 						: filteredDogs.map((d) => {
 								return (
 									d.dog_status === view && (
-										<DogListItem id={d.id} key={d.id}>
+										<DogListItem
+											id={d.id}
+											key={d.id}
+											onChange={(id) => updateSelected(id)}
+											checked={d.checked}
+										>
 											<DogItemImage img={d.profile_img} name={d.dog_name} />
 										</DogListItem>
 									)

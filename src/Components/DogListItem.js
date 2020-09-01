@@ -13,6 +13,7 @@ class DogListItem extends Component {
 				<input
 					type='checkbox'
 					className='dog-selection-checkbox'
+					checked={this.props.checked}
 					onChange={(id) => this.props.onChange(this.props.id)}
 				/>
 				<span className='circle-checkbox' />
@@ -27,23 +28,6 @@ class DogListItem extends Component {
 const DogListStyles = styled.li`
 	margin: 20px;
 
-	// .dog-img-container {
-	// 	width: 100%;
-	// 	height: 200px;
-	// 	box-shadow: 10px 10px #5d576b;
-	// 	border: 2px solid black;
-	// }
-
-	// .dog-img-container:active {
-	// 	box-shadow: none;
-	// }
-
-	// .dog-list-img {
-	// 	width: 200px;
-	// 	height: 100%;
-	// 	object-fit: cover;
-	// }
-
 	input.dog-selection-checkbox {
 		position: relative;
 		right: 42%;
@@ -51,17 +35,6 @@ const DogListStyles = styled.li`
 		border: 1px solid black;
 		border-radius: 10px;
 	}
-
-	// .dogs-list-name {
-	// 	color: #fcfcfc;
-	// 	background-color: #011627;
-	// 	font-size: 24px;
-	// 	font-weight: bolder;
-	// 	height: 40px;
-	// 	line-height: 40px;
-	// 	position: relative;
-	// 	top: -71px;
-	// }
 `;
 
 export default DogListItem;
