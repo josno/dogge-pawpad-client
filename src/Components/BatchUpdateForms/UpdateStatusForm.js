@@ -36,10 +36,17 @@ const UpdateStatusForm = (props) => {
 			if (!response) {
 				setError("Something wrong happened. Try again later.");
 			}
-			props.updateDogs();
 
+			props.resetSelected([]);
 			props.setModal(false);
+			props.updateDogs();
 		});
+	};
+
+	const closeUpdateStatusForm = () => {
+		props.resetSelected([]);
+		props.setModal(false);
+		props.setChecked(false);
 	};
 
 	return (
@@ -60,7 +67,7 @@ const UpdateStatusForm = (props) => {
 			</label>
 
 			<ButtonWrapperStyles>
-				<button onClick={() => props.setModal(false)}>Cancel</button>
+				<button onClick={() => closeUpdateStatusForm()}>Cancel</button>
 				<button>Submit</button>
 			</ButtonWrapperStyles>
 		</UpdateStatusFormStyles>
