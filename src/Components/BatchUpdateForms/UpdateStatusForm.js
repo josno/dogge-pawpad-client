@@ -1,8 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import config from "../../config";
 import TokenService from "../../services/token-service";
-import PawPadContext from "../../PawPadContext";
+import Button from "../Button";
 
 const statusList = ["Current", "Archived"];
 
@@ -10,8 +10,7 @@ const UpdateStatusForm = (props) => {
 	const [status, setStatus] = useState("");
 	const [error, setError] = useState(null);
 
-	const onSubmit = (e) => {
-		e.preventDefault();
+	const onSubmit = () => {
 		let list = props.selectedDogs.map((dogId) => {
 			return {
 				fetchUrl: `${config.API_ENDPOINT}/dogs/${dogId}`,
@@ -50,7 +49,7 @@ const UpdateStatusForm = (props) => {
 	};
 
 	return (
-		<UpdateStatusFormStyles onSubmit={(e) => onSubmit(e)}>
+		<UpdateStatusFormStyles>
 			<label>
 				Select Status
 				<div className='button-selection-container'>
@@ -59,7 +58,7 @@ const UpdateStatusForm = (props) => {
 							key={index}
 							type='button'
 							value={s}
-							className='status-button'
+							className={`status-button ${status === s ? "clicked" : ""}`}
 							onClick={() => setStatus(s)}
 						/>
 					))}
@@ -67,8 +66,8 @@ const UpdateStatusForm = (props) => {
 			</label>
 
 			<ButtonWrapperStyles>
-				<button onClick={() => closeUpdateStatusForm()}>Cancel</button>
-				<button>Submit</button>
+				<Button handleClick={() => closeUpdateStatusForm()}>Cancel</Button>
+				<Button handleClick={() => onSubmit()}>Submit</Button>
 			</ButtonWrapperStyles>
 		</UpdateStatusFormStyles>
 	);
@@ -79,7 +78,30 @@ const UpdateStatusFormStyles = styled.form`
 	flex-direction: column;
 	padding: 20px 0px 10px 0px;
 	justify-content: space-between;
-	height: 150px;
+	max-width: 250px;
+
+	.status-button {
+		font-weight: bold;
+		padding: 5px;
+		font-size: 1em;
+		width: 50%;
+		color: #f7567c;
+		border: 2px solid #f7567c;
+		background-color: white;
+		margin: 10px;
+		:focus {
+			display: none;
+		}
+		:hover {
+			cursor: pointer;
+		}
+	}
+
+	.clicked {
+		color: white;
+		background-color: #f7567c;
+	}
+
 	label {
 		display: flex;
 		flex-direction: column;
@@ -87,8 +109,12 @@ const UpdateStatusFormStyles = styled.form`
 	.button-selection-container {
 		margin-top: 10px;
 		display: flex;
+		flex-direction: column;
+		padding-top: 10px;
+		padding-bottom: 20px;
+		align-items: center;
 		justify-content: space-evenly;
-		width: 270px;
+		width: 200px;
 	}
 `;
 
