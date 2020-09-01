@@ -11,6 +11,7 @@ import TokenService from "../../services/token-service";
 import UpdateBar from "../../Components/UpdateBar";
 import { Modal } from "react-responsive-modal";
 import UpdateStatusForm from "../../Components/BatchUpdateForms/UpdateStatusForm";
+import DeleteDogForm from "../../Components/DeleteDogForm";
 
 const DogList = (props) => {
 	const [error, setError] = useState("");
@@ -18,7 +19,7 @@ const DogList = (props) => {
 	const [dogSearch, setDogSearch] = useState("");
 	const [view, setView] = useState("");
 	const [selected, setSelected] = useState([]);
-	const [updateType, setType] = useState("");
+	const [updateType, setType] = useState();
 	const [isOpen, setIsOpen] = useState(false);
 
 	const getDogs = () => {
@@ -61,6 +62,7 @@ const DogList = (props) => {
 			if (dog.id === id) {
 				dog.checked = !dog.checked;
 			}
+			return dog;
 		});
 	};
 
@@ -112,6 +114,14 @@ const DogList = (props) => {
 							setChecked={() => setChecked()}
 							resetSelected={setSelected}
 							{...props}
+						/>
+					) : updateType === "delete" ? (
+						<DeleteDogForm
+							selectedDogs={selected}
+							setModal={() => setIsOpen()}
+							updateDogs={() => getDogs()}
+							setChecked={() => setChecked()}
+							resetSelected={setSelected}
 						/>
 					) : null}
 					{/* Based on status type put update modal here */}
