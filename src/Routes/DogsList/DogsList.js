@@ -12,6 +12,7 @@ import UpdateBar from "../../Components/UpdateBar";
 import { Modal } from "react-responsive-modal";
 import UpdateStatusForm from "../../Components/BatchUpdateForms/UpdateStatusForm";
 import DeleteDogForm from "../../Components/DeleteDogForm";
+import BatchShotForm from "../../Components/BatchUpdateForms/BatchShotForm";
 
 const DogList = (props) => {
 	const [error, setError] = useState("");
@@ -123,8 +124,15 @@ const DogList = (props) => {
 							setChecked={() => setChecked()}
 							resetSelected={setSelected}
 						/>
-					) : null}
-					{/* Based on status type put update modal here */}
+					) : (
+						<BatchShotForm
+							selectedDogs={selected}
+							setModal={() => setIsOpen()}
+							updateDogs={() => getDogs()}
+							setChecked={() => setChecked()}
+							resetSelected={setSelected}
+						/>
+					)}
 				</Modal>
 
 				<label className='search-box ' aria-label='search'>
@@ -244,6 +252,7 @@ const DogListStyles = styled.main`
 	.dog-list-actions {
 		border: 1px solid black;
 		background-color: #fcfcfc;
+		padding: 10px 30px;
 	}
 
 	.search-dog {
