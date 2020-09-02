@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
-const DropDown = (props) => {
+const DropDown = ({ list, label, onClick }) => {
 	const [isListOpen, setIsListOpen] = useState(false);
-	const [filterLabel, setFilterLabel] = useState(props.label);
+	const [filterLabel, setFilterLabel] = useState(label);
 
 	const handleClick = (value) => {
 		value === "None" ? setFilterLabel("Filter") : setFilterLabel(value);
-		props.onClick(value);
+		onClick(value);
 		setIsListOpen(!isListOpen);
 	};
 
@@ -23,7 +23,7 @@ const DropDown = (props) => {
 			</div>
 			{isListOpen && (
 				<ul className='list-container'>
-					{props.list.map((item, index) => (
+					{list.map((item, index) => (
 						<li
 							className='list-item list-text'
 							key={index}
@@ -41,11 +41,9 @@ const DropDown = (props) => {
 
 const DropDownStyles = styled.div`
 	width: 100%;
-	margin: 20px;
-	@media (min-width: 500px) {
-		width: 120px;
-		margin: 0px 10px;
-	}
+	margin: 0px 10px;
+	position: relative;
+	font-size: 1rem;
 	.list-label {
 		position: relative;
 		z-index: 1;
@@ -63,10 +61,11 @@ const DropDownStyles = styled.div`
 		margin: 0px;
 		background-color: #fcfcfc;
 		border-top: none;
-		position: ${(props) => (props.modal ? "absolute" : "relative")};
-		width: ${(props) => (props.modal ? "100%" : "")};
 		z-index: 1;
+		position: absolute;
+		width: 100%;
 	}
+
 	.list-item {
 		text-align: left;
 		list-style: none;
