@@ -63,7 +63,8 @@ const DropDownStyles = styled.div`
 		margin: 0px;
 		background-color: #fcfcfc;
 		border-top: none;
-		position: relative;
+		position: ${(props) => (props.modal ? "absolute" : "relative")};
+		width: ${(props) => (props.modal ? "100%" : "")};
 		z-index: 1;
 	}
 	.list-item {
@@ -73,6 +74,12 @@ const DropDownStyles = styled.div`
 	.list-text:hover {
 		cursor: pointer;
 		color: #219eb8;
+	}
+
+	.dog-list-actions {
+		border: 1px solid black;
+		background-color: #fcfcfc;
+		padding: 10px 30px;
 	}
 `;
 

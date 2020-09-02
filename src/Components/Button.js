@@ -27,6 +27,9 @@ const ButtonStyles = styled.div`
 		box-shadow: none;
 		transform: translateY(1px);
 	}
+	:focus {
+		border: 2px solid white;
+	}
 `;
 
 export default Button;
