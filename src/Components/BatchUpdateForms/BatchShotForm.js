@@ -4,6 +4,7 @@ import Button from "../Button";
 import DropDown from "../DropDown";
 import DatePicker from "react-datepicker";
 import DogsApiService from "../../services/api-service";
+import moment from "moment";
 
 const BatchShotForm = ({
 	selectedDogs,
@@ -27,8 +28,16 @@ const BatchShotForm = ({
 	}, []);
 
 	const onSubmit = () => {
+		const dateString = moment(date).format("YYYY-MM-DD");
+
+		const shotObj = {
+			shot_name: shotName,
+			shot_date: dateString,
+		};
 		Promise.all(
-			selectedDogs.map((dogId) => DogsApiService.deleteDog(dogId))
+			selectedDogs.map((dogId) =>
+				DogsApiService.updateDogShotByDogId(shotObj, dogId)
+			)
 		).then((response) => {
 			if (!response) {
 				setError("Something wrong happened. Try again later.");
@@ -41,45 +50,26 @@ const BatchShotForm = ({
 	};
 
 	return (
-		<BatchShotFormStyles type={updateType}>
-			{updateType === "update" && (
-				<>
-					{" "}
-					<label>Update Shot</label>
-					<DropDown
-						modal={true}
-						list={shotList}
-						label='Select Shot'
-						onClick={(value) => setShotName(value)}
-					/>
-					<DatePicker
-						selected={date}
-						dateFormat='dd/MM/yyyy'
-						onChange={(date) => setDate(date)}
-						placeholderText='Select date'
-						className='input-style-custom'
-						required
-					/>
-					<div className='button-container'>
-						<Button handleClick={() => setUpdateType("")}>Back</Button>
-						<Button>Submit</Button>
-					</div>
-				</>
-			)}
-			{updateType === "add" && (
-				<>
-					<label>Add Shot</label>
-				</>
-			)}
-
-			{!updateType && (
-				<div className='button-container'>
-					<Button handleClick={() => setUpdateType("add")}>Add Shot</Button>
-					<Button handleClick={() => setUpdateType("update")}>
-						Update Shot
-					</Button>
-				</div>
-			)}
+		<BatchShotFormStyles>
+			<>
+				{" "}
+				<label>Update Shot</label>
+				<DropDown
+					modal={true}
+					list={shotList}
+					label='Select Shot'
+					onClick={(value) => setShotName(value)}
+				/>
+				<DatePicker
+					selected={date}
+					dateFormat='dd/MM/yyyy'
+					onChange={(date) => setDate(date)}
+					placeholderText='Select date'
+					className='input-style-custom'
+					required
+				/>
+				<Button handleClick={() => onSubmit()}>Submit</Button>
+			</>
 		</BatchShotFormStyles>
 	);
 };
@@ -87,20 +77,15 @@ const BatchShotForm = ({
 const BatchShotFormStyles = styled.form`
 	max-width: 500px;
 	max-height: 600px;
-	height: ${(props) => (!props.type ? "200px" : "400px")};
+	height: 400px;
 	width: 300px;
 	align-items: center;
 	justify-content: space-evenly;
 	display: flex;
-	flex-direction: ${(props) => (!props.type ? "row" : "column")};
+	flex-direction: column;
 	padding: 10px;
 	transition: 0.3s;
-	.button-container {
-		display: flex;
-		width: 100%;
-		align-items: center;
-		justify-content: space-evenly;
-	}
+
 	.input-style-custom {
 		width: 100%;
 		width: 100%;

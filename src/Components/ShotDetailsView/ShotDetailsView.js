@@ -13,8 +13,12 @@ class ShotDetailsView extends Component {
 	}
 
 	formatDate(date) {
-		const formattedDate = moment(date).format("LL");
-		return formattedDate;
+		let formattedDate = moment(date).format("LL");
+		if (formattedDate === "Invalid date") {
+			return moment(date, "DD-MM-YYYY").format("LL");
+		} else {
+			return formattedDate;
+		}
 	}
 
 	changeEditMode = (e) => {
