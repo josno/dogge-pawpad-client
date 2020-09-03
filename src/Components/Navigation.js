@@ -90,6 +90,7 @@ const NavigationStyles = styled.div`
 	}
 	,
 	.nav-title {
+		transition: 0.2s;
 		padding-left: 10px;
 		text-align: left;
 		flex-grow: 1;

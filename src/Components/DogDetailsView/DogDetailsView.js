@@ -38,6 +38,7 @@ class DogDetailsView extends Component {
 	}
 
 	handleDateChange = (name, date) => {
+		console.log(date);
 		const curVal = this.state[name];
 
 		this.setState({

@@ -128,7 +128,7 @@ const DogsApiService = {
 		);
 	},
 	getShots(dogId) {
-		return fetch(`${config.API_ENDPOINT}/shots/${dogId}`, {
+		return fetch(`${config.API_ENDPOINT}/shots/dogs/${dogId}`, {
 			headers: {
 				Authorization: `Bearer ${TokenService.getAuthToken()}`,
 			},
@@ -147,6 +147,22 @@ const DogsApiService = {
 		};
 		return fetch(
 			`${config.API_ENDPOINT}/shots/${shotId}`,
+			shotToUpdate
+		).then((res) =>
+			!res.ok ? res.json().then((e) => Promise.reject(e)) : null
+		);
+	},
+	updateDogShotByDogId(shot, dogId) {
+		const shotToUpdate = {
+			method: "PATCH",
+			headers: {
+				"content-type": "application/json",
+				Authorization: `Bearer ${TokenService.getAuthToken()}`,
+			},
+			body: JSON.stringify(shot),
+		};
+		return fetch(
+			`${config.API_ENDPOINT}/shots/dogs/${dogId}`,
 			shotToUpdate
 		).then((res) =>
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : null
