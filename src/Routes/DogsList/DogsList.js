@@ -106,7 +106,12 @@ const DogList = (props) => {
 				{selected.length > 0 && (
 					<UpdateBar onClick={(type) => setUpdateType(type)} />
 				)}
-				<Modal open={isOpen} onClose={() => setIsOpen(!isOpen)} center>
+				<Modal
+					open={isOpen}
+					onClose={() => setIsOpen(!isOpen)}
+					showCloseIcon={false}
+					center
+				>
 					{updateType === "status" ? (
 						<UpdateStatusForm
 							selectedDogs={selected}
@@ -114,7 +119,6 @@ const DogList = (props) => {
 							updateDogs={() => getDogs()}
 							setChecked={() => setChecked()}
 							resetSelected={setSelected}
-							{...props}
 						/>
 					) : updateType === "delete" ? (
 						<DeleteDogForm
@@ -129,7 +133,6 @@ const DogList = (props) => {
 							selectedDogs={selected}
 							setModal={() => setIsOpen()}
 							updateDogs={() => getDogs()}
-							setChecked={() => setChecked()}
 							resetSelected={setSelected}
 						/>
 					)}

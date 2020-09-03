@@ -50,7 +50,7 @@ const DropDownStyles = styled.div`
 		height: 30px;
 		display: flex;
 		align-items: center;
-		justify-content: space-evenly;
+		justify-content: space-between;
 		height: 40px;
 	}
 	.list-container {
@@ -64,6 +64,9 @@ const DropDownStyles = styled.div`
 		z-index: 1;
 		position: absolute;
 		width: 100%;
+		height: 100px;
+		overflow-y: scroll;
+		overflow-x: hidden;
 	}
 
 	.list-item {

@@ -41,7 +41,7 @@ const UpdateBarStyles = styled.div`
 	top: 60px;
 	width: 350px;
 	top: 28%;
-    left: 50%;
+	left: 50%;
 	margin-left: -175px;
 	span {
 		display: none;
@@ -67,7 +67,7 @@ const UpdateBarStyles = styled.div`
 		background-color: transparent;
 	}
 	button:focus {
-		none;
+		outline: none;
 	}
 `;
 
