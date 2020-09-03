@@ -33,31 +33,44 @@ const BatchShotForm = ({
 		setNewShot(e.target.value);
 	};
 
+	const handleSelection = (shot) => {
+		if (shot === "Add A New Shot") {
+			setAddMode(true);
+		} else {
+			setShotName(shot);
+		}
+	};
+
+	const updateShot = (dateString) => {
+		const shotObj = {
+			shot_name: shotName,
+			shot_date: dateString,
+		};
+		return Promise.all(
+			selectedDogs.map((dogId) => {
+				return DogsApiService.updateDogShotByDogId(shotObj, dogId);
+			})
+		);
+	};
+
+	const addShot = (dateString) => {
+		const newShotObj = {
+			shot_name: newShot,
+			shot_date: dateString,
+			shot_iscompleted: true,
+		};
+		return Promise.all(
+			selectedDogs.map((dogId) => {
+				newShotObj.dog_id = dogId;
+				return DogsApiService.insertNewShot(newShotObj);
+			})
+		);
+	};
+
 	const onSubmit = () => {
 		const dateString = moment(date).format("YYYY-MM-DD");
 
-		const request = addMode
-			? Promise.all(
-					selectedDogs.map((dogId) => {
-						const newShotObj = {
-							shot_name: newShot,
-							shot_date: dateString,
-							shot_iscompleted: true,
-							dog_id: dogId,
-						};
-
-						return DogsApiService.insertNewShot(newShotObj);
-					})
-			  )
-			: Promise.all(
-					selectedDogs.map((dogId) => {
-						const shotObj = {
-							shot_name: shotName,
-							shot_date: dateString,
-						};
-						return DogsApiService.updateDogShotByDogId(shotObj, dogId);
-					})
-			  );
+		const request = addMode ? addShot(dateString) : updateShot(dateString);
 
 		request.then((response) => {
 			if (!response) {
@@ -79,14 +92,14 @@ const BatchShotForm = ({
 	return (
 		<BatchShotFormStyles>
 			<>
-				{shotName !== "Add A New Shot" ? (
+				{!addMode ? (
 					<>
-						<label>Shot To Upate</label>
+						<label>Shot To Update</label>
 						<DropDown
 							modal={true}
 							list={shotList}
 							label='Select Shot'
-							onClick={(value) => setShotName(value)}
+							onClick={(value) => handleSelection(value)}
 							required
 						/>
 					</>
@@ -116,7 +129,7 @@ const BatchShotForm = ({
 				{error && <ValidationError message={error} />}
 
 				<div className='container'>
-					{shotName === "Add A New Shot" && (
+					{addMode && (
 						<Button handleClick={() => setShotName("")}>Go Back</Button>
 					)}
 					<Button handleClick={() => handleCancel()}>Cancel</Button>

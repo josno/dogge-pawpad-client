@@ -25,6 +25,10 @@ NavItem.propTypes = {
 };
 
 const NavItemStyles = styled.div`
+	transition: 0.2s;
+	:hover {
+		transform: scale(1.2);
+	}
 	@media (min-width: 768px) {
 		flex-direction: row;
 		display: flex;
@@ -37,9 +41,6 @@ const NavItemStyles = styled.div`
 		.nav-icon {
 			width: 1.15em;
 			height: 1.15em;
-		}
-		.nav-icon:hover {
-			transform: scale(1.2);
 		}
 	}
 `;

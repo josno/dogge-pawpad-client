@@ -21,7 +21,7 @@ const DogList = (props) => {
 	const [view, setView] = useState("");
 	const [selected, setSelected] = useState([]);
 	const [updateType, setType] = useState();
-	const [isOpen, setIsOpen] = useState(false);
+	const [modalIsOpen, setModalIsOpen] = useState(false);
 
 	const getDogs = () => {
 		const shelterId = TokenService.getShelterToken();
@@ -93,7 +93,7 @@ const DogList = (props) => {
 
 	const setUpdateType = (type) => {
 		setType(type);
-		setIsOpen(true);
+		setModalIsOpen(true);
 	};
 
 	const setChecked = () => {
@@ -103,40 +103,9 @@ const DogList = (props) => {
 	return (
 		<DogListStyles>
 			<section className='search-filter-container'>
-				{selected.length > 0 && (
+				{selected.length > 0 && !modalIsOpen && (
 					<UpdateBar onClick={(type) => setUpdateType(type)} />
 				)}
-				<Modal
-					open={isOpen}
-					onClose={() => setIsOpen(!isOpen)}
-					showCloseIcon={false}
-					center
-				>
-					{updateType === "status" ? (
-						<UpdateStatusForm
-							selectedDogs={selected}
-							setModal={() => setIsOpen()}
-							updateDogs={() => getDogs()}
-							setChecked={() => setChecked()}
-							resetSelected={setSelected}
-						/>
-					) : updateType === "delete" ? (
-						<DeleteDogForm
-							selectedDogs={selected}
-							setModal={() => setIsOpen()}
-							updateDogs={() => getDogs()}
-							setChecked={() => setChecked()}
-							resetSelected={setSelected}
-						/>
-					) : (
-						<BatchShotForm
-							selectedDogs={selected}
-							setModal={() => setIsOpen()}
-							updateDogs={() => getDogs()}
-							resetSelected={setSelected}
-						/>
-					)}
-				</Modal>
 
 				<label className='search-box ' aria-label='search'>
 					<input
@@ -201,6 +170,38 @@ const DogList = (props) => {
 					Add Dog
 				</Link>
 			</button>
+
+			<Modal
+				open={modalIsOpen}
+				onClose={() => setModalIsOpen(!modalIsOpen)}
+				showCloseIcon={false}
+				center
+			>
+				{updateType === "status" ? (
+					<UpdateStatusForm
+						selectedDogs={selected}
+						setModal={() => setModalIsOpen()}
+						updateDogs={() => getDogs()}
+						setChecked={() => setChecked()}
+						resetSelected={setSelected}
+					/>
+				) : updateType === "delete" ? (
+					<DeleteDogForm
+						selectedDogs={selected}
+						setModal={() => setModalIsOpen()}
+						updateDogs={() => getDogs()}
+						setChecked={() => setChecked()}
+						resetSelected={setSelected}
+					/>
+				) : (
+					<BatchShotForm
+						selectedDogs={selected}
+						setModal={() => setModalIsOpen()}
+						updateDogs={() => getDogs()}
+						resetSelected={setSelected}
+					/>
+				)}
+			</Modal>
 		</DogListStyles>
 	);
 };
