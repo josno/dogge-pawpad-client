@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 import { Link } from "react-router-dom";
-import AdoptModal from "../../Components/AdoptModal/AdoptModal";
+import FosterAdopForm from "../../Components/FosterAdopForm/FosterAdopForm";
 import ArchiveModal from "../../Components/ArchiveModal/ArchiveModal";
 import ModalForm from "../../Components/ImgModalForm/ImgModalForm";
 
@@ -23,6 +23,7 @@ class DogInfo extends Component {
 		this.state = {
 			dogInfo: "",
 			openAdopt: false,
+			openFoster: false,
 			openArchive: false,
 			openProfileImg: false,
 			editShotMode: false,
@@ -33,6 +34,7 @@ class DogInfo extends Component {
 		this.handleArchive = this.handleArchive.bind(this);
 		this.updateDogImage = this.updateDogImage.bind(this);
 		this.handleDogAdoption = this.handleDogAdoption.bind(this);
+		this.handleDogFoster = this.handleDogFoster.bind(this);
 		this.changeShotEditMode = this.changeShotEditMode.bind(this);
 	}
 
@@ -97,6 +99,14 @@ class DogInfo extends Component {
 		});
 	};
 
+	handleDogFoster = () => {
+		const { dogInfo } = this.state;
+		this.setState({
+			dogInfo: { ...dogInfo, dog_status: "Fostered" },
+			openFoster: false,
+		});
+	};
+
 	updateDogImage(e, profileImg) {
 		e.preventDefault(e);
 		const profile_img = profileImg;
@@ -106,7 +116,6 @@ class DogInfo extends Component {
 
 		DogsApiService.deleteDogImg(formData, this.state.dogInfo.tag_number)
 			.then((res) => {
-
 				return DogsApiService.uploadDogImg(
 					formData,
 					this.state.dogInfo.tag_number
@@ -133,10 +142,10 @@ class DogInfo extends Component {
 
 	renderNavButtons = (dogInfo) => {
 		return (
-			<div className='nav-buttons'>
+			<div className="nav-buttons">
 				{dogInfo.dog_status === "Adopted" && (
 					<Link
-						className='delete'
+						className="delete"
 						to={{
 							pathname: `/adoption-details-${dogInfo.dog_name}/${dogInfo.id}`,
 							state: dogInfo,
@@ -146,18 +155,28 @@ class DogInfo extends Component {
 					</Link>
 				)}
 				{dogInfo.dog_status === "Current" && (
-					<button
-						className='delete'
-						name='openAdopt'
-						onClick={(e) => this.openModal(e)}
-					>
-						Adopted
-					</button>
+					<>
+						<button
+							className="delete"
+							name="openAdopt"
+							onClick={(e) => this.openModal(e)}
+						>
+							Adopted
+						</button>
+
+						<button
+							className="delete"
+							name="openFoster"
+							onClick={(e) => this.openModal(e)}
+						>
+							Fostered
+						</button>
+					</>
 				)}
 
-				<button className='see-notes'>
+				<button className="see-notes">
 					<Link
-						className='dog-link'
+						className="dog-link"
 						to={`/notes-${dogInfo.dog_name}/${dogInfo.id}`}
 					>
 						Notes
@@ -166,8 +185,8 @@ class DogInfo extends Component {
 
 				{dogInfo.dog_status !== "Archived" && (
 					<button
-						className='delete'
-						name='openArchive'
+						className="delete"
+						name="openArchive"
 						onClick={(e) => this.openModal(e)}
 					>
 						Archive
@@ -175,7 +194,7 @@ class DogInfo extends Component {
 				)}
 
 				{dogInfo.dog_status !== "Adopted" && (
-					<button className='delete' onClick={this.handleDelete}>
+					<button className="delete" onClick={this.handleDelete}>
 						Delete
 					</button>
 				)}
@@ -209,9 +228,21 @@ class DogInfo extends Component {
 					onClose={(e) => this.closeModal("openAdopt")}
 					center
 				>
-					<AdoptModal
+					<FosterAdopForm
+						type="adopt"
 						dogId={dogInfo.id}
 						updateDogInfo={this.handleDogAdoption}
+					/>
+				</Modal>
+				<Modal
+					open={this.state.openFoster}
+					onClose={(e) => this.closeModal("openFoster")}
+					center
+				>
+					<FosterAdopForm
+						type="foster"
+						dogId={dogInfo.id}
+						updateDogInfo={this.handleDogFoster}
 					/>
 				</Modal>
 			</>
@@ -220,7 +251,7 @@ class DogInfo extends Component {
 
 	renderAdoptionDetails = (id) => {
 		return (
-			<div className='adoption-details box-flex'>
+			<div className="adoption-details box-flex">
 				<AdoptionDetails dogId={id} />
 			</div>
 		);
@@ -228,16 +259,16 @@ class DogInfo extends Component {
 
 	renderDogImgName = (obj) => {
 		return (
-			<div className='dog-name'>
-				<img alt='dog-name' className='info-img' src={obj.profile_img} />
+			<div className="dog-name">
+				<img alt="dog-name" className="info-img" src={obj.profile_img} />
 				<button
-					className='edit-pencil edit-pencil-img'
-					name='openProfileImg'
+					className="edit-pencil edit-pencil-img"
+					name="openProfileImg"
 					onClick={(e) => this.openModal(e)}
 				>
 					&#9998;
 				</button>
-				<h1 className='dog-name-text'>{obj.dog_name}</h1>
+				<h1 className="dog-name-text">{obj.dog_name}</h1>
 			</div>
 		);
 	};
@@ -248,17 +279,17 @@ class DogInfo extends Component {
 
 	renderShots = (shots) => {
 		return (
-			<div className='shots-information box-flex'>
-				<h3 className='info-title'>Shots Completed</h3>
+			<div className="shots-information box-flex">
+				<h3 className="info-title">Shots Completed</h3>
 				<button
-					className='edit-shot-pencil edit-pencil'
+					className="edit-shot-pencil edit-pencil"
 					onClick={(e) => this.changeShotEditMode(e)}
 				>
 					&#9998;
 				</button>
 				{!this.state.editShotMode ? (
 					<>
-						<ul className='dog-info-text shot-container'>
+						<ul className="dog-info-text shot-container">
 							<ShotDetailsView shots={shots} />
 						</ul>
 					</>
@@ -273,7 +304,7 @@ class DogInfo extends Component {
 		return !obj.updated_by ? (
 			""
 		) : (
-			<div className='updated-by'>
+			<div className="updated-by">
 				<p>
 					Updated by {obj.updated_by} on{" "}
 					{this.formatDate(obj.notes_date_modified)}
@@ -296,8 +327,8 @@ class DogInfo extends Component {
 		const { dogInfo, shots } = this.state;
 
 		return (
-			<main className='dog-info'>
-				<div className='grid-container'>
+			<main className="dog-info">
+				<div className="grid-container">
 					{this.renderDogImgName(dogInfo)}
 					{this.renderNavButtons(dogInfo)}
 					{this.renderModals(dogInfo)}

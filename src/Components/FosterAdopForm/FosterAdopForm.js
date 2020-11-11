@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import "./AdoptModal.css";
+import "./FosterAdopForm.css";
 import DogsApiService from "../../services/api-service";
 import DatePicker from "react-datepicker";
 import Validate from "../../Utils/validation";
-import CountrySelect from "../../Components/CountrySelect/CountrySelect";
-import ValidationError from "../../Components/ValidationError/ValidationError";
+import CountrySelect from "../CountrySelect/CountrySelect";
+import ValidationError from "../ValidationError/ValidationError";
 
 import Encryption from "../../Utils/encryption";
 
-class AdoptModal extends Component {
+class FosterAdopForm extends Component {
 	constructor(props) {
 		super(props);
 
@@ -34,7 +34,9 @@ class AdoptModal extends Component {
 			},
 			error: null,
 		};
-		this.handleSubmit = this.handleSubmit.bind(this);
+
+		this.makeAdoption = this.makeAdoption.bind(this);
+		this.makeFoster = this.makeFoster.bind(this);
 	}
 
 	onChange = (e) => {
@@ -96,7 +98,11 @@ class AdoptModal extends Component {
 		return newAdoptionObj;
 	};
 
-	handleSubmit = (e) => {
+	makeFoster = (e) => {
+		//
+	};
+
+	makeAdoption = (e) => {
 		e.preventDefault();
 
 		const newAdoptionObj = this.makeAdoptionObj();
@@ -123,7 +129,7 @@ class AdoptModal extends Component {
 		if (adopterName.touched && adopterName.value.length > 0) {
 			return (
 				<ValidationError
-					className='adopt-error-style'
+					className="adopt-error-style"
 					message={Validate.validateName(adopterName.value)}
 				/>
 			);
@@ -135,7 +141,7 @@ class AdoptModal extends Component {
 		if (email.touched && email.value.length > 0) {
 			return (
 				<ValidationError
-					className='adopt-error-style'
+					className="adopt-error-style"
 					message={Validate.validateEmail(email.value)}
 				/>
 			);
@@ -147,7 +153,7 @@ class AdoptModal extends Component {
 		if (phone.touched && phone.value.length > 0) {
 			return (
 				<ValidationError
-					className='adopt-error-style'
+					className="adopt-error-style"
 					message={Validate.validatePhone(phone.value)}
 				/>
 			);
@@ -164,6 +170,8 @@ class AdoptModal extends Component {
 			country,
 		} = this.state;
 
+		const { type } = this.props;
+
 		const disabled =
 			Validate.validateName(adopterName.value) ||
 			Validate.validateEmail(email.value) ||
@@ -173,88 +181,93 @@ class AdoptModal extends Component {
 				: false;
 
 		return (
-			<div className='modal-inner'>
-				<h1> Adoption Info</h1>
+			<div className="modal-inner">
+				<h1>{type === "adopt" ? "Adoption" : "Foster"} Info</h1>
 				{this.state.error !== null && (
 					<ValidationError
-						className='center-error'
+						className="center-error"
 						message={this.state.error}
 					/>
 				)}
-				<form className='adopter-grid' onSubmit={(e) => this.handleSubmit(e)}>
-					<label className='name adopt-label'>
-						Adopter Name
+				<form
+					className="adopter-grid"
+					onSubmit={(e) =>
+						props.type === "adoption" ? this.makeAdoption : this.makeFoster
+					}
+				>
+					<label className="name adopt-label">
+						Name
 						<input
-							className='adopt-input adopt-input-style'
-							name='adopterName'
+							className="adopt-input adopt-input-style"
+							name="adopterName"
 							value={adopterName.value}
 							onChange={(e) => this.onChange(e)}
-							type='text'
+							type="text"
 							required
 						/>
 						{this.validateNameInput()}
 					</label>
-					<label className='adoption-date adopt-label'>
-						Adoption Date
+					<label className="adoption-date adopt-label">
+						Date
 						<DatePicker
-							className='adopt-input adopt-input-style'
+							className="adopt-input adopt-input-style"
 							selected={adoptionDate}
-							dateFormat='dd/MM/yyyy'
+							dateFormat="dd/MM/yyyy"
 							onChange={(date) => this.handleDateChange(date)}
 							required
 						/>
 					</label>
-					<label className='email adopt-label '>
-						Adopter Email
+					<label className="email adopt-label ">
+						Email
 						<input
-							className='adopt-input adopt-input-style'
-							name='email'
+							className="adopt-input adopt-input-style"
+							name="email"
 							value={email.value}
 							onChange={(e) => this.onChange(e)}
-							type='text'
+							type="text"
 							required
 						/>
 						{this.validateEmailInput()}
 					</label>
-					<label className='phone adopt-label'>
-						Adopter Phone
+					<label className="phone adopt-label">
+						Phone
 						<input
-							className='adopt-input adopt-input-style'
-							name='phone'
+							className="adopt-input adopt-input-style"
+							name="phone"
 							value={phone.value}
 							onChange={(e) => this.onChange(e)}
-							type='text'
+							type="text"
 						/>
 						{this.validatePhoneInput()}
 					</label>
-					<label className='contract adopt-label'>
+					<label className="contract adopt-label">
 						Contract
 						<input
-							className='adopt-input'
-							name='contract'
+							className="adopt-input"
+							name="contract"
 							onChange={(e) => this.handleFileChange(e)}
-							type='file'
-							accept='application/pdf'
+							type="file"
+							accept="application/pdf"
 						/>
 					</label>
-					<label className='country adopt-label'>
-						Adopter Country
+					<label className="country adopt-label">
+						Country
 						<CountrySelect
 							onChange={this.handleCountryChange}
 							styleClass={"adopt-input"}
 						/>
 					</label>
 
-					<label className='comment adopt-label '>
+					<label className="comment adopt-label ">
 						Comments
 						<textarea
-							className='adopt-comment-input adopt-input-style'
-							name='comment'
+							className="adopt-comment-input adopt-input-style"
+							name="comment"
 							value={comment.value}
 							onChange={(e) => this.onChange(e)}
 						/>
 					</label>
-					<button className='adoption-submit-button' disabled={disabled}>
+					<button className="adoption-submit-button" disabled={disabled}>
 						Submit
 					</button>
 				</form>
@@ -263,4 +276,4 @@ class AdoptModal extends Component {
 	}
 }
 
-export default AdoptModal;
+export default FosterAdopForm;
