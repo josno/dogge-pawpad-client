@@ -268,6 +268,17 @@ const DogsApiService = {
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
 		);
 	},
+	insertFoster(obj) {
+		return fetch(`${config.API_ENDPOINT}/foster`, {
+			method: "POST",
+			headers: {
+				authorization: `Bearer ${TokenService.getAuthToken()}`,
+			},
+			body: obj,
+		}).then((res) =>
+			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+		);
+	},
 };
 
 export default DogsApiService;

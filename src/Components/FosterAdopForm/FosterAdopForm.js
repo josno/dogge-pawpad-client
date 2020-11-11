@@ -13,11 +13,11 @@ class FosterAdopForm extends Component {
 		super(props);
 
 		this.state = {
-			adopterName: {
+			name: {
 				touched: false,
 				value: "",
 			},
-			adoptionDate: "",
+			date: "",
 			email: {
 				touched: false,
 				value: "",
@@ -56,7 +56,7 @@ class FosterAdopForm extends Component {
 
 	handleDateChange = (date) => {
 		this.setState({
-			adoptionDate: date,
+			date: date,
 		});
 	};
 
@@ -67,22 +67,15 @@ class FosterAdopForm extends Component {
 	};
 
 	makeAdoptionObj = () => {
-		const {
-			adopterName,
-			adoptionDate,
-			email,
-			phone,
-			country,
-			contract,
-		} = this.state;
+		const { name, date, email, phone, country, contract } = this.state;
 
-		const adopterNameValue = adopterName.value;
+		const adopterNameValue = name.value;
 		const emailValue = email.value;
 		const phoneValue = phone.value;
 
 		const objectToEncrypt = {
 			adopter_name: adopterNameValue,
-			adoption_date: adoptionDate,
+			adoption_date: date,
 			email: emailValue,
 			phone: phoneValue,
 			dog_id: this.props.dogId,
@@ -98,8 +91,50 @@ class FosterAdopForm extends Component {
 		return newAdoptionObj;
 	};
 
+	makeFosterObj = () => {
+		const { name, date, email, phone, country, contract } = this.state;
+
+		const fosterNameValue = name.value;
+		const emailValue = email.value;
+		const phoneValue = phone.value;
+
+		const objectToEncrypt = {
+			foster_name: fosterNameValue,
+			foster_date: date,
+			foster_email: emailValue,
+			foster_phone: phoneValue,
+			dog_id: this.props.dogId,
+			foster_country: country,
+		};
+
+		let data = Encryption.encryptData(objectToEncrypt);
+
+		const newFosterObj = new FormData();
+		newFosterObj.append("contract", contract);
+		newFosterObj.append("data", data);
+
+		return newFosterObj;
+	};
+
 	makeFoster = (e) => {
-		//
+		e.preventDefault();
+		const newFosterObj = this.makeFosterObj();
+
+		const newNote = {
+			date_created: new Date(),
+			notes: this.state.comment.value,
+			type_of_note: "foster",
+			dog_id: this.props.dogId,
+		};
+
+		Promise.all([
+			(DogsApiService.insertFoster(newFosterObj),
+			DogsApiService.insertNewNote(newNote)),
+		])
+			.then((res) => this.props.updateDogInfo())
+			.catch((err) =>
+				this.setState({ error: "Something went wrong. Try again later." })
+			);
 	};
 
 	makeAdoption = (e) => {
@@ -125,12 +160,12 @@ class FosterAdopForm extends Component {
 	};
 
 	validateNameInput = () => {
-		const { adopterName } = this.state;
-		if (adopterName.touched && adopterName.value.length > 0) {
+		const { name } = this.state;
+		if (name.touched && name.value.length > 0) {
 			return (
 				<ValidationError
 					className="adopt-error-style"
-					message={Validate.validateName(adopterName.value)}
+					message={Validate.validateName(name.value)}
 				/>
 			);
 		}
@@ -161,19 +196,12 @@ class FosterAdopForm extends Component {
 	};
 
 	render(props) {
-		const {
-			adopterName,
-			adoptionDate,
-			email,
-			phone,
-			comment,
-			country,
-		} = this.state;
+		const { name, date, email, phone, comment, country } = this.state;
 
 		const { type } = this.props;
 
 		const disabled =
-			Validate.validateName(adopterName.value) ||
+			Validate.validateName(name.value) ||
 			Validate.validateEmail(email.value) ||
 			Validate.validatePhone(phone.value) ||
 			!country
@@ -192,15 +220,15 @@ class FosterAdopForm extends Component {
 				<form
 					className="adopter-grid"
 					onSubmit={(e) =>
-						props.type === "adoption" ? this.makeAdoption : this.makeFoster
+						type === "adoption" ? this.makeAdoption(e) : this.makeFoster(e)
 					}
 				>
 					<label className="name adopt-label">
 						Name
 						<input
 							className="adopt-input adopt-input-style"
-							name="adopterName"
-							value={adopterName.value}
+							name="name"
+							value={name.value}
 							onChange={(e) => this.onChange(e)}
 							type="text"
 							required
@@ -211,7 +239,7 @@ class FosterAdopForm extends Component {
 						Date
 						<DatePicker
 							className="adopt-input adopt-input-style"
-							selected={adoptionDate}
+							selected={date}
 							dateFormat="dd/MM/yyyy"
 							onChange={(date) => this.handleDateChange(date)}
 							required
