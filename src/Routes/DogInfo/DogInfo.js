@@ -10,7 +10,7 @@ import DogDetailsView from "../../Components/DogDetailsView/DogDetailsView";
 import ShotDetailsView from "../../Components/ShotDetailsView/ShotDetailsView";
 import PawPadContext from "../../PawPadContext.js";
 import DogsApiService from "../../services/api-service";
-import AdoptionDetails from "../../Components/AdoptionDetails/AdoptionDetails";
+import FosterAdopDetails from "../../Components/FosterAdopDetails/FosterAdopDetails";
 import EditShots from "../../Components/EditShots/EditShots";
 
 import "./DogInfo.css";
@@ -198,6 +198,18 @@ class DogInfo extends Component {
 						Delete
 					</button>
 				)}
+
+				{dogInfo.dog_status === "Fostered" && (
+					<Link
+						className="delete"
+						to={{
+							pathname: `/foster-details-${dogInfo.dog_name}/${dogInfo.id}`,
+							state: dogInfo,
+						}}
+					>
+						Foster Details
+					</Link>
+				)}
 			</div>
 		);
 	};
@@ -252,7 +264,7 @@ class DogInfo extends Component {
 	renderAdoptionDetails = (id) => {
 		return (
 			<div className="adoption-details box-flex">
-				<AdoptionDetails dogId={id} />
+				<FosterAdopDetails dogId={id} />
 			</div>
 		);
 	};

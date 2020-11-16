@@ -220,7 +220,7 @@ class FosterAdopForm extends Component {
 				<form
 					className="adopter-grid"
 					onSubmit={(e) =>
-						type === "adoption" ? this.makeAdoption(e) : this.makeFoster(e)
+						type === "adopt" ? this.makeAdoption(e) : this.makeFoster(e)
 					}
 				>
 					<label className="name adopt-label">

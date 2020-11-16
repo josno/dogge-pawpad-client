@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import "./Adoption.css";
+import "./FosterAdopPage.css";
 import DogsApiService from "../../services/api-service";
-import AdoptionDetails from "../../Components/AdoptionDetails/AdoptionDetails";
+import FosterAdopDetails from "../../Components/FosterAdopDetails/FosterAdopDetails";
 import Modal from "react-responsive-modal";
 import Encryption from "../../Utils/encryption";
 
-class Adoption extends Component {
+class FosterAdopPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -48,13 +48,13 @@ class Adoption extends Component {
 		return this.state.error !== null ? (
 			<div>
 				<h2>{this.props.match.params.dogName} is now set to Current.</h2>
-				<Link className='delete' to='/dogs-list'>
+				<Link className="delete" to="/dogs-list">
 					Go Back To List
 				</Link>
 			</div>
 		) : (
 			<>
-				<AdoptionDetails
+				<FosterAdopDetails
 					info={this.state.adoptionInfo}
 					dogName={this.props.match.params.dogName}
 					undoAdoption={this.undoAdoption}
@@ -68,7 +68,7 @@ class Adoption extends Component {
 	renderUndoAdoptionButton = () => {
 		return (
 			<>
-				<button className='delete' onClick={() => this.undoAdoption()}>
+				<button className="delete" onClick={() => this.undoAdoption()}>
 					Undo Adoption
 				</button>
 			</>
@@ -105,13 +105,13 @@ class Adoption extends Component {
 
 	renderContractButton = () => {
 		return this.state.adoptionInfo.contract_url != null ? (
-			<button className='delete'>
+			<button className="delete">
 				<a href={this.state.adoptionInfo.contract_url} download>
 					View Contract
 				</a>
 			</button>
 		) : (
-			<button onClick={() => this.toggleUploadContract()} className='delete'>
+			<button onClick={() => this.toggleUploadContract()} className="delete">
 				Upload Contract
 			</button>
 		);
@@ -119,19 +119,19 @@ class Adoption extends Component {
 
 	contractForm = () => {
 		return (
-			<div className='adoption-contract-modal'>
-				<div className='contract-upload-div'>
+			<div className="adoption-contract-modal">
+				<div className="contract-upload-div">
 					<input
-						className='upload-contract-input'
-						name='contract'
+						className="upload-contract-input"
+						name="contract"
 						onChange={(e) => this.handleChange(e)}
-						type='file'
-						accept='application/pdf'
+						type="file"
+						accept="application/pdf"
 					/>
 				</div>
-				<div className='contract-upload-div'>
+				<div className="contract-upload-div">
 					<button
-						className='contract-upload-button delete'
+						className="contract-upload-button delete"
 						onClick={() => this.handleUploadContract()}
 					>
 						Upload
@@ -173,7 +173,7 @@ class Adoption extends Component {
 
 	render() {
 		return (
-			<div className='wrapper'>
+			<div className="wrapper">
 				{this.renderDetails()}
 				{this.renderContractModal()}
 			</div>
@@ -181,4 +181,4 @@ class Adoption extends Component {
 	}
 }
 
-export default Adoption;
+export default FosterAdopPage;
