@@ -10,7 +10,7 @@ class FosterAdopPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			adoptionInfo: "",
+			info: "",
 			showContractModal: false,
 			error: null,
 			contract: "",
@@ -25,14 +25,14 @@ class FosterAdopPage extends Component {
 	};
 
 	undoAdoption = () => {
-		const { dog_id } = this.state.adoptionInfo;
+		const { dog_id } = this.state.info;
 
 		DogsApiService.deleteAdoption(dog_id).then((res) => {
 			//refactor
-			DogsApiService.getAdoptionInfo(dog_id)
+			DogsApiService.getinfo(dog_id)
 				.then((res) => {
 					this.setState({
-						adoptionInfo: res,
+						info: res,
 						dog_status: res.dog_status,
 					});
 				})
@@ -55,7 +55,7 @@ class FosterAdopPage extends Component {
 		) : (
 			<>
 				<FosterAdopDetails
-					info={this.state.adoptionInfo}
+					info={this.state.info}
 					dogName={this.props.match.params.dogName}
 					undoAdoption={this.undoAdoption}
 				/>
@@ -89,14 +89,12 @@ class FosterAdopPage extends Component {
 		contractData.append("contract", this.state.contract);
 
 		DogsApiService.uploadContract(contractData, this.props.match.params.dogId)
-			.then((res) =>
-				DogsApiService.getAdoptionInfo(this.props.match.params.dogId)
-			)
+			.then((res) => DogsApiService.getinfo(this.props.match.params.dogId))
 			.then((res) => {
 				let data = Encryption.decryptData(res.data);
 
 				this.setState({
-					adoptionInfo: data,
+					info: data,
 					showContractModal: !this.state.showContractModal,
 				});
 			})
@@ -104,9 +102,9 @@ class FosterAdopPage extends Component {
 	};
 
 	renderContractButton = () => {
-		return this.state.adoptionInfo.contract_url != null ? (
+		return this.state.info.contract_url != null ? (
 			<button className="delete">
-				<a href={this.state.adoptionInfo.contract_url} download>
+				<a href={this.state.info.contract_url} download>
 					View Contract
 				</a>
 			</button>
@@ -155,23 +153,39 @@ class FosterAdopPage extends Component {
 
 	componentDidMount = () => {
 		const { dogId } = this.props.match.params;
-		DogsApiService.getAdoptionInfo(dogId)
-			.then((res) => {
-				let data = Encryption.decryptData(res.data);
+		this.props.type === "adoption"
+			? DogsApiService.getinfo(dogId)
+					.then((res) => {
+						let data = Encryption.decryptData(res.data);
 
-				this.setState({
-					adoptionInfo: data,
-					dog_status: data.dog_status,
-				});
-			})
-			.catch((resErr) => {
-				this.setState({
-					error: resErr.error,
-				});
-			});
+						this.setState({
+							info: data,
+							dog_status: data.dog_status,
+						});
+					})
+					.catch((resErr) => {
+						this.setState({
+							error: resErr.error,
+						});
+					})
+			: DogsApiService.getFosterInfo(dogId)
+					.then((res) => {
+						let data = Encryption.decryptData(res.data);
+
+						this.setState({
+							info: data,
+							dog_status: data.dog_status,
+						});
+					})
+					.catch((resErr) => {
+						this.setState({
+							error: resErr.error,
+						});
+					});
 	};
 
 	render() {
+		console.log(this.state.info);
 		return (
 			<div className="wrapper">
 				{this.renderDetails()}

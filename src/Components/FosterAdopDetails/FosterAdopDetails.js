@@ -10,38 +10,58 @@ export default function FosterAdopDetails(props) {
 
 	return (
 		<div className="adoption-details-container">
-			<h3 className="info-title">Adoption Details: {props.dogName} </h3>
+			<h3 className="info-title">
+				{props.info.adoption_date ? "Adoption" : "Foster"} Date Details:{" "}
+				{props.dogName}{" "}
+			</h3>
 			<ul className="adoption-info-text">
 				<li className="adoption-label adoption-date">
-					Adoption Date:
+					{props.info.adoption_date ? "Adoption" : "Foster"} Date
 					<div className="adopter-date-value adoption-value value-align">
-						{formatDate(props.info.adoption_date)}
+						{formatDate(props.info.adoption_date || props.info.foster_date)}
 					</div>
 				</li>
+				{props.info.foster_completed_on && (
+					<li className="adoption-label adoption-date">
+						Foster Completed Date
+						<div className="adopter-date-value adoption-value value-align">
+							{formatDate(props.info.foster_completed_on)}
+						</div>
+					</li>
+				)}
 				<li className="adoption-label adopt-name">
-					Adopter Name:
+					{props.info.adoption_date ? "Adoption" : "Foster"} Name:
 					<div className="adopter-name-value adoption-value value-align ">
-						{props.info.adopter_name}
+						{props.info.adopter_name || props.info.foster_name}
 					</div>
 				</li>
 
 				<li className="adoption-label adopter-email">
-					Adopter Email:
+					{props.info.adoption_date ? "Adoption" : "Foster"} Email:
 					<div className="adopter-email-value adoption-value value-align">
-						{props.info.adopter_email}
+						{props.info.adopter_email || props.info.foster_email}
 					</div>
 				</li>
 
 				<li className="adoption-label adopter-phone">
-					Adopter Phone Number:
+					{props.info.adoption_date ? "Adoption" : "Foster"} Phone Number:
 					<div className="adopter-phone-value adoption-value value-align">
-						{props.info.adopter_phone}
+						{props.info.adopter_phone || props.info.foster_phone}
 					</div>
 				</li>
+				{props.info.foster_address && (
+					<li className="adoption-label adopter-phone">
+						Foster Address:
+						<div className="adopter-phone-value adoption-value value-align">
+							{props.info.foster_address}
+						</div>
+					</li>
+				)}
+
 				<li className="adoption-label">
-					Adopter Country:
+					{props.info.adoption_date ? "Adoption" : "Foster"} Country:
 					<div className="adopter-country-value adoption-value value-align">
-						{props.info.adopter_country}
+						{props.info.adopter_country || props.info.foster_country}
 					</div>
 				</li>
 			</ul>
