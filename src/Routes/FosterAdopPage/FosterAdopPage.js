@@ -44,6 +44,10 @@ class FosterAdopPage extends Component {
 		});
 	};
 
+	undoFoster = () => {
+		console.log("undo foster clicked");
+	};
+
 	renderDetails = () => {
 		return this.state.error !== null ? (
 			<div>
@@ -57,7 +61,8 @@ class FosterAdopPage extends Component {
 				<FosterAdopDetails
 					info={this.state.info}
 					dogName={this.props.match.params.dogName}
-					undoAdoption={this.undoAdoption}
+					undoAdoption={() => this.undoAdoption()}
+					status={this.state.dog_status}
 				/>
 				{this.renderContractButton()}
 				{this.renderUndoAdoptionButton()}
@@ -68,8 +73,15 @@ class FosterAdopPage extends Component {
 	renderUndoAdoptionButton = () => {
 		return (
 			<>
-				<button className="delete" onClick={() => this.undoAdoption()}>
-					Undo Adoption
+				<button
+					className="delete"
+					onClick={
+						this.state.dog_status === "Adopted"
+							? () => this.undoAdoption()
+							: () => this.undoFoster()
+					}
+				>
+					Undo {this.state.dog_status === "Adopted" ? "Adoption" : "Foster"}
 				</button>
 			</>
 		);
@@ -185,7 +197,7 @@ class FosterAdopPage extends Component {
 	};
 
 	render() {
-		console.log(this.state.info);
+		console.log(this.state.dog_status);
 		return (
 			<div className="wrapper">
 				{this.renderDetails()}

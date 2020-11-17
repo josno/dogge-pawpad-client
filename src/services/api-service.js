@@ -279,6 +279,16 @@ const DogsApiService = {
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
 		);
 	},
+	getFosterInfo(dogId) {
+		return fetch(`${config.API_ENDPOINT}/foster/${dogId}`, {
+			method: "GET",
+			headers: {
+				authorization: `Bearer ${TokenService.getAuthToken()}`,
+			},
+		}).then((res) =>
+			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+		);
+	},
 };
 
 export default DogsApiService;
