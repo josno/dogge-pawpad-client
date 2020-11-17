@@ -7,7 +7,7 @@ import DogsList from "./Routes/DogsList/DogsList";
 import AddNewDog from "./Routes/AddNewDog/AddNewDog";
 import DogInfo from "./Routes/DogInfo/DogInfo";
 import Notes from "./Routes/Notes/Notes";
-import Adoption from "./Routes/Adoption/Adoption";
+import FosterAdopPage from "./Routes/FosterAdopPage/FosterAdopPage";
 import Login from "./Routes/Login/Login";
 import SignUp from "./Routes/SignUp/SignUp";
 import PawPadContext from "./PawPadContext.js";
@@ -39,28 +39,28 @@ const App = () => {
 				<SideNav handleOpen={() => handleIsOpen()} open={isOpen} />
 
 				<Switch>
-					<Route exact path='/' component={Home} />
-					<Route path='/login' component={Login} />
-					<Route path='/sign-up' component={SignUp} />
+					<Route exact path="/" component={Home} />
+					<Route path="/login" component={Login} />
+					<Route path="/sign-up" component={SignUp} />
 					{TokenService.hasAuthToken() ? (
 						<Route
-							path='/dogs-list'
+							path="/dogs-list"
 							render={(routeProps) => <DogsList {...routeProps} />}
 						/>
 					) : (
-						<Redirect to='/' />
+						<Redirect to="/" />
 					)}
 
 					{TokenService.hasAuthToken() ? (
-						<Route path='/add-new-dog' component={AddNewDog} />
+						<Route path="/add-new-dog" component={AddNewDog} />
 					) : (
-						<Redirect to='/' />
+						<Redirect to="/" />
 					)}
 
 					{TokenService.hasAuthToken() ? (
 						<Route
 							exact
-							path='/dog-info/:dogId'
+							path="/dog-info/:dogId"
 							render={(routeProps) => (
 								<DogInfo
 									dogId={routeProps.match.params.dogId}
@@ -70,13 +70,13 @@ const App = () => {
 							)}
 						/>
 					) : (
-						<Redirect to='/' />
+						<Redirect to="/" />
 					)}
 
 					{TokenService.hasAuthToken() ? (
 						<Route
 							exact
-							path='/notes-:dogName/:dogId'
+							path="/notes-:dogName/:dogId"
 							render={(routeProps) => (
 								<Notes
 									dogName={routeProps.match.params.dogName}
@@ -87,17 +87,31 @@ const App = () => {
 							)}
 						/>
 					) : (
-						<Redirect to='/' />
+						<Redirect to="/" />
 					)}
 
 					{TokenService.hasAuthToken() ? (
 						<Route
 							exact
-							path='/adoption-details-:dogName/:dogId'
-							render={(routeProps) => <Adoption {...routeProps} />}
+							path="/adoption-details-:dogName/:dogId"
+							render={(routeProps) => (
+								<FosterAdopPage {...routeProps} type="adoption" />
+							)}
 						/>
 					) : (
-						<Redirect to='/' />
+						<Redirect to="/" />
+					)}
+
+					{TokenService.hasAuthToken() ? (
+						<Route
+							exact
+							path="/foster-details-:dogName/:dogId"
+							render={(routeProps) => (
+								<FosterAdopPage {...routeProps} type="foster" />
+							)}
+						/>
+					) : (
+						<Redirect to="/" />
 					)}
 				</Switch>
 			</PawPadContext.Provider>

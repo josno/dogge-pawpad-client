@@ -29,7 +29,7 @@ class FosterAdopPage extends Component {
 
 		DogsApiService.deleteAdoption(dog_id).then((res) => {
 			//refactor
-			DogsApiService.getinfo(dog_id)
+			DogsApiService.getDogInfo(dog_id)
 				.then((res) => {
 					this.setState({
 						info: res,
@@ -45,11 +45,27 @@ class FosterAdopPage extends Component {
 	};
 
 	undoFoster = () => {
-		console.log("undo foster clicked");
+		const { dog_id } = this.state.info;
+
+		DogsApiService.deleteFoster(dog_id).then((res) => {
+			//refactor
+			DogsApiService.getDogInfo(dog_id)
+				.then((res) => {
+					this.setState({
+						info: res,
+						dog_status: res.dog_status,
+					});
+				})
+				.catch((resErr) => {
+					this.setState({
+						error: resErr.error,
+					});
+				});
+		});
 	};
 
 	renderDetails = () => {
-		return this.state.error !== null ? (
+		return this.state.dog_status === "Current" ? (
 			<div>
 				<h2>{this.props.match.params.dogName} is now set to Current.</h2>
 				<Link className="delete" to="/dogs-list">
@@ -166,7 +182,7 @@ class FosterAdopPage extends Component {
 	componentDidMount = () => {
 		const { dogId } = this.props.match.params;
 		this.props.type === "adoption"
-			? DogsApiService.getinfo(dogId)
+			? DogsApiService.getAdoptionInfo(dogId)
 					.then((res) => {
 						let data = Encryption.decryptData(res.data);
 
@@ -197,7 +213,6 @@ class FosterAdopPage extends Component {
 	};
 
 	render() {
-		console.log(this.state.dog_status);
 		return (
 			<div className="wrapper">
 				{this.renderDetails()}

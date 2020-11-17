@@ -289,6 +289,14 @@ const DogsApiService = {
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
 		);
 	},
+	deleteFoster(dogId) {
+		return fetch(`${config.API_ENDPOINT}/foster/${dogId}`, {
+			method: "DELETE",
+			headers: {
+				authorization: `Bearer ${TokenService.getAuthToken()}`,
+			},
+		});
+	},
 };
 
 export default DogsApiService;
