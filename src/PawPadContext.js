@@ -1,10 +1,8 @@
-import React from 'react';
+import React from "react";
 
 const PawPadContext = React.createContext({
-	isLoggedIn: '',
+	isLoggedIn: "",
 	handleLogInState: () => {},
-	firstName: '',
-	saveFirstName: () => {}
 });
 
 export default PawPadContext;

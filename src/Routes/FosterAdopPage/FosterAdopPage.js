@@ -46,9 +46,7 @@ class FosterAdopPage extends Component {
 
 	undoFoster = () => {
 		const { dog_id } = this.state.info;
-
 		DogsApiService.deleteFoster(dog_id).then((res) => {
-			//refactor
 			DogsApiService.getDogInfo(dog_id)
 				.then((res) => {
 					this.setState({
