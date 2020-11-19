@@ -102,37 +102,37 @@ const DogList = (props) => {
 
 	return (
 		<DogListStyles>
-			<section className='search-filter-container'>
+			<section className="search-filter-container">
 				{selected.length > 0 && !modalIsOpen && (
 					<UpdateBar onClick={(type) => setUpdateType(type)} />
 				)}
 
-				<label className='search-box ' aria-label='search'>
+				<label className="search-box " aria-label="search">
 					<input
-						className='search-dog dog-list-actions'
-						type='text'
-						name='dogSearch'
+						className="search-dog dog-list-actions"
+						type="text"
+						name="dogSearch"
 						value={dogSearch}
 						onChange={handleChange}
-						placeholder='Search by name...'
+						placeholder="Search by name..."
 					/>
 				</label>
-				<div className='filters-container'>
+				<div className="filters-container">
 					<DropDown
-						label='Filter'
+						label="Filter"
 						list={["Current", "Adopted", "Archived", "None"]}
 						onClick={(value) => setFilter(value)}
 					/>
 					<DropDown
-						label='Sort'
+						label="Sort"
 						list={["A-Z", "Z-A"]}
 						onClick={(sortType) => handleSort(sortType)}
 					/>
 				</div>
 			</section>
 
-			<section className='list-container'>
-				<ul className='dogs-list'>
+			<section className="list-container">
+				<ul className="dogs-list">
 					{/* Fix THIS */}
 
 					{view === "" && !error
@@ -143,9 +143,9 @@ const DogList = (props) => {
 										key={d.id}
 										onChange={(id) => updateSelected(id)}
 										checked={d.checked}
-									>
-										<DogItemImage img={d.profile_img} name={d.dog_name} />
-									</DogListItem>
+										img={d.profile_img}
+										name={d.dog_name}
+									/>
 								);
 						  })
 						: filteredDogs.map((d) => {
@@ -165,8 +165,8 @@ const DogList = (props) => {
 				</ul>
 			</section>
 
-			<button className='add-a-dog-button add-dog'>
-				<Link className='add-dog-link' to={"/add-new-dog"}>
+			<button className="add-a-dog-button add-dog">
+				<Link className="add-dog-link" to={"/add-new-dog"}>
 					Add Dog
 				</Link>
 			</button>
