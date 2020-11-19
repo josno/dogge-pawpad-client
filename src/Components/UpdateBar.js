@@ -10,20 +10,20 @@ const UpdateBar = (props) => {
 			<ul>
 				<li>
 					<button onClick={() => props.onClick("status")}>
-						<FaInfoCircle fill='white' size={"20px"} />
-						<span className='button-text'>Update Status</span>
+						<FaInfoCircle fill="white" size={"20px"} />
+						<span className="button-text">Update Status</span>
 					</button>
 				</li>
 				<li>
 					<button onClick={() => props.onClick("shot")}>
-						<FaSyringe fill='white' size={"20px"} />
-						<span className='button-text'>Update Shots</span>
+						<FaSyringe fill="white" size={"20px"} />
+						<span className="button-text">Update Shots</span>
 					</button>
 				</li>
 				<li>
 					<button onClick={() => props.onClick("delete")}>
-						<FaTrashAlt fill='white' size={"20px"} />
-						<span className='button-text'>Delete</span>
+						<FaTrashAlt fill="white" size={"20px"} />
+						<span className="button-text">Delete</span>
 					</button>
 				</li>
 			</ul>
@@ -37,12 +37,13 @@ const UpdateBarStyles = styled.div`
 	padding: 5px;
 	font-size: 0.8em;
 	background-color: #00636f;
-	position: absolute;
+	position: fixed;
 	top: 60px;
 	width: 350px;
 	top: 28%;
 	left: 50%;
 	margin-left: -175px;
+	z-index: 3;
 	span {
 		display: none;
 	}
