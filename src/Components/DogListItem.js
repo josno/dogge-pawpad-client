@@ -59,7 +59,7 @@ const DogListStyles = styled.li`
 		z-index: 1;
 	}
 
-	@media (min-width: 1200px) {
+	@media (min-width: 1000px) {
 		width: 100%;
 		display: flex;
 		border-radius: 10px;
@@ -110,7 +110,7 @@ const DogImgStyles = styled.div`
 		z-index: 2;
 	}
 
-	@media (min-width: 1200px) {
+	@media (min-width: 1000px) {
 		box-shadow: none;
 		border: 0px;
 		.dogs-list-name {
@@ -121,7 +121,7 @@ const DogImgStyles = styled.div`
 
 const DetailContainerStyles = styled.ul`
 	display: none;
-	@media (min-width: 1200px) {
+	@media (min-width: 1000px) {
 		width: 100%;
 		display: flex;
 		justify-content: space-between;

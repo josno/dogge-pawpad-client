@@ -111,9 +111,25 @@ const DogList = (props) => {
 		}
 	};
 
+	const totalDogs = dogs.length > 0 && dogs.length;
+	const adoptedDogs =
+		dogs.length > 0 && dogs.filter((a) => a.dog_status === "Adopted").length;
+	const fosteredDogs =
+		dogs.length > 0 && dogs.filter((a) => a.dog_status === "Fostered").length;
+
 	return (
 		<DogListStyles>
-			<section>Overview Total Dogs: Dogs Adopted: Dogs Fostered:</section>
+			<OverviewCountStyles>
+				<div className="container">
+					<span className="container-title">Total Dogs:</span> {totalDogs}
+				</div>
+				<div className="container">
+					<span className="container-title">Dogs Adopted:</span> {adoptedDogs}
+				</div>
+				<div className="container">
+					<span className="container-title">Dogs Fostered:</span> {fosteredDogs}
+				</div>
+			</OverviewCountStyles>
 			<section className="search-filter-container">
 				{selected.length > 0 && !modalIsOpen && (
 					<UpdateBar onClick={(type) => setUpdateType(type)} />
@@ -145,8 +161,6 @@ const DogList = (props) => {
 
 			<section className="dog-list-container">
 				<ul className="dogs-list">
-					{/* Fix THIS */}
-
 					{view === "" && !error
 						? filteredDogs.map((d) => {
 								return (
@@ -287,7 +301,7 @@ const DogListStyles = styled.main`
 	.search-filter-container {
 		width: 100%;
 		height: 100px;
-		padding-top: 10px;
+		padding-top: 20px;
 		display: flex;
 		flex-direction: column;
 	}
@@ -321,6 +335,22 @@ const DogListStyles = styled.main`
 		.search-dog {
 			width: 30vw;
 		}
+	}
+`;
+
+const OverviewCountStyles = styled.section`
+	width: 100%;
+	padding: 10px 7%;
+	display: flex;
+	justify-content: flex-start;
+
+	.container {
+		padding: 10px;
+		font-weight: bold;
+	}
+
+	.container-title {
+		font-weight: 500;
 	}
 `;
 
