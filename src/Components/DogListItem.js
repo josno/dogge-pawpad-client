@@ -1,22 +1,47 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const DogListItem = (props) => {
+const DogListItem = ({ info, onChange, checked, formatDate }) => {
+	const { dog_name, dog_status, gender, age, tag_number, profile_img } = info;
 	return (
 		<DogListStyles>
-			<Link className="link" to={`/dog-info/${props.id}`} />
+			<Link className="link" to={`/dog-info/${info.id}`} />
 			<DogImgStyles>
 				<input
 					type="checkbox"
 					className="dog-selection-checkbox"
-					checked={props.checked}
-					onChange={() => props.onChange(props.id)}
+					checked={checked}
+					onChange={() => onChange(info.id)}
 				/>
-				<img className="dog-list-img" alt={`${props.name}`} src={props.img} />
+				<img className="dog-list-img" alt={`${dog_name}`} src={profile_img} />
 
-				<p className="dogs-list-name">{props.name}</p>
+				<p className="dogs-list-name">{dog_name}</p>
 			</DogImgStyles>
+			<DetailContainerStyles>
+				<li className="list-title">
+					Name
+					<p className="list-title-value">{dog_name}</p>
+				</li>
+				<li className="list-title">
+					Status
+					<p className="list-title-value">{dog_status}</p>
+				</li>
+				<li className="list-title">
+					Gender
+					<p className="list-title-value">{gender}</p>
+				</li>
+				<li className="list-title">
+					Birthdate
+					<p className="list-title-value birthdate">{formatDate(age)}</p>
+				</li>
+				<li className="list-title">
+					Tag Number
+					<p className="list-title-value">
+						{tag_number.length <= 1 ? "N/A" : tag_number}
+					</p>
+				</li>
+			</DetailContainerStyles>
 		</DogListStyles>
 	);
 };
@@ -38,9 +63,9 @@ const DogListStyles = styled.li`
 		width: 100%;
 		display: flex;
 		border-radius: 10px;
-		padding: 1rem;
 		background-color: #85c1ca;
-
+		overflow: hidden;
+		box-shadow: 3px 3px 12px rgb(0, 0, 0, 0.3);
 		.item-inner-container {
 			width: 100%;
 			border: 1px solid black;
@@ -51,7 +76,6 @@ const DogListStyles = styled.li`
 
 const DogImgStyles = styled.div`
 	position: relative;
-	width: 100%;
 	height: 200px;
 	border: 2px solid black;
 
@@ -91,6 +115,33 @@ const DogImgStyles = styled.div`
 		border: 0px;
 		.dogs-list-name {
 			display: none;
+		}
+	}
+`;
+
+const DetailContainerStyles = styled.ul`
+	display: none;
+	@media (min-width: 1200px) {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		height: 100%;
+		padding: 20px;
+
+		.list-title {
+			position: relative;
+			color: #ffffff;
+			font-size: 1.5rem;
+			text-align: center;
+			width: 100%;
+		}
+		.list-title-value {
+			position: absolute;
+			color: #ffffff;
+			font-size: 1.7rem;
+			font-weight: bold;
+			text-align: center;
+			width: 100%;
 		}
 	}
 `;

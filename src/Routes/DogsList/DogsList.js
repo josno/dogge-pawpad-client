@@ -14,6 +14,8 @@ import UpdateStatusForm from "../../Components/BatchUpdateForms/UpdateStatusForm
 import DeleteDogForm from "../../Components/DeleteDogForm";
 import BatchShotForm from "../../Components/BatchUpdateForms/BatchShotForm";
 
+import moment from "moment";
+
 const DogList = (props) => {
 	const [error, setError] = useState("");
 	const [dogs, setDogs] = useState([]);
@@ -100,8 +102,18 @@ const DogList = (props) => {
 		dogs.map((dog) => (dog.checked = false));
 	};
 
+	const formatDate = (date) => {
+		let formattedDate = moment(date).format("LL");
+		if (formattedDate === "Invalid date") {
+			return "N/A";
+		} else {
+			return formattedDate;
+		}
+	};
+
 	return (
 		<DogListStyles>
+			<section>Overview Total Dogs: Dogs Adopted: Dogs Fostered:</section>
 			<section className="search-filter-container">
 				{selected.length > 0 && !modalIsOpen && (
 					<UpdateBar onClick={(type) => setUpdateType(type)} />
@@ -131,7 +143,7 @@ const DogList = (props) => {
 				</div>
 			</section>
 
-			<section className="list-container">
+			<section className="dog-list-container">
 				<ul className="dogs-list">
 					{/* Fix THIS */}
 
@@ -139,12 +151,11 @@ const DogList = (props) => {
 						? filteredDogs.map((d) => {
 								return (
 									<DogListItem
-										id={d.id}
 										key={d.id}
 										onChange={(id) => updateSelected(id)}
 										checked={d.checked}
-										img={d.profile_img}
-										name={d.dog_name}
+										info={d}
+										formatDate={(date) => formatDate(date)}
 									/>
 								);
 						  })
@@ -152,10 +163,11 @@ const DogList = (props) => {
 								return (
 									d.dog_status === view && (
 										<DogListItem
-											id={d.id}
 											key={d.id}
 											onChange={(id) => updateSelected(id)}
 											checked={d.checked}
+											info={d}
+											formatDate={(date) => formatDate(date)}
 										>
 											<DogItemImage img={d.profile_img} name={d.dog_name} />
 										</DogListItem>
@@ -236,10 +248,6 @@ const DogListStyles = styled.main`
 		color: white;
 	}
 
-	.dog-list-container {
-		padding-top: 40px;
-	}
-
 	.dogs-list {
 		display: flex;
 		flex-wrap: wrap;
@@ -247,10 +255,8 @@ const DogListStyles = styled.main`
 	}
 
 	.dog-list-container {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-evenly;
 		height: 80vh;
+		padding: 5px 5% 10px 5%;
 	}
 
 	.dog-list-actions {
@@ -280,7 +286,7 @@ const DogListStyles = styled.main`
 
 	.search-filter-container {
 		width: 100%;
-		height: 150px;
+		height: 100px;
 		padding-top: 10px;
 		display: flex;
 		flex-direction: column;
