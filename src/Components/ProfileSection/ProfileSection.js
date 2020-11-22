@@ -1,14 +1,15 @@
 import React, { useState, useLayoutEffect } from "react";
 import styled from "styled-components";
+import { Modal } from "react-responsive-modal";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import DogsApiService from "../../services/api-service";
 import DropDown from "../../Components/DropDown";
+import ImgModalForm from "../../Components/ImgModalForm/ImgModalForm";
 
 import { GrEdit } from "react-icons/gr";
 import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
-import EditButtons from "../EditButtons/EditButtons";
 
 import moment from "moment";
 
@@ -21,7 +22,9 @@ const ProfileSection = ({ dogId, history }) => {
 	const [gender, setGender] = useState({ male: false, female: false });
 	const [tag, setTag] = useState("");
 	const [microchip, setMicrochip] = useState("");
-	const [isEditting, setEditting] = useState(false);
+	const [isEditing, setEditing] = useState(false);
+	const [editingPhoto, setPhotoEditing] = useState(false);
+	const [imgName, setImgName] = useState("");
 
 	useLayoutEffect(() => {
 		async function getDogInfo() {
@@ -38,6 +41,10 @@ const ProfileSection = ({ dogId, history }) => {
 			setName(res.dog_name);
 			setStatus(res.dog_status);
 			setBirthdate(new Date(res.age));
+
+			const s = res.profile_img.split("/");
+			const name = s[s.length - 1].split(".")[0];
+			setImgName(name);
 		}
 		getDogInfo();
 	}, [dogId]);
@@ -70,20 +77,53 @@ const ProfileSection = ({ dogId, history }) => {
 		const res = await DogsApiService.updateDog(newObj, dogId);
 		const updatedDog = await DogsApiService.getDogInfo(res.id);
 		setInfo(updatedDog);
-		setEditting(!isEditting);
+		setEditing(!isEditing);
 	}
 
 	const updateStatus = (status) => {
 		setStatus(status);
 	};
 
+	async function updateDogImage(e, profileImg) {
+		e.preventDefault(e);
+		const profile_img = profileImg;
+
+		const formData = new FormData();
+		formData.append("profile_img", profile_img);
+
+		await DogsApiService.deleteDogImg(formData, imgName);
+		const newUrl = await DogsApiService.uploadDogImg(formData, info.tag_number);
+
+		const dogObj = {
+			dog_name: info.dog_name,
+			profile_img: newUrl,
+		};
+
+		await DogsApiService.updateDog(dogObj, dogId);
+
+		setInfo({ ...info, profile_img: newUrl });
+		setPhotoEditing(!editingPhoto);
+	}
+
 	return (
 		<ProfileSectionStyles>
 			<div className="img-container">
+				<Modal
+					open={editingPhoto}
+					onClose={() => setPhotoEditing(false)}
+					center
+				>
+					<ImgModalForm handleUpdate={(e, path) => updateDogImage(e, path)} />
+				</Modal>
+
 				<img src={info.profile_img} alt="dog" />
+				<GrEdit
+					className="icon"
+					onClick={() => setPhotoEditing(!editingPhoto)}
+				/>
 			</div>
 
-			{isEditting ? (
+			{isEditing ? (
 				<>
 					<h1 className="dog-name name-style">
 						<input
@@ -172,7 +212,7 @@ const ProfileSection = ({ dogId, history }) => {
 						</form>
 						<FaRegTimesCircle
 							className="icon active-edit-icon cancel-button"
-							onClick={() => setEditting(!isEditting)}
+							onClick={() => setEditing(!isEditing)}
 							fill="#1f8392"
 						/>
 						<FaRegCheckCircle
@@ -214,7 +254,7 @@ const ProfileSection = ({ dogId, history }) => {
 						</ul>
 						<GrEdit
 							className="icon edit-button"
-							onClick={() => setEditting(!isEditting)}
+							onClick={() => setEditing(!isEditing)}
 						/>
 					</div>
 				</>
@@ -236,7 +276,9 @@ const ProfileSectionStyles = styled.div`
 		border-radius: 50%;
 		border: 1px solid black;
 		overflow: hidden;
+		position: relative;
 	}
+
 	img {
 		width: 100%;
 		height: auto;

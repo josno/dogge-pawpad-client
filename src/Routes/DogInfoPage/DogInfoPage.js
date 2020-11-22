@@ -3,9 +3,7 @@ import { IoIosArrowBack } from "react-icons/io";
 
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import moment from "moment";
 
-import DogsApiService from "../../services/api-service";
 import ProfileSection from "../../Components/ProfileSection/ProfileSection";
 
 const DogInfoPage = (props) => {
