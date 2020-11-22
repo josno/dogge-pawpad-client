@@ -92,7 +92,7 @@ const DogsApiService = {
 			`${config.API_ENDPOINT}/dogs/${dogId}`,
 			updatedDog
 		).then((res) =>
-			!res.ok ? res.json().then((e) => Promise.reject(e)) : null
+			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
 		);
 	},
 	uploadDogImg(data, tagNumber) {

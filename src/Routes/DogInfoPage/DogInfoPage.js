@@ -9,17 +9,7 @@ import DogsApiService from "../../services/api-service";
 import ProfileSection from "../../Components/ProfileSection/ProfileSection";
 
 const DogInfoPage = (props) => {
-	const [info, setInfo] = useState({});
-	const [profileEdit, setProfileEdit] = useState(false);
 	const dogId = props.match.params.dogId;
-
-	useLayoutEffect(() => {
-		async function getDogInfo() {
-			const res = await DogsApiService.getDogInfo(dogId);
-			setInfo(res);
-		}
-		getDogInfo();
-	}, [dogId]);
 
 	return (
 		<DogInfoPageStyles>
@@ -39,18 +29,7 @@ const DogInfoPage = (props) => {
 
 			<div className="details-section">
 				<div className="dog-details">
-					<ProfileSection
-						name={info.dog_name}
-						status={info.dog_status}
-						birthdate={info.age}
-						gender={info.gender}
-						arrival={info.arrival_date}
-						tag={info.tag_number}
-						profile_img={info.profile_img}
-						microchip={info.microchip}
-						isEditting={profileEdit}
-						handleProfileEdit={(v) => setProfileEdit(v)}
-					/>
+					<ProfileSection dogId={dogId} history={props.history} />
 				</div>
 				<div className="medical"></div>
 				<div className="adoption"></div>

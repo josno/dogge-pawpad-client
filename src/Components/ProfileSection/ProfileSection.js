@@ -1,28 +1,47 @@
-import React from "react";
+import React, { useState, useLayoutEffect } from "react";
 import styled from "styled-components";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import DogsApiService from "../../services/api-service";
+import DropDown from "../../Components/DropDown";
 
-import { IoIosAddCircleOutline } from "react-icons/io";
+import { GrEdit } from "react-icons/gr";
+import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
 import EditButtons from "../EditButtons/EditButtons";
-import { FaTag } from "react-icons/fa";
 
 import moment from "moment";
 
-const ProfileSection = ({
-	name,
-	status,
-	birthdate,
-	gender,
-	arrival,
-	tag,
-	profile_img,
-	microchip,
-	isEditting,
-	handleProfileEdit,
-	handleInputChange,
-}) => {
+const ProfileSection = ({ dogId, history }) => {
+	const [info, setInfo] = useState({});
+	const [name, setName] = useState("");
+	const [status, setStatus] = useState("");
+	const [birthdate, setBirthdate] = useState("");
+	const [arrivalDate, setArrivalDate] = useState("");
+	const [gender, setGender] = useState({ male: false, female: false });
+	const [tag, setTag] = useState("");
+	const [microchip, setMicrochip] = useState("");
+	const [isEditting, setEditting] = useState(false);
+
+	useLayoutEffect(() => {
+		async function getDogInfo() {
+			const res = await DogsApiService.getDogInfo(dogId);
+			setInfo(res);
+
+			res.gender === "Male"
+				? setGender({ male: true, female: false })
+				: setGender({ male: false, female: true });
+
+			setMicrochip(res.microchip);
+			setTag(res.tag_number);
+			setArrivalDate(new Date(res.arrival_date));
+			setName(res.dog_name);
+			setStatus(res.dog_status);
+			setBirthdate(new Date(res.age));
+		}
+		getDogInfo();
+	}, [dogId]);
+
 	const formatDate = (date) => {
 		let formattedDate = moment(date).format("LL");
 		if (formattedDate === "N/A") {
@@ -32,95 +51,174 @@ const ProfileSection = ({
 		}
 	};
 
+	async function updateDogInfo() {
+		let updatedGender = "";
+		gender.male === "true"
+			? (updatedGender = "Male")
+			: (updatedGender = "Female");
+
+		const newObj = {
+			dog_name: name,
+			age: birthdate,
+			gender: updatedGender,
+			arrival_date: arrivalDate,
+			dog_status: status,
+			tag_number: tag,
+			microchip: microchip,
+		};
+
+		const res = await DogsApiService.updateDog(newObj, dogId);
+		const updatedDog = await DogsApiService.getDogInfo(res.id);
+		setInfo(updatedDog);
+		setEditting(!isEditting);
+	}
+
+	const updateStatus = (status) => {
+		setStatus(status);
+	};
+
 	return (
 		<ProfileSectionStyles>
 			<div className="img-container">
-				<img src={profile_img} alt="dog" />
+				<img src={info.profile_img} alt="dog" />
 			</div>
-			<h1 className="dog-name">{name}</h1>
 
-			<div>
-				{!isEditting ? (
-					<form>
-						<label className="profile-list-item">
-							<span className="title">Status:</span>
-							<input
-								className="value input-value"
-								value={status}
-								type="text"
-								onChange={() => handleInputChange()}
-							/>
-						</label>
-						<label className="profile-list-item">
-							<span className="title">Gender:</span>
-							<input
-								className="value input-value"
-								value={gender}
-								type="text"
-								onChange={() => handleInputChange()}
-							/>
-						</label>
-						<label className="profile-list-item">
-							<span className="title">Birthdate:</span>
-							<input value={birthdate} onChange={() => handleInputChange()} />
-						</label>
-						<label className="profile-list-item">
-							<span className="title">Arrival:</span>
-							<input
-								className="value input-value"
-								value={arrival}
-								type="text"
-								onChange={() => handleInputChange()}
-							/>
-						</label>
-						<label className="profile-list-item">
-							<span className="title">Tag:</span>
-							<input
-								className="value input-value"
-								value={tag}
-								type="text"
-								onChange={() => handleInputChange()}
-							/>
-						</label>
-						<label className="profile-list-item">
-							<span className="title">Microchip:</span>
-							<input
-								className="value input-value"
-								value={microchip}
-								type="text"
-								onChange={() => handleInputChange()}
-							/>
-						</label>
-					</form>
-				) : (
-					<ul className="profile-details">
-						<li className="profile-list-item">
-							<span className="title">Status:</span>{" "}
-							<span className="value">{status}</span>
-						</li>
-						<li className="profile-list-item">
-							<span className="title">Gender: </span>
-							<span className="value">{gender}</span>
-						</li>
-						<li className="profile-list-item">
-							<span className="title">Birthdate:</span>
-							<span className="value">{formatDate(birthdate)}</span>
-						</li>
-						<li className="profile-list-item">
-							<span className="title">Arrival:</span>
-							<span className="value">{formatDate(arrival)}</span>
-						</li>
-						<li className="profile-list-item">
-							<span className="title">Tag:</span>
-							<span className="value">{tag}</span>
-						</li>
-						<li className="profile-list-item">
-							<span className="title">Microchip:</span>
-							<span className="value">{microchip}</span>
-						</li>
-					</ul>
-				)}
-			</div>
+			{isEditting ? (
+				<>
+					<h1 className="dog-name name-style">
+						<input
+							className="edit-name-input"
+							type="text"
+							value={name}
+							onChange={(e) => setName(e.target.value)}
+						/>
+					</h1>
+					<div>
+						<form className="fade-in">
+							<label className="profile-list-item">
+								<span className="title">Status:</span>
+								<DropDown
+									label="Pick Status"
+									className="fade-in edit-input value"
+									list={["Current", "Adopted", "Archived", "Fostered", "None"]}
+									onClick={(value) => updateStatus(value)}
+								/>
+							</label>
+							<label className="profile-list-item">
+								<span className="title">Gender:</span>
+								<div className="value">
+									<label htmlFor="male">
+										<input
+											type="radio"
+											name="gender"
+											checked={gender.male}
+											onChange={(e) => setGender({ male: true, female: false })}
+											id="male"
+											required
+										/>
+										Male
+									</label>
+
+									<label htmlFor="female">
+										<input
+											type="radio"
+											name="gender"
+											checked={gender.female}
+											onChange={(e) => setGender({ male: false, female: true })}
+											id="female"
+										/>
+										Female
+									</label>
+								</div>
+							</label>
+							<label className="profile-list-item">
+								<span className="title">Birthdate:</span>
+								<DatePicker
+									dateFormat="dd/MM/yyyy"
+									selected={birthdate}
+									placeholderText="dd/mm/yyyy"
+									onChange={(date) => setBirthdate(date)}
+									className="fade-in edit-input"
+								/>
+							</label>
+							<label className="profile-list-item">
+								<span className="title">Arrival:</span>
+								<DatePicker
+									dateFormat="dd/MM/yyyy"
+									selected={arrivalDate}
+									placeholderText="dd/mm/yyyy"
+									onChange={(date) => setArrivalDate(date)}
+									className="fade-in edit-input"
+								/>
+							</label>
+							<label className="profile-list-item">
+								<span className="title">Tag:</span>
+								<input
+									className="fade-in edit-input"
+									value={tag}
+									type="text"
+									onChange={(e) => setTag(e.target.value)}
+								/>
+							</label>
+							<label className="profile-list-item">
+								<span className="title">Microchip:</span>
+								<input
+									className="fade-in edit-input"
+									value={microchip}
+									type="text"
+									onChange={(e) => setMicrochip(e.target.value)}
+								/>
+							</label>
+						</form>
+						<FaRegTimesCircle
+							className="icon active-edit-icon cancel-button"
+							onClick={() => setEditting(!isEditting)}
+							fill="#1f8392"
+						/>
+						<FaRegCheckCircle
+							className="icon active-edit-icon check-button"
+							onClick={() => updateDogInfo()}
+							fill="#1f8392"
+						/>
+					</div>
+				</>
+			) : (
+				<>
+					<h1 className="dog-name name-style">{info.dog_name}</h1>
+					<div>
+						<ul className="profile-details">
+							<li className="profile-list-item">
+								<span className="title">Status:</span>{" "}
+								<span className="value">{info.dog_status}</span>
+							</li>
+							<li className="profile-list-item">
+								<span className="title">Gender: </span>
+								<span className="value">{info.gender}</span>
+							</li>
+							<li className="profile-list-item">
+								<span className="title">Birthdate:</span>
+								<span className="value">{formatDate(info.age)}</span>
+							</li>
+							<li className="profile-list-item">
+								<span className="title">Arrival:</span>
+								<span className="value">{formatDate(info.arrival_date)}</span>
+							</li>
+							<li className="profile-list-item">
+								<span className="title">Tag:</span>
+								<span className="value">{info.tag_number}</span>
+							</li>
+							<li className="profile-list-item">
+								<span className="title">Microchip:</span>
+								<span className="value">{info.microchip}</span>
+							</li>
+						</ul>
+						<GrEdit
+							className="icon edit-button"
+							onClick={() => setEditting(!isEditting)}
+						/>
+					</div>
+				</>
+			)}
 		</ProfileSectionStyles>
 	);
 };
@@ -143,11 +241,25 @@ const ProfileSectionStyles = styled.div`
 		width: 100%;
 		height: auto;
 	}
+
+	.edit-name-input {
+		text-align: center;
+		height: inherit;
+		font-size: 1.2rem;
+		font-weight: bold;
+	}
+
+	.name-style {
+		width: 100%;
+		height: 60px;
+		margin: 20px;
+	}
 	.profile-list-item {
 		font-size: 1rem;
+		padding: 2px;
 		line-height: 2;
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 0.5fr 1fr;
 		grid-template-rows: 1fr;
 		gap: 10px 10px;
 		grid-template-areas: "title value";
@@ -167,17 +279,71 @@ const ProfileSectionStyles = styled.div`
 		margin: 2px;
 	}
 
-	.add-button {
-		height: 2em;
-		width: 2em;
+	.fade-in {
+		opacity: 1;
+		animation-name: fadeInOpacity;
+		animation-iteration-count: 1;
+		animation-timing-function: ease-in;
+		animation-duration: 0.5s;
+	}
+
+	.edit-input {
+		padding: none;
+		margin-right: 10px;
+		font-size: 1em;
+		border: none;
+		color: #009fb7;
+		font-style: italic;
+		font-weight: bold;
+	}
+
+	@keyframes fadeInOpacity {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+
+	.edit-button {
 		position: absolute;
-		bottom: 2%;
-		right: 5%;
+		bottom: 20px;
+		right: 20px;
+		transition: 0.2s ease-in-out;
+		height: 1.7em;
+		width: 1.7em;
+	}
+
+	.cancel-button,
+	.check-button {
+		position: absolute;
+		bottom: 20px;
+		height: 1.7em;
+		width: 1.7em;
+	}
+
+	.cancel-button {
+		right: 60px;
+	}
+
+	.check-button {
+		right: 20px;
+	}
+
+	.icon {
+		:hover {
+			cursor: pointer;
+			transform: scale(1.2);
+		}
+		path {
+			stroke: #1f8392;
+		}
 	}
 
 	@media (min-width: 1000px) {
 		.profile-list-item {
-			font-size: 1.3rem;
+			font-size: 1.2rem;
 		}
 	}
 `;
