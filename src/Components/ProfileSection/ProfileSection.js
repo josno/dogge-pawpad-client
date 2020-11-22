@@ -117,11 +117,11 @@ const ProfileSection = ({ dogId, history }) => {
 				</Modal>
 
 				<img src={info.profile_img} alt="dog" />
-				<GrEdit
-					className="icon"
-					onClick={() => setPhotoEditing(!editingPhoto)}
-				/>
 			</div>
+			<GrEdit
+				className="icon edit-img-icon"
+				onClick={() => setPhotoEditing(!editingPhoto)}
+			/>
 
 			{isEditing ? (
 				<>
@@ -295,6 +295,11 @@ const ProfileSectionStyles = styled.div`
 		width: 100%;
 		height: 60px;
 		margin: 20px;
+	}
+
+	.edit-img-icon {
+		position: relative;
+		top: 10px;
 	}
 	.profile-list-item {
 		font-size: 1rem;

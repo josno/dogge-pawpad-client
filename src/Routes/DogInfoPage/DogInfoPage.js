@@ -96,6 +96,7 @@ const DogInfoPageStyles = styled.div`
 			.dog-details {
 				grid-area: dog-details;
 				display: flex;
+				justify-content: center;
 			}
 			.medical {
 				grid-area: medical;
