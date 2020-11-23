@@ -28,6 +28,15 @@ const DogsApiService = {
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
 		);
 	},
+	getDogStatus(dogId) {
+		return fetch(`${config.API_ENDPOINT}/dogs/status/${dogId}`, {
+			headers: {
+				Authorization: `Bearer ${TokenService.getAuthToken()}`,
+			},
+		}).then((res) =>
+			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+		);
+	},
 	insertNewDog(dogObj) {
 		const newDog = {
 			method: "POST",

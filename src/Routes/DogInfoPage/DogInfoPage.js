@@ -1,14 +1,81 @@
-import React from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { IoIosArrowBack } from "react-icons/io";
+import { Modal } from "react-responsive-modal";
 
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+
+import DogsApiService from "../../services/api-service";
+import ArchiveModal from "../../Components/ArchiveModal/ArchiveModal";
 
 import ProfileSection from "../../Components/ProfileSection/ProfileSection";
 import MedicalSection from "../../Components/MedicalSection/MedicalSection";
 
 const DogInfoPage = (props) => {
 	const dogId = props.match.params.dogId;
+	const name = props.match.params.dogName;
+	const [archive, setArchive] = useState(false);
+	const [status, setStatus] = useState("");
+	const [error, setError] = useState(null);
+
+	const handleArchive = (str) => {
+		const dateObj = { archive_date: new Date() };
+		const noteObj = {
+			type_of_note: "archive",
+			notes: str,
+			dog_id: dogId,
+		};
+		DogsApiService.archiveDog(dogId, dateObj)
+			.then((response) => DogsApiService.insertNewNote(noteObj))
+			.then((response) => {
+				DogsApiService.getDogInfo(dogId).then((res) => setArchive(false));
+			})
+			.catch((err) => setError({ error: "Can't archive dog." }));
+	};
+
+	useLayoutEffect(() => {
+		async function getDogInfo() {
+			const res = await DogsApiService.getDogStatus(dogId);
+			setStatus(res.dog_status);
+		}
+		getDogInfo();
+	}, [dogId]);
+
+	const renderModals = () => {
+		return (
+			<>
+				<Modal open={archive} onClose={() => setArchive(false)} center>
+					<ArchiveModal
+						dogName={name}
+						dogId={dogId}
+						handleArchive={(s) => handleArchive(s)}
+					/>
+				</Modal>
+				{/* <Modal
+					open={this.state.openAdopt}
+					onClose={(e) => this.closeModal("openAdopt")}
+					center
+				>
+					<FosterAdopForm
+						type="adopt"
+						dogId={dogInfo.id}
+						updateDogInfo={this.handleDogAdoption}
+					/>
+				</Modal> */}
+				{/* <Modal
+					open={this.state.openFoster}
+					onClose={(e) => this.closeModal("openFoster")}
+					center
+				>
+					<FosterAdopForm
+						type="foster"
+						dogId={dogInfo.id}
+						updateDogInfo={this.handleDogFoster}
+					/>
+				</Modal> */}
+			</>
+		);
+	};
 
 	return (
 		<DogInfoPageStyles>
@@ -18,17 +85,24 @@ const DogInfoPage = (props) => {
 						<IoIosArrowBack /> Back
 					</Link>
 				</div>
-				<div className="archive">
-					<button>Archive</button>
-				</div>
-				<div className="delete-dog">
-					<button>Delete</button>
-				</div>
+
+				{status !== "Archived" && (
+					<button className="archive" onClick={() => setArchive(!archive)}>
+						Archive
+					</button>
+				)}
+
+				<button className="delete-dog">Delete</button>
 			</div>
+			{renderModals()}
 
 			<div className="details-section">
 				<div className="dog-details">
-					<ProfileSection dogId={dogId} history={props.history} />
+					<ProfileSection
+						dogId={dogId}
+						history={props.history}
+						buttonStatus={(s) => setStatus(s)}
+					/>
 				</div>
 				<div className="medical">
 					<MedicalSection dogId={dogId} />
@@ -69,15 +143,17 @@ const DogInfoPageStyles = styled.div`
 	.archive,
 	.delete-dog {
 		margin: 0.8rem;
-
-		button {
-			background-color: #1f8392;
-			color: white;
-			border: 1px solid black;
-			box-shadow: 0px;
-			padding: 5px;
-			font-weight: bold;
+		position: relative;
+		:hover {
+			cursor: pointer;
 		}
+
+		background-color: #1f8392;
+		color: white;
+		border: 1px solid black;
+		box-shadow: 0px;
+		padding: 5px;
+		font-weight: bold;
 	}
 
 	.details-section {

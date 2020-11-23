@@ -13,7 +13,7 @@ import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
 
 import moment from "moment";
 
-const ProfileSection = ({ dogId, history }) => {
+const ProfileSection = ({ dogId, buttonStatus }) => {
 	const [info, setInfo] = useState({});
 	const [name, setName] = useState("");
 	const [status, setStatus] = useState("");
@@ -78,6 +78,7 @@ const ProfileSection = ({ dogId, history }) => {
 		const updatedDog = await DogsApiService.getDogInfo(res.id);
 		setInfo(updatedDog);
 		setEditMode(!editMode);
+		buttonStatus(updatedDog.dog_status);
 	}
 
 	const updateStatus = (status) => {
