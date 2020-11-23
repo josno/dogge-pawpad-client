@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Modal } from "react-responsive-modal";
 
@@ -26,7 +26,7 @@ const ProfileSection = ({ dogId, buttonStatus }) => {
 	const [editingPhoto, setPhotoEditing] = useState(false);
 	const [imgName, setImgName] = useState("");
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		async function getDogInfo() {
 			const res = await DogsApiService.getDogInfo(dogId);
 			setInfo(res);

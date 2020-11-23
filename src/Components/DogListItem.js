@@ -6,7 +6,7 @@ const DogListItem = ({ info, onChange, checked, formatDate }) => {
 	const { dog_name, dog_status, gender, age, tag_number, profile_img } = info;
 	return (
 		<DogListStyles>
-			<Link className="link" to={`/dog-info/${info.id}`} />
+			<Link className="link" to={`/dog/${info.id}/${info.dog_name}`} />
 			<DogImgStyles>
 				<input
 					type="checkbox"

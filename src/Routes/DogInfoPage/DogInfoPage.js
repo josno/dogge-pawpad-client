@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { Modal } from "react-responsive-modal";
 
@@ -10,6 +10,7 @@ import ArchiveModal from "../../Components/ArchiveModal/ArchiveModal";
 
 import ProfileSection from "../../Components/ProfileSection/ProfileSection";
 import MedicalSection from "../../Components/MedicalSection/MedicalSection";
+import NotesSection from "../../Components/NotesSection/NotesSection";
 
 const DogInfoPage = (props) => {
 	const dogId = props.match.params.dogId;
@@ -33,12 +34,12 @@ const DogInfoPage = (props) => {
 			.catch((err) => setError({ error: "Can't archive dog." }));
 	};
 
-	useLayoutEffect(() => {
-		async function getDogInfo() {
+	useEffect(() => {
+		async function getStatus() {
 			const res = await DogsApiService.getDogStatus(dogId);
 			setStatus(res.dog_status);
 		}
-		getDogInfo();
+		getStatus();
 	}, [dogId]);
 
 	const renderModals = () => {
@@ -107,9 +108,11 @@ const DogInfoPage = (props) => {
 				<div className="medical">
 					<MedicalSection dogId={dogId} />
 				</div>
+				<div className="notes">
+					<NotesSection dogId={dogId} />
+				</div>
 				<div className="adoption"></div>
 				<div className="foster"></div>
-				<div className="notes"></div>
 			</div>
 		</DogInfoPageStyles>
 	);

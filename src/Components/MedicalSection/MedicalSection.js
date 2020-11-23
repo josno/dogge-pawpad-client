@@ -1,27 +1,19 @@
 import React, { useState, useLayoutEffect } from "react";
 import ShotDetailsView from "../../Components/ShotDetailsView/ShotDetailsView";
 import EditShots from "../../Components/EditShots/EditShots";
-import DatePicker from "react-datepicker";
 import { Modal } from "react-responsive-modal";
+
+import DogsApiService from "../../services/api-service";
 
 import styled from "styled-components";
 import NewEditButtons from "../NewEditButtons/NewEditButtons";
 import BatchShotForm from "../BatchUpdateForms/BatchShotForm";
-import Button from "../../Components/Button";
-
-import DogsApiService from "../../services/api-service";
-import { GrEdit } from "react-icons/gr";
 
 const MedicalSection = ({ dogId }) => {
 	const [shots, setShots] = useState([]);
 	const [spayedNeutered, setSpayedNeutered] = useState("");
 	const [editMode, setEditMode] = useState(false);
 	const [modalIsOpen, setModalIsOpen] = useState(false);
-	const [date, setDate] = useState(null);
-	const [shotName, setShotName] = useState("");
-	const [error, setError] = useState(null);
-	const [addMode, setAddMode] = useState(false);
-	const [newShot, setNewShot] = useState("");
 
 	useLayoutEffect(() => {
 		async function getDogInfo() {
