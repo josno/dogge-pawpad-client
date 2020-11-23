@@ -104,7 +104,7 @@ const BatchShotForm = ({
 			<>
 				{singleShotUpdate ? (
 					<>
-						<label>Add Shot Name</label>
+						<label className="label">Add Shot Name</label>
 						<input
 							className="input-style-custom"
 							value={newShot}
@@ -113,9 +113,9 @@ const BatchShotForm = ({
 							required
 						/>
 					</>
-				) : !addMode ? (
+				) : singleShotUpdate ? (
 					<>
-						<label>Shot To Update</label>
+						<label className="label">Shot To Update</label>
 						<DropDown
 							modal={true}
 							list={shotList}
@@ -126,7 +126,7 @@ const BatchShotForm = ({
 					</>
 				) : (
 					<>
-						<label>Add Shot Name</label>
+						<label className="label">Add Shot Name</label>
 						<input
 							className="input-style-custom"
 							value={newShot}
@@ -137,7 +137,7 @@ const BatchShotForm = ({
 					</>
 				)}
 
-				<label>Select A Date</label>
+				<label className="label">Select A Date</label>
 				<DatePicker
 					selected={date}
 					dateFormat="dd/MM/yyyy"
@@ -150,7 +150,7 @@ const BatchShotForm = ({
 				{error && <ValidationError message={error} />}
 
 				<div className="container">
-					{addMode && (
+					{addMode && !singleShotUpdate && (
 						<Button handleClick={() => setShotName("")}>Go Back</Button>
 					)}
 					<Button handleClick={() => handleCancel()}>Cancel</Button>
@@ -182,6 +182,11 @@ const BatchShotFormStyles = styled.form`
 		padding: 5px;
 	}
 
+	.label {
+		text-align: center;
+		width: 100%;
+	}
+
 	.input-style-custom {
 		margin: 0px 10px;
 		width: 100%;
@@ -191,6 +196,11 @@ const BatchShotFormStyles = styled.form`
 		border: 1px solid black;
 		font-size: 1rem;
 		text-align: center;
+	}
+
+	.react-datepicker-wrapper {
+		width: 80%;
+		margin: 0px auto;
 	}
 `;
 
