@@ -41,8 +41,24 @@
 .shot-container {
 	display: flex;
 	flex-direction: column;
-	flex-wrap: wrap;
-	height: 100%;
+	/* height: 70%; */
+	flex-grow: 1;
+	overflow: hidden;
+	overflow-y: scroll;
+	max-height: 385px;
+}
+
+::-webkit-scrollbar {
+	width: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: lightgray;
+	border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: rgb(54, 56, 58);
 }
 
 .nav-buttons {

@@ -12,6 +12,7 @@ const BatchShotForm = ({
 	resetSelected,
 	setModal,
 	updateDogs,
+	singleShotUpdate,
 }) => {
 	const [date, setDate] = useState(null);
 	const [shotList, setShotList] = useState([]);
@@ -77,28 +78,48 @@ const BatchShotForm = ({
 				setError("Something went wrong. Try again later.");
 			}
 
-			resetSelected([]);
-			setModal(false);
-			updateDogs();
+			if (singleShotUpdate) {
+				updateDogs();
+				setModal();
+			} else {
+				resetSelected([]);
+				setModal(false);
+				updateDogs();
+			}
 		});
 	};
 
 	const handleCancel = () => {
-		resetSelected([]);
-		setModal(false);
-		updateDogs();
+		if (singleShotUpdate) {
+			setModal();
+		} else {
+			resetSelected([]);
+			setModal(false);
+			updateDogs();
+		}
 	};
 
 	return (
 		<BatchShotFormStyles>
 			<>
-				{!addMode ? (
+				{singleShotUpdate ? (
+					<>
+						<label>Add Shot Name</label>
+						<input
+							className="input-style-custom"
+							value={newShot}
+							placeholder="Add A Shot Not In The List"
+							onChange={(e) => setAddShotForm(e)}
+							required
+						/>
+					</>
+				) : !addMode ? (
 					<>
 						<label>Shot To Update</label>
 						<DropDown
 							modal={true}
 							list={shotList}
-							label='Select Shot'
+							label="Select Shot"
 							onClick={(value) => handleSelection(value)}
 							required
 						/>
@@ -107,9 +128,9 @@ const BatchShotForm = ({
 					<>
 						<label>Add Shot Name</label>
 						<input
-							className='input-style-custom'
+							className="input-style-custom"
 							value={newShot}
-							placeholder='Add A Shot Not In The List'
+							placeholder="Add A Shot Not In The List"
 							onChange={(e) => setAddShotForm(e)}
 							required
 						/>
@@ -119,16 +140,16 @@ const BatchShotForm = ({
 				<label>Select A Date</label>
 				<DatePicker
 					selected={date}
-					dateFormat='dd/MM/yyyy'
+					dateFormat="dd/MM/yyyy"
 					onChange={(date) => setDate(date)}
-					placeholderText='Click To Choose Date'
-					className='input-style-custom'
+					placeholderText="Click To Choose Date"
+					className="input-style-custom"
 					required
 				/>
 
 				{error && <ValidationError message={error} />}
 
-				<div className='container'>
+				<div className="container">
 					{addMode && (
 						<Button handleClick={() => setShotName("")}>Go Back</Button>
 					)}

@@ -22,7 +22,7 @@ const ProfileSection = ({ dogId, history }) => {
 	const [gender, setGender] = useState({ male: false, female: false });
 	const [tag, setTag] = useState("");
 	const [microchip, setMicrochip] = useState("");
-	const [isEditing, setEditing] = useState(false);
+	const [editMode, setEditMode] = useState(false);
 	const [editingPhoto, setPhotoEditing] = useState(false);
 	const [imgName, setImgName] = useState("");
 
@@ -77,7 +77,7 @@ const ProfileSection = ({ dogId, history }) => {
 		const res = await DogsApiService.updateDog(newObj, dogId);
 		const updatedDog = await DogsApiService.getDogInfo(res.id);
 		setInfo(updatedDog);
-		setEditing(!isEditing);
+		setEditMode(!editMode);
 	}
 
 	const updateStatus = (status) => {
@@ -123,7 +123,7 @@ const ProfileSection = ({ dogId, history }) => {
 				onClick={() => setPhotoEditing(!editingPhoto)}
 			/>
 
-			{isEditing ? (
+			{editMode ? (
 				<>
 					<h1 className="dog-name name-style">
 						<input
@@ -212,7 +212,7 @@ const ProfileSection = ({ dogId, history }) => {
 						</form>
 						<FaRegTimesCircle
 							className="icon active-edit-icon cancel-button"
-							onClick={() => setEditing(!isEditing)}
+							onClick={() => setEditMode(!editMode)}
 							fill="#1f8392"
 						/>
 						<FaRegCheckCircle
@@ -254,7 +254,7 @@ const ProfileSection = ({ dogId, history }) => {
 						</ul>
 						<GrEdit
 							className="icon edit-button"
-							onClick={() => setEditing(!isEditing)}
+							onClick={() => setEditMode(!editMode)}
 						/>
 					</div>
 				</>
@@ -269,10 +269,13 @@ const ProfileSectionStyles = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	padding: 10px;
-
+	max-width: 300px;
+	margin: 0 auto;
 	align-items: center;
+
 	.img-container {
-		width: 80%;
+		width: 200px;
+		height: 200px;
 		border-radius: 50%;
 		border: 1px solid black;
 		overflow: hidden;
@@ -282,6 +285,7 @@ const ProfileSectionStyles = styled.div`
 	img {
 		width: 100%;
 		height: auto;
+		object-fit: cover;
 	}
 
 	.edit-name-input {
@@ -355,27 +359,23 @@ const ProfileSectionStyles = styled.div`
 
 	.edit-button {
 		position: absolute;
-		bottom: 20px;
-		right: 20px;
+		top: 20px;
+		right: 0px;
 		transition: 0.2s ease-in-out;
-		height: 1.7em;
-		width: 1.7em;
 	}
 
 	.cancel-button,
 	.check-button {
 		position: absolute;
-		bottom: 20px;
-		height: 1.7em;
-		width: 1.7em;
+		top: 20px;
 	}
 
 	.cancel-button {
-		right: 60px;
+		right: 40px;
 	}
 
 	.check-button {
-		right: 20px;
+		right: 0px;
 	}
 
 	.icon {

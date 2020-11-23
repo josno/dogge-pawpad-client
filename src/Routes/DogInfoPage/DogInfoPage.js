@@ -1,10 +1,11 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React from "react";
 import { IoIosArrowBack } from "react-icons/io";
 
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import ProfileSection from "../../Components/ProfileSection/ProfileSection";
+import MedicalSection from "../../Components/MedicalSection/MedicalSection";
 
 const DogInfoPage = (props) => {
 	const dogId = props.match.params.dogId;
@@ -29,7 +30,9 @@ const DogInfoPage = (props) => {
 				<div className="dog-details">
 					<ProfileSection dogId={dogId} history={props.history} />
 				</div>
-				<div className="medical"></div>
+				<div className="medical">
+					<MedicalSection dogId={dogId} />
+				</div>
 				<div className="adoption"></div>
 				<div className="foster"></div>
 				<div className="notes"></div>
@@ -42,11 +45,14 @@ const DogInfoPageStyles = styled.div`
 	padding: 1rem;
 	padding-top: 60px;
 	height: 100%;
+	.dog-details,
 	.medical,
 	.adoption,
 	.foster,
 	.notes {
+		position: relative;
 		border: 1px solid black;
+		margin: 10px 0px;
 	}
 
 	.buttons-section {
@@ -77,18 +83,25 @@ const DogInfoPageStyles = styled.div`
 	.details-section {
 		display: flex;
 		flex-direction: column;
-		height: 900px;
-		border: 1px solid black;
 	}
 
 	@media (min-width: 1000px) {
 		padding: 3rem;
 
+		.dog-details,
+		.medical,
+		.notes,
+		.adoption,
+		.foster {
+			margin: 5px;
+		}
+
 		.details-section {
 			display: grid;
+			height: 700px;
 			grid-template-columns: 0.8fr 1.1fr 1.1fr;
 			grid-template-rows: 1.4fr 0.6fr;
-			gap: 0px 0px;
+
 			grid-template-areas:
 				"dog-details medical notes"
 				"dog-details adoption foster";
@@ -100,6 +113,9 @@ const DogInfoPageStyles = styled.div`
 			}
 			.medical {
 				grid-area: medical;
+				display: flex;
+				flex-direction: column;
+				position: relative;
 			}
 			.notes {
 				grid-area: notes;

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import moment from "moment";
-import "./EditShots.css";
+import styled from "styled-components";
 import DogsApiService from "../../services/api-service";
 import Validate from "../../Utils/validation";
 import ValidationError from "../../Components/ValidationError/ValidationError";
@@ -32,7 +32,7 @@ class EditShots extends Component {
 		this.handleChecks = this.handleChecks.bind(this);
 		this.renderOptionShots = this.renderOptionShots.bind(this);
 		this.renderTextbox = this.renderTextbox.bind(this);
-		this.handleAddShot = this.handleAddShot.bind(this);
+		// this.handleAddShot = this.handleAddShot.bind(this);
 		this.handleSubmitNewShot = this.handleSubmitNewShot.bind(this);
 		this.deleteShot = this.deleteShot.bind(this);
 		this.formatDate = this.formatDate.bind(this);
@@ -84,11 +84,11 @@ class EditShots extends Component {
 		);
 
 		return shotsToMap.map((i, index) => (
-			<li className='edit-shot-line' key={i.id}>
+			<li className="edit-shot-line" key={i.id}>
 				<label htmlFor={i.id}>
 					<input
 						id={i.id + " " + i.shot_name}
-						type='checkbox'
+						type="checkbox"
 						name={i.shot_name}
 						value={i.shot_iscompleted}
 						checked={i.shot_iscompleted}
@@ -96,11 +96,12 @@ class EditShots extends Component {
 					/>
 					{i.shot_name}
 
-					<span className='shot-date-text'>{this.formatDate(i.shot_date)}</span>
+					<span className="shot-date-text">{this.formatDate(i.shot_date)}</span>
+
 					<DatePicker
-						dateFormat='dd/MM/yyyy'
-						selected={this.makeDate(this.state.shots[index].shot_date)}
-						className='edit-shot-date-input'
+						dateFormat="dd/MM/yyyy"
+						placeholderText="Select New Date"
+						className="edit-shot-date-input"
 						onChange={(date) =>
 							this.handleUpdateDateChange(i.shot_name, date, i.id)
 						}
@@ -118,11 +119,11 @@ class EditShots extends Component {
 		);
 
 		return shotsToMap.map((i) => (
-			<li className='edit-shot-line' key={i.id}>
+			<li className="edit-shot-line" key={i.id}>
 				<label key={i.id} htmlFor={i.shot_name}>
 					<input
 						id={i.id}
-						type='checkbox'
+						type="checkbox"
 						name={i.shot_name}
 						value={i.shot_iscompleted}
 						checked={i.shot_iscompleted}
@@ -130,17 +131,17 @@ class EditShots extends Component {
 					/>
 					{i.shot_name}
 
-					<span className='shot-date-text'>{this.formatDate(i.shot_date)}</span>
+					<span className="shot-date-text">{this.formatDate(i.shot_date)}</span>
 				</label>
 			</li>
 		));
 	}
 
-	handleAddShot(newShotName) {
-		this.setState({
-			newShot: { value: newShotName, touched: true },
-		});
-	}
+	// handleAddShot(newShotName) {
+	// 	this.setState({
+	// 		newShot: { value: newShotName, touched: true },
+	// 	});
+	// }
 
 	renderTextbox() {
 		this.setState({
@@ -245,71 +246,118 @@ class EditShots extends Component {
 		const { shots } = this.state;
 
 		return (
-			<div>
-				<ul className='edit-shots-container'>
+			<EditShotsStyles>
+				<ul className="edit-shots-container fade-in">
 					{shots !== undefined && this.renderMandatoryShots(shots)}
 
 					{shots !== undefined && this.renderOptionShots(shots)}
 				</ul>
-
-				{this.state.renderAddShot ? (
-					<li className='edit-shot-line'>
-						<input
-							className='block new-shot-box'
-							id='name'
-							type='text'
-							name='newShot'
-							placeholder="example: 'Serum'"
-							value={this.state.newShot.value}
-							onChange={(e) => this.handleAddShot(e.target.value)}
-							required
-						/>
-
-						<DatePicker
-							dateFormat='dd/MM/yyyy'
-							placeholderText='Pick A Date'
-							selected={this.state.newShotDate}
-							className='edit-shot-date-input'
-							onChange={(date) => this.handleNewShotDateChange(date)}
-						/>
-
-						{this.state.newShot.touched && (
-							<ValidationError
-								message={Validate.validateShotName(this.state.newShot.value)}
-							/>
-						)}
-						<div className='sht-btn-box'>
-							<button
-								type='button'
-								className='shot-btn'
-								onClick={this.renderTextbox}
-							>
-								Cancel
-							</button>
-							<button
-								type='button'
-								className='shot-btn'
-								onClick={this.handleSubmitNewShot}
-								disabled={Validate.validateShotName(this.state.newShot.value)}
-							>
-								Add
-							</button>
-						</div>
-					</li>
-				) : (
-					<li className='edit-shot-line'>
-						<button
-							type='button'
-							className='add-shot-btn'
-							onClick={this.renderTextbox}
-						>
-							Add A Shot
-						</button>
-					</li>
-				)}
-			</div>
+			</EditShotsStyles>
 		);
 	}
 }
+
+const EditShotsStyles = styled.div`
+	max-height: 385px;
+	overflow-y: scroll;
+
+	.edit-shots-container {
+		padding: 0px 20px;
+	}
+	.add-shot-btn,
+	.shot-date-button,
+	.shot-btn {
+		border: 2px solid black;
+		box-shadow: 5px 5px gray;
+		font-size: 0.8em;
+		font-weight: bold;
+		height: 40px;
+		margin: 20px 0px 10px 0px;
+		width: 100%;
+	}
+
+	.add-shot-btn:active,
+	.shot-btn:active {
+		box-shadow: none;
+	}
+
+	.shot-btn {
+		width: 40%;
+	}
+
+	.sht-btn-box {
+		display: flex;
+		justify-content: space-evenly;
+	}
+
+	.new-shot-box {
+		margin-top: 20px;
+	}
+
+	.edit-shot-line {
+		display: block;
+		text-align: left;
+		font-size: 0.9rem;
+		margin: 10px 0px;
+	}
+
+	.edit-shot-date {
+		padding-left: 10px;
+	}
+
+	.edit-shot-date-input {
+		font-size: 0.8em;
+		height: 40px;
+		padding-left: 15px;
+		width: 100%;
+	}
+
+	.shot-date-text {
+		font-size: 0.8em;
+		font-style: italic;
+		font-weight: bold;
+		display: block;
+	}
+
+	.fade-in {
+		opacity: 1;
+		animation-name: fadeInOpacity;
+		animation-iteration-count: 1;
+		animation-timing-function: ease-in;
+		animation-duration: 0.5s;
+	}
+
+	@keyframes fadeInOpacity {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+
+	@media (min-width: 500px) {
+		.update-shot-date-box {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.edit-shot-line {
+			max-width: 500px;
+			margin: 10px 0px;
+		}
+	}
+
+	@media (min-width: 1300px) {
+		.update-shot-date-box {
+			flex-wrap: wrap;
+			flex-direction: row;
+			justify-content: space-evenly;
+			align-items: start;
+		}
+	}
+`;
 
 export default EditShots;
