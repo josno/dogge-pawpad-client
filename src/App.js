@@ -6,6 +6,7 @@ import SideNav from "./Components/SideNav";
 import DogsList from "./Routes/DogsList/DogsList";
 import AddNewDog from "./Routes/AddNewDog/AddNewDog";
 import DogInfo from "./Routes/DogInfo/DogInfo";
+import DogInfoPage from "./Routes/DogInfoPage/DogInfoPage";
 import Notes from "./Routes/Notes/Notes";
 import FosterAdopPage from "./Routes/FosterAdopPage/FosterAdopPage";
 import Login from "./Routes/Login/Login";
@@ -68,6 +69,16 @@ const App = () => {
 									{...routeProps}
 								/>
 							)}
+						/>
+					) : (
+						<Redirect to="/" />
+					)}
+
+					{TokenService.hasAuthToken() ? (
+						<Route
+							exact
+							path="/dog/:dogId/:dogName"
+							render={(routeProps) => <DogInfoPage {...routeProps} />}
 						/>
 					) : (
 						<Redirect to="/" />
