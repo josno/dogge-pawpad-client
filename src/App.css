@@ -19,12 +19,6 @@ body {
 	color: red;
 }
 
-.add-dog-container,
-.notes-container,
-.edit-dog-container {
-	padding-top: 30px;
-}
-
 .dogslist {
 	min-height: 800px;
 }

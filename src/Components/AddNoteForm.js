@@ -5,7 +5,7 @@ import ValidationError from "./ValidationError/ValidationError";
 import DogsApiService from "../services/api-service";
 import Validate from "../Utils/validation";
 
-const AddNoteForm = ({ setModal, dogId }) => {
+const AddNoteForm = ({ setModal, dogId, updateNotes }) => {
 	const [noteType, setNoteType] = useState("");
 	const [text, setText] = useState({
 		value: "",
@@ -20,8 +20,19 @@ const AddNoteForm = ({ setModal, dogId }) => {
 		});
 	};
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		const newNote = {
+			date_created: new Date(),
+			notes: text.value,
+			type_of_note: noteType,
+			dog_id: dogId,
+		};
+
+		const res = await DogsApiService.insertNewNote(newNote);
+		updateNotes(res);
+		setModal(false);
 	};
 
 	return (
@@ -40,6 +51,7 @@ const AddNoteForm = ({ setModal, dogId }) => {
 					<option value="medical">Medical</option>
 					<option value="additional">Additional</option>
 					<option value="adoption">Adoption</option>
+					<option value="archive">Foster</option>
 					<option value="archive">Archive</option>
 				</select>
 
@@ -48,9 +60,9 @@ const AddNoteForm = ({ setModal, dogId }) => {
 						className="notes-input"
 						name="text"
 						value={text.value}
-						onChange={(e) => setText(e.target.value)}
+						onChange={(e) => setText({ value: e.target.value, touched: true })}
 						required
-					></textarea>
+					/>
 				</div>
 				{text.touched && (
 					<ValidationError message={Validate.validateNote(text.value)} />
