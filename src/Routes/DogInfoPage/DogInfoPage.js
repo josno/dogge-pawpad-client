@@ -11,6 +11,7 @@ import ArchiveModal from "../../Components/ArchiveModal/ArchiveModal";
 import ProfileSection from "../../Components/ProfileSection/ProfileSection";
 import MedicalSection from "../../Components/MedicalSection/MedicalSection";
 import NotesSection from "../../Components/NotesSection/NotesSection";
+import AdoptionSection from "../../Components/AdoptionSection";
 
 const DogInfoPage = (props) => {
 	const dogId = props.match.params.dogId;
@@ -41,6 +42,11 @@ const DogInfoPage = (props) => {
 		}
 		getStatus();
 	}, [dogId]);
+
+	const updateStatus = async () => {
+		const res = await DogsApiService.getDogStatus(dogId);
+		setStatus(res.dog_status);
+	};
 
 	const renderModals = () => {
 		return (
@@ -111,7 +117,13 @@ const DogInfoPage = (props) => {
 				<div className="notes">
 					<NotesSection dogId={dogId} />
 				</div>
-				<div className="adoption"></div>
+				<div className="adoption">
+					<AdoptionSection
+						dogId={dogId}
+						status={status}
+						updateStatus={() => updateStatus()}
+					/>
+				</div>
 				<div className="foster"></div>
 			</div>
 		</DogInfoPageStyles>
