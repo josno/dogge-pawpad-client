@@ -42,8 +42,8 @@ const NotesSection = ({ dogId }) => {
 			<h3 className="notes-title">Notes</h3>
 			<ul className="notes-filter">
 				{["additional", "adoption", "medical", "archive", "foster", "all"].map(
-					(t) => (
-						<li>
+					(t, index) => (
+						<li key={index}>
 							<button className={`${t}-title`} onClick={() => setSelected(t)}>
 								{t}
 							</button>
@@ -113,16 +113,14 @@ const NotesSectionStyles = styled.div`
 	.notes-container {
 		max-height: 385px;
 		overflow-y: scroll;
+		padding: 10px 0px;
 	}
 
 	.notes-filter {
-		position: absolute;
-		top: 6%;
 		display: flex;
 		font-size: 0.7rem;
-		width: 15rem;
-		justify-content: space-between;
-		left: 2%;
+		padding: 0px 10px;
+		flex-wrap: wrap;
 		li button {
 			border: 1px solid black;
 			margin: 2px;

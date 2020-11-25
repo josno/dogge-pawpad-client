@@ -37,7 +37,7 @@ const AddNoteForm = ({ setModal, dogId, updateNotes }) => {
 
 	return (
 		<AddNoteStyles>
-			<h1>Add Note</h1>
+			<h1 className="add-note-title">Add Note</h1>
 			<form onSubmit={(e) => handleSubmit(e)}>
 				<br />
 				<select
@@ -81,6 +81,34 @@ const AddNoteForm = ({ setModal, dogId, updateNotes }) => {
 	);
 };
 
-const AddNoteStyles = styled.div``;
+const AddNoteStyles = styled.div`
+	width: 80vw;
+	.add-note-title {
+		margin-bottom: 0px;
+	}
+	.note-types {
+		border: 2px solid black;
+		font-size: 0.8em;
+		height: 30px;
+		margin: 10px;
+		text-align: center;
+		width: 200px;
+	}
+
+	.notes-input {
+		border: 2px solid black;
+		display: block;
+		font-size: 0.9em;
+		margin-left: auto;
+		margin-right: auto;
+		padding: 10px;
+		width: 100%;
+		height: 200px;
+	}
+
+	@media (min-width: 1000px) {
+		width: 30vw;
+	}
+`;
 
 export default AddNoteForm;

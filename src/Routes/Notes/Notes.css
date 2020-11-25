@@ -16,26 +16,6 @@
 	font-weight: bold;
 }
 
-.notes-input {
-	border: 2px solid black;
-	display: block;
-	font-size: 0.9em;
-	margin-left: auto;
-	margin-right: auto;
-	padding: 10px;
-	width: 80vw;
-	height: 200px;
-}
-
-.note-types {
-	border: 2px solid black;
-	font-size: 0.8em;
-	height: 30px;
-	margin: 10px;
-	text-align: center;
-	width: 200px;
-}
-
 .note-by-container {
 	width: 80vw;
 	display: flex;
@@ -54,10 +34,6 @@
 
 	.notes-list-container {
 		flex-direction: row;
-	}
-
-	.notes-input {
-		width: 50vw;
 	}
 
 	.note-by-container {
