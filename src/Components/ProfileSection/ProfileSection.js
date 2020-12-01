@@ -32,6 +32,7 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
 	const [error, setError] = useState("");
 
 	const [openAdopt, setOpenAdopt] = useState(false);
+	const [openFoster, setOpenFoster] = useState(false);
 	const [openArchive, setOpenArchive] = useState(false);
 
 	useEffect(() => {
@@ -103,8 +104,8 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
 			setOpenAdopt(true);
 		}
 
-		if (status === "Adopted") {
-			setOpenAdopt(true);
+		if (status === "Fostered") {
+			setOpenFoster(true);
 		}
 
 		setStatus(status);
@@ -160,7 +161,7 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
 						handleArchive={(s) => handleArchive(s)}
 					/>
 				</Modal>
-				<Modal open={openAdopt} onClose={(e) => setOpenAdopt(false)} center>
+				<Modal open={openAdopt} onClose={() => setOpenAdopt(false)} center>
 					<FosterAdopForm
 						type="adopt"
 						dogId={dogId}
@@ -168,17 +169,14 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
 						setOpenAdopt={setOpenAdopt}
 					/>
 				</Modal>
-				{/* <Modal
-					open={this.state.openFoster}
-					onClose={(e) => this.closeModal("openFoster")}
-					center
-				>
+				<Modal open={openFoster} onClose={() => setOpenFoster(false)} center>
 					<FosterAdopForm
 						type="foster"
-						dogId={dogInfo.id}
-						updateDogInfo={this.handleDogFoster}
+						dogId={dogId}
+						updateDogInfo={updateDogInfo}
+						setOpenFoster={setOpenFoster}
 					/>
-				</Modal> */}
+				</Modal>
 			</>
 		);
 	};

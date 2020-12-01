@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import styled from "styled-components";
 
@@ -15,8 +15,11 @@ const AdoptionSection = ({
 }) => {
 	const [adoption, setAdoption] = useState("");
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		const getAdoption = async () => {
+			if (status !== "Adopted") {
+				return;
+			}
 			let data;
 			const res = await DogsApiService.getAdoptionInfo(dogId);
 			data = Encryption.decryptData(res.data);
@@ -26,7 +29,7 @@ const AdoptionSection = ({
 			setUpdate(false);
 		}
 		getAdoption();
-	}, [dogId, update, setUpdate]);
+	}, [dogId, update, setUpdate, status]);
 
 	const handleUploadContract = async (contract) => {
 		const contractData = new FormData();

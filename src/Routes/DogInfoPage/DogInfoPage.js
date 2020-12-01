@@ -10,6 +10,7 @@ import ProfileSection from "../../Components/ProfileSection/ProfileSection";
 import MedicalSection from "../../Components/MedicalSection/MedicalSection";
 import NotesSection from "../../Components/NotesSection/NotesSection";
 import AdoptionSection from "../../Components/AdoptionSection";
+import FosterSection from "../../Components/FosterSection";
 
 const DogInfoPage = (props) => {
 	const dogId = props.match.params.dogId;
@@ -68,7 +69,9 @@ const DogInfoPage = (props) => {
 						setUpdate={setUpdate}
 					/>
 				</div>
-				<div className="foster"></div>
+				<div className="foster">
+					<FosterSection dogId={dogId} status={status} />
+				</div>
 			</div>
 		</DogInfoPageStyles>
 	);

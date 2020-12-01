@@ -131,7 +131,10 @@ class FosterAdopForm extends Component {
 			(DogsApiService.insertFoster(newFosterObj),
 			DogsApiService.insertNewNote(newNote)),
 		])
-			.then((res) => this.props.updateDogInfo())
+			.then((res) => {
+				this.props.updateDogInfo();
+				this.props.setOpenFoster(false);
+			})
 			.catch((err) =>
 				this.setState({ error: "Something went wrong. Try again later." })
 			);
@@ -213,7 +216,7 @@ class FosterAdopForm extends Component {
 
 		return (
 			<div className="modal-inner">
-				<h1>{type === "adopt" ? "Adoption" : "Foster"} Info</h1>
+				<h1>{type === "adopt" ? "Adoption" : "Foster"} Information</h1>
 				{this.state.error !== null && (
 					<ValidationError
 						className="center-error"
