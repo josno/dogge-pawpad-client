@@ -78,6 +78,8 @@ const DogInfoPageStyles = styled.div`
 	padding: 1rem;
 	padding-top: 60px;
 	height: 100%;
+	max-width: 500px;
+	margin: 0 auto;
 	.dog-details,
 	.medical,
 	.adoption,
@@ -122,6 +124,7 @@ const DogInfoPageStyles = styled.div`
 
 	@media (min-width: 1000px) {
 		padding: 3rem;
+		max-width: 1500px;
 
 		.dog-details,
 		.medical,

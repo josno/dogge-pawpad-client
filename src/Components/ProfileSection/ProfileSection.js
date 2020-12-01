@@ -304,6 +304,10 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
 				<>
 					<h1 className="dog-name name-style">{info.dog_name}</h1>
 					<div>
+						<GrEdit
+							className="icon edit-button"
+							onClick={() => setEditMode(!editMode)}
+						/>
 						<ul className="profile-details">
 							<li className="profile-list-item">
 								<span className="title">Status:</span>{" "}
@@ -330,10 +334,6 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
 								<span className="value">{info.microchip}</span>
 							</li>
 						</ul>
-						<GrEdit
-							className="icon edit-button"
-							onClick={() => setEditMode(!editMode)}
-						/>
 					</div>
 				</>
 			)}
@@ -437,10 +437,7 @@ const ProfileSectionStyles = styled.div`
 	}
 
 	.edit-button {
-		position: absolute;
-		top: 20px;
-		right: 0px;
-		transition: 0.2s ease-in-out;
+		width: 100%;
 	}
 
 	.cancel-button,
