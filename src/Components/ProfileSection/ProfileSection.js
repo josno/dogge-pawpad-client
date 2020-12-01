@@ -17,7 +17,7 @@ import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
 
 import moment from "moment";
 
-const ProfileSection = ({ dogId, buttonStatus, setUpdate }) => {
+const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
 	const [info, setInfo] = useState({});
 	const [name, setName] = useState("");
 	const [status, setStatus] = useState("");
@@ -54,8 +54,12 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate }) => {
 			const name = s[s.length - 1].split(".")[0];
 			setImgName(name);
 		}
+
+		if (update) {
+			setUpdate(false);
+		}
 		getDogInfo();
-	}, [dogId]);
+	}, [dogId, update, setUpdate]);
 
 	const formatDate = (date) => {
 		let formattedDate = moment(date).format("LL");
@@ -87,6 +91,7 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate }) => {
 		setInfo(updatedDog);
 		setEditMode(!editMode);
 		buttonStatus(updatedDog.dog_status);
+		setUpdate(true);
 	}
 
 	const updateStatus = (status) => {
@@ -160,6 +165,7 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate }) => {
 						type="adopt"
 						dogId={dogId}
 						updateDogInfo={updateDogInfo}
+						setOpenAdopt={setOpenAdopt}
 					/>
 				</Modal>
 				{/* <Modal

@@ -153,7 +153,10 @@ class FosterAdopForm extends Component {
 			(DogsApiService.insertAdoption(newAdoptionObj),
 			DogsApiService.insertNewNote(newNote)),
 		])
-			.then((res) => this.props.updateDogInfo())
+			.then((res) => {
+				this.props.updateDogInfo();
+				this.props.setOpenAdopt(false);
+			})
 			.catch((err) =>
 				this.setState({ error: "Something went wrong. Try again later." })
 			);

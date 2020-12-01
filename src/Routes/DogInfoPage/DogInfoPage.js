@@ -50,6 +50,7 @@ const DogInfoPage = (props) => {
 						history={props.history}
 						buttonStatus={(s) => setStatus(s)}
 						setUpdate={setUpdate}
+						update={update}
 					/>
 				</div>
 				<div className="medical">
@@ -63,6 +64,8 @@ const DogInfoPage = (props) => {
 						dogId={dogId}
 						status={status}
 						updateStatus={() => updateStatus()}
+						update={update}
+						setUpdate={setUpdate}
 					/>
 				</div>
 				<div className="foster"></div>
