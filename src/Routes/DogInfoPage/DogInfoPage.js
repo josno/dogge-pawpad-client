@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { IoIosArrowBack } from "react-icons/io";
-import { Modal } from "react-responsive-modal";
 
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import DogsApiService from "../../services/api-service";
-import ArchiveModal from "../../Components/ArchiveModal/ArchiveModal";
 
 import ProfileSection from "../../Components/ProfileSection/ProfileSection";
 import MedicalSection from "../../Components/MedicalSection/MedicalSection";
@@ -15,73 +13,22 @@ import AdoptionSection from "../../Components/AdoptionSection";
 
 const DogInfoPage = (props) => {
 	const dogId = props.match.params.dogId;
-	const name = props.match.params.dogName;
-	const [archive, setArchive] = useState(false);
 	const [status, setStatus] = useState("");
+	const [update, setUpdate] = useState(false);
 	const [error, setError] = useState(null);
-
-	const handleArchive = (str) => {
-		const dateObj = { archive_date: new Date() };
-		const noteObj = {
-			type_of_note: "archive",
-			notes: str,
-			dog_id: dogId,
-		};
-		DogsApiService.archiveDog(dogId, dateObj)
-			.then((response) => DogsApiService.insertNewNote(noteObj))
-			.then((response) => {
-				DogsApiService.getDogInfo(dogId).then((res) => setArchive(false));
-			})
-			.catch((err) => setError({ error: "Can't archive dog." }));
-	};
 
 	useEffect(() => {
 		async function getStatus() {
 			const res = await DogsApiService.getDogStatus(dogId);
 			setStatus(res.dog_status);
 		}
+		setUpdate(false);
 		getStatus();
-	}, [dogId]);
+	}, [dogId, update]);
 
 	const updateStatus = async () => {
 		const res = await DogsApiService.getDogStatus(dogId);
 		setStatus(res.dog_status);
-	};
-
-	const renderModals = () => {
-		return (
-			<>
-				<Modal open={archive} onClose={() => setArchive(false)} center>
-					<ArchiveModal
-						dogName={name}
-						dogId={dogId}
-						handleArchive={(s) => handleArchive(s)}
-					/>
-				</Modal>
-				{/* <Modal
-					open={this.state.openAdopt}
-					onClose={(e) => this.closeModal("openAdopt")}
-					center
-				>
-					<FosterAdopForm
-						type="adopt"
-						dogId={dogInfo.id}
-						updateDogInfo={this.handleDogAdoption}
-					/>
-				</Modal> */}
-				{/* <Modal
-					open={this.state.openFoster}
-					onClose={(e) => this.closeModal("openFoster")}
-					center
-				>
-					<FosterAdopForm
-						type="foster"
-						dogId={dogInfo.id}
-						updateDogInfo={this.handleDogFoster}
-					/>
-				</Modal> */}
-			</>
-		);
 	};
 
 	return (
@@ -93,15 +40,8 @@ const DogInfoPage = (props) => {
 					</Link>
 				</div>
 
-				{status !== "Archived" && (
-					<button className="archive" onClick={() => setArchive(!archive)}>
-						Archive
-					</button>
-				)}
-
 				<button className="delete-dog">Delete</button>
 			</div>
-			{renderModals()}
 
 			<div className="details-section">
 				<div className="dog-details">
@@ -109,13 +49,14 @@ const DogInfoPage = (props) => {
 						dogId={dogId}
 						history={props.history}
 						buttonStatus={(s) => setStatus(s)}
+						setUpdate={setUpdate}
 					/>
 				</div>
 				<div className="medical">
 					<MedicalSection dogId={dogId} />
 				</div>
 				<div className="notes">
-					<NotesSection dogId={dogId} />
+					<NotesSection dogId={dogId} update={update} setUpdate={setUpdate} />
 				</div>
 				<div className="adoption">
 					<AdoptionSection

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal } from "react-responsive-modal";
 import styled from "styled-components";
 
@@ -9,7 +9,7 @@ import AddNoteForm from "../AddNoteForm";
 import NewEditButtons from "../NewEditButtons/NewEditButtons";
 import moment from "moment";
 
-const NotesSection = ({ dogId }) => {
+const NotesSection = ({ dogId, update, setUpdate }) => {
 	const [notes, setNotes] = useState([]);
 	const [modalIsOpen, setModalIsOpen] = useState(false);
 	const [selected, setSelected] = useState("");
@@ -19,8 +19,11 @@ const NotesSection = ({ dogId }) => {
 			const res = await DogsApiService.getDogNotes(dogId);
 			setNotes([...res]);
 		}
+		if (update) {
+			setUpdate(false);
+		}
 		getNotes();
-	}, [dogId]);
+	}, [dogId, update, setUpdate]);
 
 	const handleDelete = async (noteId) => {
 		await DogsApiService.deleteNote(noteId);

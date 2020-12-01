@@ -28,6 +28,7 @@
 
 .react-datepicker-wrapper {
 	width: 50%;
+	display: block;
 }
 
 .loader-container {

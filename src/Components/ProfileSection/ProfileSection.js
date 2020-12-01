@@ -2,18 +2,22 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Modal } from "react-responsive-modal";
 
+import ArchiveModal from "../../Components/ArchiveModal/ArchiveModal";
+import FosterAdopForm from "../../Components/FosterAdopForm/FosterAdopForm";
+import ImgModalForm from "../../Components/ImgModalForm/ImgModalForm";
+
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
 import DogsApiService from "../../services/api-service";
 import DropDown from "../../Components/DropDown";
-import ImgModalForm from "../../Components/ImgModalForm/ImgModalForm";
 
 import { GrEdit } from "react-icons/gr";
 import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
 
 import moment from "moment";
 
-const ProfileSection = ({ dogId, buttonStatus }) => {
+const ProfileSection = ({ dogId, buttonStatus, setUpdate }) => {
 	const [info, setInfo] = useState({});
 	const [name, setName] = useState("");
 	const [status, setStatus] = useState("");
@@ -25,6 +29,10 @@ const ProfileSection = ({ dogId, buttonStatus }) => {
 	const [editMode, setEditMode] = useState(false);
 	const [editingPhoto, setPhotoEditing] = useState(false);
 	const [imgName, setImgName] = useState("");
+	const [error, setError] = useState("");
+
+	const [openAdopt, setOpenAdopt] = useState(false);
+	const [openArchive, setOpenArchive] = useState(false);
 
 	useEffect(() => {
 		async function getDogInfo() {
@@ -82,6 +90,18 @@ const ProfileSection = ({ dogId, buttonStatus }) => {
 	}
 
 	const updateStatus = (status) => {
+		if (status === "Archived") {
+			setOpenArchive(true);
+		}
+
+		if (status === "Adopted") {
+			setOpenAdopt(true);
+		}
+
+		if (status === "Adopted") {
+			setOpenAdopt(true);
+		}
+
 		setStatus(status);
 	};
 
@@ -105,6 +125,57 @@ const ProfileSection = ({ dogId, buttonStatus }) => {
 		setInfo({ ...info, profile_img: newUrl });
 		setPhotoEditing(!editingPhoto);
 	}
+
+	const handleArchive = async (str) => {
+		const dateObj = { archive_date: new Date() };
+		const noteObj = {
+			type_of_note: "archive",
+			notes: str,
+			dog_id: dogId,
+		};
+
+		try {
+			await DogsApiService.archiveDog(dogId, dateObj);
+			await DogsApiService.insertNewNote(noteObj);
+			updateDogInfo();
+			setOpenArchive(false);
+			setUpdate(true);
+		} catch {
+			setError({ error: "Can't archive dog." });
+		}
+	};
+
+	const renderModals = () => {
+		return (
+			<>
+				<Modal open={openArchive} onClose={() => setOpenArchive(false)} center>
+					<ArchiveModal
+						dogName={name}
+						dogId={dogId}
+						handleArchive={(s) => handleArchive(s)}
+					/>
+				</Modal>
+				<Modal open={openAdopt} onClose={(e) => setOpenAdopt(false)} center>
+					<FosterAdopForm
+						type="adopt"
+						dogId={dogId}
+						updateDogInfo={updateDogInfo}
+					/>
+				</Modal>
+				{/* <Modal
+					open={this.state.openFoster}
+					onClose={(e) => this.closeModal("openFoster")}
+					center
+				>
+					<FosterAdopForm
+						type="foster"
+						dogId={dogInfo.id}
+						updateDogInfo={this.handleDogFoster}
+					/>
+				</Modal> */}
+			</>
+		);
+	};
 
 	return (
 		<ProfileSectionStyles>
@@ -141,7 +212,7 @@ const ProfileSection = ({ dogId, buttonStatus }) => {
 								<DropDown
 									label="Pick Status"
 									className="fade-in edit-input value"
-									list={["Current", "Adopted", "Archived", "Fostered", "None"]}
+									list={["Current", "Adopted", "Archived", "Fostered"]}
 									onClick={(value) => updateStatus(value)}
 								/>
 							</label>
@@ -260,6 +331,7 @@ const ProfileSection = ({ dogId, buttonStatus }) => {
 					</div>
 				</>
 			)}
+			{renderModals()}
 		</ProfileSectionStyles>
 	);
 };
