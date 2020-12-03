@@ -79,6 +79,11 @@ const NotesListStyles = styled.div`
 		transform: scale(1.2);
 	}
 
+	.note-author {
+		color: #f7567c;
+		font-weight: bold;
+	}
+
 	@media (min-width: 1000px) {
 		font-size: 1rem;
 	}
