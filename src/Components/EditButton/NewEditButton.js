@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { GrEdit, GrAddCircle } from "react-icons/gr";
 import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
 
-const NewEditButton = ({ type, style, handleClick }) => {
+const EditButton = ({ type, style, handleClick }) => {
 	return (
 		<EditStyles>
 			{type === "edit" ? (
@@ -43,4 +43,4 @@ const EditStyles = styled.div`
 	}
 `;
 
-export default NewEditButton;
+export default EditButton;
