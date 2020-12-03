@@ -1,28 +1,38 @@
 import React, { useState, useEffect } from "react";
+
 import styled from "styled-components";
 import moment from "moment";
+
+import Button from "../Components/Button";
 
 import DogsApiService from "../services/api-service";
 import Encryption from "../Utils/encryption";
 
-const FosterSection = ({ dogId, status, setUpdate, update }) => {
-	const [foster, setFoster] = useState("");
+const FosterSection = ({ dogId, setUpdate, update }) => {
+	const [foster, setFoster] = useState([]);
+
+	console.log(update);
+
+	const fosterBtnStyles = {
+		textAlign: "center",
+		width: "50%",
+		margin: "0 auto",
+		color: "#00000",
+	};
 
 	useEffect(() => {
-		const getAdoption = async () => {
-			if (status !== "Fostered") {
-				return;
-			}
+		const getFoster = async () => {
 			let data;
 			const res = await DogsApiService.getFosterInfo(dogId);
 			data = Encryption.decryptData(res.data);
-			setFoster(data);
+
+			setFoster([...data]);
 		};
 		if (update) {
 			setUpdate(false);
 		}
-		getAdoption();
-	}, [dogId, update, setUpdate, status]);
+		getFoster();
+	}, [dogId, update, setUpdate]);
 
 	const formatDate = (date) => {
 		let formattedDate = moment(date).format("LL");
@@ -37,31 +47,49 @@ const FosterSection = ({ dogId, status, setUpdate, update }) => {
 		<FosterSectionStyles>
 			<h3 className="foster-title">Foster</h3>
 			<FosterContainerStyles>
-				<FosterItemStyles>
-					<li className="list-title name">
-						Name
-						<p className="list-title-value">{foster.foster_name}</p>
-					</li>
-					<li className="list-title status">
-						Status
-						<p className="list-title-value">
-							{!foster.foster_completed_on ? "Ongoing" : "Completed"}
-						</p>
-					</li>
-					<li className="list-title start">
-						Start
-						<p className="list-title-value">{formatDate(foster.foster_date)}</p>
-					</li>
-					<li className="list-title end">
-						End
-						<p className="list-title-value birthdate">
-							{formatDate(foster.foster_completed_on)}
-						</p>
-					</li>
-					<li className="list-title foster-contract">
-						<button>View Contract</button>
-					</li>
-				</FosterItemStyles>
+				{foster.length > 0 &&
+					foster.map((f, index) => {
+						return (
+							<FosterItemStyles key={index}>
+								<li className="list-title name">
+									Name
+									<p className="list-title-value">{f.foster_name}</p>
+								</li>
+								<li className="list-title status">
+									Status
+									<p className="list-title-value">
+										{!f.foster_completed_on ? "Ongoing" : "Completed"}
+									</p>
+								</li>
+								<li className="list-title start">
+									Start
+									<p className="list-title-value">
+										{formatDate(f.foster_date)}
+									</p>
+								</li>
+								<li className="list-title end">
+									End
+									<p className="list-title-value birthdate">
+										{formatDate(f.foster_completed_on)}
+									</p>
+								</li>
+
+								<li className="list-title foster-contract">
+									<Button styles={fosterBtnStyles}>
+										<a
+											className="contract-link"
+											href={f.contract_url}
+											target="_blank"
+											rel="noopener noreferrer"
+											download
+										>
+											View Contract
+										</a>
+									</Button>
+								</li>
+							</FosterItemStyles>
+						);
+					})}
 			</FosterContainerStyles>
 		</FosterSectionStyles>
 	);
@@ -76,16 +104,16 @@ const FosterSectionStyles = styled.div`
 `;
 
 const FosterContainerStyles = styled.div`
-	overflow: hidden;
 	width: 100%;
+	height: 200px;
+	overflow-y: scroll;
 `;
 
 const FosterItemStyles = styled.ul`
 	border-radius: 10px;
 	background-color: #85c1ca;
 	width: 90%;
-	margin: 0 auto;
-	height: 100%;
+	margin: 5px auto;
 	padding: 5px;
 
 	display: grid;

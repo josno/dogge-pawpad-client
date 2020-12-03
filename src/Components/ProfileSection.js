@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Modal } from "react-responsive-modal";
 
-import ArchiveModal from "../../Components/ArchiveModal/ArchiveModal";
-import FosterAdopForm from "../../Components/FosterAdopForm/FosterAdopForm";
-import ImgModalForm from "../../Components/ImgModalForm/ImgModalForm";
+import ArchiveModal from "./ArchiveModal/ArchiveModal";
+import FosterAdopForm from "./FosterAdopForm/FosterAdopForm";
+import ImgModalForm from "./ImgModalForm/ImgModalForm";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import DogsApiService from "../../services/api-service";
-import DropDown from "../../Components/DropDown";
+import DogsApiService from "../services/api-service";
+import DropDown from "./DropDown";
 
 import { GrEdit } from "react-icons/gr";
 import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
@@ -213,12 +213,16 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
 						<form className="fade-in">
 							<label className="profile-list-item">
 								<span className="title">Status:</span>
-								<DropDown
-									label="Pick Status"
-									className="fade-in edit-input value"
-									list={["Current", "Adopted", "Archived", "Fostered"]}
-									onClick={(value) => updateStatus(value)}
-								/>
+								{status === "Adopted" ? (
+									"Adopted"
+								) : (
+									<DropDown
+										label="Pick Status"
+										className="fade-in edit-input value"
+										list={["Current", "Adopted", "Archived", "Fostered"]}
+										onClick={(value) => updateStatus(value)}
+									/>
+								)}
 							</label>
 							<label className="profile-list-item">
 								<span className="title">Gender:</span>

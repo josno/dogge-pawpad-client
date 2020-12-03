@@ -6,9 +6,9 @@ import styled from "styled-components";
 
 import DogsApiService from "../../services/api-service";
 
-import ProfileSection from "../../Components/ProfileSection/ProfileSection";
-import MedicalSection from "../../Components/MedicalSection/MedicalSection";
-import NotesSection from "../../Components/NotesSection/NotesSection";
+import ProfileSection from "../../Components/ProfileSection";
+import MedicalSection from "../../Components/MedicalSection";
+import NotesSection from "../../Components/NotesSection";
 import AdoptionSection from "../../Components/AdoptionSection";
 import FosterSection from "../../Components/FosterSection";
 
@@ -70,7 +70,7 @@ const DogInfoPage = (props) => {
 					/>
 				</div>
 				<div className="foster">
-					<FosterSection dogId={dogId} status={status} />
+					<FosterSection dogId={dogId} update={update} setUpdate={setUpdate} />
 				</div>
 			</div>
 		</DogInfoPageStyles>
