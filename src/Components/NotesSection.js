@@ -6,7 +6,7 @@ import NoteListItem from "./NoteListItem/NoteListItem";
 import DogsApiService from "../services/api-service";
 import AddNoteForm from "./AddNoteForm";
 
-import NewEditButtons from "./NewEditButtons/NewEditButtons";
+import NewEditButton from "./NewEditButton/NewEditButton";
 import moment from "moment";
 
 const NotesSection = ({ dogId, update, setUpdate }) => {
@@ -73,22 +73,11 @@ const NotesSection = ({ dogId, update, setUpdate }) => {
 						))}
 
 				<EditContainerStyles>
-					{!modalIsOpen ? (
-						<NewEditButtons
+					{!modalIsOpen && (
+						<NewEditButton
 							type="add"
 							handleClick={() => setModalIsOpen(!modalIsOpen)}
 						/>
-					) : (
-						<>
-							<NewEditButtons
-								type="submit"
-								handleClick={() => console.log("submitted")}
-							/>
-							<NewEditButtons
-								type="cancel"
-								handleClick={() => setModalIsOpen(!modalIsOpen)}
-							/>
-						</>
 					)}
 				</EditContainerStyles>
 				<Modal

@@ -11,8 +11,6 @@ import Encryption from "../Utils/encryption";
 const FosterSection = ({ dogId, setUpdate, update }) => {
 	const [foster, setFoster] = useState([]);
 
-	console.log(update);
-
 	const fosterBtnStyles = {
 		textAlign: "center",
 		width: "50%",

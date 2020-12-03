@@ -6,7 +6,7 @@ import { Modal } from "react-responsive-modal";
 import DogsApiService from "../services/api-service";
 
 import styled from "styled-components";
-import NewEditButtons from "./NewEditButtons/NewEditButtons";
+import NewEditButton from "./NewEditButton/NewEditButton";
 import BatchShotForm from "./BatchUpdateForms/BatchShotForm";
 
 const MedicalSection = ({ dogId }) => {
@@ -45,18 +45,18 @@ const MedicalSection = ({ dogId }) => {
 			)}
 			<EditContainerStyles>
 				{!editMode ? (
-					<NewEditButtons
+					<NewEditButton
 						type="edit"
 						handleClick={() => setEditMode(!editMode)}
 					/>
 				) : (
 					<>
-						<NewEditButtons type="submit" handleClick={() => updateShots()} />
-						<NewEditButtons type="cancel" handleClick={() => updateShots()} />
+						<NewEditButton type="submit" handleClick={() => updateShots()} />
+						<NewEditButton type="cancel" handleClick={() => updateShots()} />
 					</>
 				)}
 
-				<NewEditButtons
+				<NewEditButton
 					type="add"
 					handleClick={() => setModalIsOpen(!modalIsOpen)}
 				/>

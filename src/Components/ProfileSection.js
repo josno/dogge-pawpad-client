@@ -5,6 +5,7 @@ import { Modal } from "react-responsive-modal";
 import ArchiveModal from "./ArchiveModal/ArchiveModal";
 import FosterAdopForm from "./FosterAdopForm/FosterAdopForm";
 import ImgModalForm from "./ImgModalForm/ImgModalForm";
+import NewEditButton from "./NewEditButton/NewEditButton";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -209,6 +210,18 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
 							onChange={(e) => setName(e.target.value)}
 						/>
 					</h1>
+					<NewEditButton />
+					<NewEditButton />
+					<FaRegTimesCircle
+						className="icon active-edit-icon cancel-button"
+						onClick={() => setEditMode(!editMode)}
+						fill="#1f8392"
+					/>
+					<FaRegCheckCircle
+						className="icon active-edit-icon check-button"
+						onClick={() => updateDogInfo()}
+						fill="#1f8392"
+					/>
 					<div>
 						<form className="fade-in">
 							<label className="profile-list-item">
@@ -290,16 +303,6 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
 								/>
 							</label>
 						</form>
-						<FaRegTimesCircle
-							className="icon active-edit-icon cancel-button"
-							onClick={() => setEditMode(!editMode)}
-							fill="#1f8392"
-						/>
-						<FaRegCheckCircle
-							className="icon active-edit-icon check-button"
-							onClick={() => updateDogInfo()}
-							fill="#1f8392"
-						/>
 					</div>
 				</>
 			) : (
