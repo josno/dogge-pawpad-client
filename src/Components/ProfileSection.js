@@ -210,8 +210,7 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
 							onChange={(e) => setName(e.target.value)}
 						/>
 					</h1>
-					<NewEditButton />
-					<NewEditButton />
+
 					<FaRegTimesCircle
 						className="icon active-edit-icon cancel-button"
 						onClick={() => setEditMode(!editMode)}
@@ -423,6 +422,7 @@ const ProfileSectionStyles = styled.div`
 	}
 
 	.edit-input {
+		width: 175px;
 		padding: none;
 		margin-right: 10px;
 		font-size: 1em;

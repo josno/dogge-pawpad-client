@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import moment from "moment";
 
 const ShotDetailsView = ({ shots, spayedNeutered }) => {
@@ -13,7 +14,7 @@ const ShotDetailsView = ({ shots, spayedNeutered }) => {
 
 	const renderShots = (shot) => {
 		return (
-			<li className="shot-checkbox" key={shot.shot_name + "-one"}>
+			<li key={shot.shot_name + "-one"}>
 				{shot.shot_iscompleted ? (
 					<span className="indicator-yes">&#10004; </span>
 				) : (
@@ -28,7 +29,7 @@ const ShotDetailsView = ({ shots, spayedNeutered }) => {
 	};
 
 	return (
-		<ul className="dog-info-text shot-container">
+		<ShotDetailsStyles>
 			<div>
 				{spayedNeutered ? (
 					<span className="indicator-yes">&#10004; </span>
@@ -41,8 +42,33 @@ const ShotDetailsView = ({ shots, spayedNeutered }) => {
 				shots
 					.sort((a, b) => (a.shot_name > b.shot_name ? 1 : -1))
 					.map((i, index) => <div key={index}>{renderShots(i)}</div>)}
-		</ul>
+		</ShotDetailsStyles>
 	);
 };
+
+const ShotDetailsStyles = styled.ul`
+	line-height: 25px;
+	margin: 20px;
+	text-align: left;
+
+	.indicator-no {
+		color: #872f44;
+	}
+
+	.indicator-yes {
+		color: #306b34;
+	}
+
+	.last-shot-text {
+		display: block;
+		padding-left: 30px;
+		font-size: 0.75em;
+		margin: 0px;
+	}
+
+	@media (min-width: 1200px) {
+		font-size: 0.8em;
+	}
+`;
 
 export default ShotDetailsView;

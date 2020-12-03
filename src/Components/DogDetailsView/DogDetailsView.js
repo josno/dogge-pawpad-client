@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DogsApiService from "../../services/api-service";
+import styled from "styled-components";
 import "./DogDetailsView.css";
 
 import DatePicker from "react-datepicker";
@@ -51,14 +52,14 @@ class DogDetailsView extends Component {
 			return (
 				<>
 					{" "}
-					<span className='indicator-yes'>&#10004; </span>
+					<span className="indicator-yes">&#10004; </span>
 				</>
 			);
 		} else {
 			return (
 				<>
 					{" "}
-					<span className='indicator-no'> &#10008; </span>
+					<span className="indicator-no"> &#10008; </span>
 				</>
 			);
 		}
@@ -139,8 +140,8 @@ class DogDetailsView extends Component {
 		return str.editMode === true ? (
 			<div className={`${str}-value align-details`}>
 				<input
-					className='fade-in edit-input'
-					type='text'
+					className="fade-in edit-input"
+					type="text"
 					name={str}
 					defaultValue={str.value}
 					onChange={(e) => this.handleChange(e)}
@@ -156,7 +157,7 @@ class DogDetailsView extends Component {
 			<div className={`${str}-value align-details`}>
 				{str.value}
 				<button
-					className='edit-pencil'
+					className="edit-pencil"
 					value={str}
 					onClick={(e) => this.changeEditMode(e)}
 				>
@@ -192,48 +193,48 @@ class DogDetailsView extends Component {
 		} = this.state;
 
 		return (
-			<div className='basic-dog-details box-flex'>
-				<h3 className='info-title'>Basic Details </h3>
-				<ul className='dog-info-text details-grid-container'>
-					<li className='gender align-details'>
+			<DogDetailsStyles>
+				<h3 className="info-title">Basic Details </h3>
+				<ul className="dog-info-text details-grid-container">
+					<li className="gender align-details">
 						Gender:
 						{gender.editMode === true ? (
-							<div className='gender-value align-details'>
-								<label htmlFor='male'>
+							<div className="gender-value align-details">
+								<label htmlFor="male">
 									<input
-										type='radio'
-										name='gender'
-										value='Male'
+										type="radio"
+										name="gender"
+										value="Male"
 										onChange={(e) => this.handleChange(e)}
-										id='male'
+										id="male"
 										required
 									/>
 									Male
 								</label>
 
-								<label htmlFor='female'>
+								<label htmlFor="female">
 									<input
-										type='radio'
-										name='gender'
-										value='Female'
+										type="radio"
+										name="gender"
+										value="Female"
 										onChange={(e) => this.handleChange(e)}
-										id='female'
+										id="female"
 									/>
 									Female
 								</label>
-								<button value='gender' onClick={(e) => this.changeEditMode(e)}>
+								<button value="gender" onClick={(e) => this.changeEditMode(e)}>
 									&#10008;{" "}
 								</button>
-								<button value='gender' onClick={(e) => this.updateValue(e)}>
+								<button value="gender" onClick={(e) => this.updateValue(e)}>
 									&#10004;{" "}
 								</button>
 							</div>
 						) : (
-							<div className='gender-value align-details'>
+							<div className="gender-value align-details">
 								{gender.value}
 								<button
-									className='edit-pencil'
-									value='gender'
+									className="edit-pencil"
+									value="gender"
 									onClick={(e) => this.changeEditMode(e)}
 								>
 									&#9998;
@@ -241,32 +242,32 @@ class DogDetailsView extends Component {
 							</div>
 						)}
 					</li>
-					<li className='age align-details'>
+					<li className="age align-details">
 						Birthdate:
 						{age.editMode === true ? (
-							<div className='age-value align-details'>
+							<div className="age-value align-details">
 								<DatePicker
-									dateFormat='dd/MM/yyyy'
+									dateFormat="dd/MM/yyyy"
 									selected={this.state.age.newVal}
-									placeholderText='dd/mm/yyyy'
+									placeholderText="dd/mm/yyyy"
 									onChange={(date) => this.handleDateChange("age", date)}
-									className='fade-in edit-input'
+									className="fade-in edit-input"
 								/>
 
-								<button value='age' onClick={(e) => this.changeEditMode(e)}>
+								<button value="age" onClick={(e) => this.changeEditMode(e)}>
 									&#10008;{" "}
 								</button>
-								<button value='age' onClick={(e) => this.updateValue(e)}>
+								<button value="age" onClick={(e) => this.updateValue(e)}>
 									&#10004;{" "}
 								</button>
 							</div>
 						) : (
-							<div className='age-value align-details'>
+							<div className="age-value align-details">
 								{this.formatDate(age.value)}
 
 								<button
-									className='edit-pencil'
-									value='age'
+									className="edit-pencil"
+									value="age"
 									onClick={(e) => this.changeEditMode(e)}
 								>
 									&#9998;
@@ -274,38 +275,38 @@ class DogDetailsView extends Component {
 							</div>
 						)}
 					</li>
-					<li className='arrival_date align-details'>
+					<li className="arrival_date align-details">
 						Arrival Date:
 						{arrival_date.editMode === true ? (
-							<div className='arrival_date-value align-details'>
+							<div className="arrival_date-value align-details">
 								<DatePicker
-									dateFormat='dd/MM/yyyy'
+									dateFormat="dd/MM/yyyy"
 									selected={this.state.arrival_date.newVal}
-									placeholderText='dd/mm/yyyy'
+									placeholderText="dd/mm/yyyy"
 									onChange={(date) =>
 										this.handleDateChange("arrival_date", date)
 									}
-									className='fade-in edit-input'
+									className="fade-in edit-input"
 								/>
 								<button
-									value='arrival_date'
+									value="arrival_date"
 									onClick={(e) => this.changeEditMode(e)}
 								>
 									&#10008;{" "}
 								</button>
 								<button
-									value='arrival_date'
+									value="arrival_date"
 									onClick={(e) => this.updateValue(e)}
 								>
 									&#10004;{" "}
 								</button>
 							</div>
 						) : (
-							<div className='arrival_date-value align-details'>
+							<div className="arrival_date-value align-details">
 								{this.formatDate(arrival_date.value)}
 								<button
-									className='edit-pencil'
-									value='arrival_date'
+									className="edit-pencil"
+									value="arrival_date"
 									onClick={(e) => this.changeEditMode(e)}
 								>
 									&#9998;
@@ -313,33 +314,33 @@ class DogDetailsView extends Component {
 							</div>
 						)}
 					</li>
-					<li className='tag_number align-details'>
+					<li className="tag_number align-details">
 						Tag:
 						{tag_number.editMode === true ? (
-							<div className='tag_number-value align-details'>
+							<div className="tag_number-value align-details">
 								<input
-									className='fade-in edit-input'
-									type='text'
-									name='tag_number'
+									className="fade-in edit-input"
+									type="text"
+									name="tag_number"
 									defaultValue={tag_number.value}
 									onChange={(e) => this.handleChange(e)}
 								/>
 								<button
-									value='tag_number'
+									value="tag_number"
 									onClick={(e) => this.changeEditMode(e)}
 								>
 									&#10008;{" "}
 								</button>
-								<button value='tag_number' onClick={(e) => this.updateValue(e)}>
+								<button value="tag_number" onClick={(e) => this.updateValue(e)}>
 									&#10004;{" "}
 								</button>
 							</div>
 						) : (
-							<div className='tag_number-value align-details'>
+							<div className="tag_number-value align-details">
 								{tag_number.value}
 								<button
-									className='edit-pencil'
-									value='tag_number'
+									className="edit-pencil"
+									value="tag_number"
 									onClick={(e) => this.changeEditMode(e)}
 								>
 									&#9998;
@@ -348,33 +349,33 @@ class DogDetailsView extends Component {
 						)}
 					</li>
 
-					<li className='microchip align-details'>
+					<li className="microchip align-details">
 						Microchip:
 						{microchip.editMode === true ? (
-							<div className='microchip-value align-details'>
+							<div className="microchip-value align-details">
 								<input
-									className='fade-in edit-input'
-									type='text'
-									name='microchip'
+									className="fade-in edit-input"
+									type="text"
+									name="microchip"
 									defaultValue={microchip.value}
 									onChange={(e) => this.handleChange(e)}
 								/>
 								<button
-									value='microchip'
+									value="microchip"
 									onClick={(e) => this.changeEditMode(e)}
 								>
 									&#10008;{" "}
 								</button>
-								<button value='microchip' onClick={(e) => this.updateValue(e)}>
+								<button value="microchip" onClick={(e) => this.updateValue(e)}>
 									&#10004;{" "}
 								</button>
 							</div>
 						) : (
-							<div className='microchip-value align-details'>
+							<div className="microchip-value align-details">
 								{microchip.value}
 								<button
-									className='edit-pencil'
-									value='microchip'
+									className="edit-pencil"
+									value="microchip"
 									onClick={(e) => this.changeEditMode(e)}
 								>
 									&#9998;
@@ -383,26 +384,26 @@ class DogDetailsView extends Component {
 						)}
 					</li>
 
-					<li className='spayedneutered align-details'>
+					<li className="spayedneutered align-details">
 						Spayed/Neutered:
 						{spayedneutered.editMode === true ? (
-							<div className='spayedneutered-value align-details'>
-								<label htmlFor='yes'>
+							<div className="spayedneutered-value align-details">
+								<label htmlFor="yes">
 									<input
-										id='yes'
-										type='radio'
-										name='spayedneutered'
+										id="yes"
+										type="radio"
+										name="spayedneutered"
 										onChange={(e) => this.handleSpayedNeuteredCheckbox(e)}
 										required
 									/>
 									Yes
 								</label>
 
-								<label htmlFor='no'>
+								<label htmlFor="no">
 									<input
-										id='no'
-										type='radio'
-										name='spayedneutered'
+										id="no"
+										type="radio"
+										name="spayedneutered"
 										onChange={(e) => this.handleSpayedNeuteredCheckbox(e)}
 									/>
 									No
@@ -415,24 +416,24 @@ class DogDetailsView extends Component {
 									onChange={(e) => this.handleChange(e)}
 								/> */}
 								<button
-									value='spayedneutered'
+									value="spayedneutered"
 									onClick={(e) => this.changeEditMode(e)}
 								>
 									&#10008;{" "}
 								</button>
 								<button
-									value='spayedneutered'
+									value="spayedneutered"
 									onClick={(e) => this.updateValue(e)}
 								>
 									&#10004;{" "}
 								</button>
 							</div>
 						) : (
-							<div className='spayedneutered-value align-details'>
+							<div className="spayedneutered-value align-details">
 								{this.renderSpayedNeutered(spayedneutered.value)}
 								<button
-									className='edit-pencil'
-									value='spayedneutered'
+									className="edit-pencil"
+									value="spayedneutered"
 									onClick={(e) => this.changeEditMode(e)}
 								>
 									&#9998;
@@ -441,9 +442,43 @@ class DogDetailsView extends Component {
 						)}
 					</li>
 				</ul>
-			</div>
+			</DogDetailsStyles>
 		);
 	}
 }
+
+const DogDetailsStyles = styled.div`
+	display: flex;
+	flex-direction: column;
+	background-color: #fcfcfc;
+	margin: 20px;
+	border: 2px solid;
+
+	.info-title {
+		color: #5d576b;
+		margin: 5px;
+	}
+
+	.dog-info-text {
+		line-height: 25px;
+		margin: 20px;
+		text-align: left;
+	}
+
+	@media (min-width: 800px) {
+		.align-details {
+			align-content: flex-start;
+			align-items: center;
+			display: flex;
+			font-size: 0.7em;
+		}
+	}
+
+	@media (min-width: 1200px) {
+		.dog-info-text {
+			font-size: 0.8em;
+		}
+	}
+`;
 
 export default DogDetailsView;

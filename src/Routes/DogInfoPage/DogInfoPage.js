@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { IoIosArrowBack } from "react-icons/io";
+import "react-responsive-modal/styles.css";
 
 import { Link } from "react-router-dom";
 import styled from "styled-components";
