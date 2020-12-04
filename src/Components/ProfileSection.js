@@ -5,7 +5,6 @@ import { Modal } from "react-responsive-modal";
 import ArchiveModal from "./ArchiveModal/ArchiveModal";
 import FosterAdopForm from "./FosterAdopForm/FosterAdopForm";
 import ImgModalForm from "./ImgModalForm/ImgModalForm";
-import EditButton from "./EditButton/EditButton";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";

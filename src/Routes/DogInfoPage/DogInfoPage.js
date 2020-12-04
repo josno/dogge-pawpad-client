@@ -42,7 +42,7 @@ const DogInfoPage = (props) => {
 					</Link>
 				</div>
 
-				<button className="delete-dog">Delete</button>
+				{/* <button className="delete-dog">Delete</button> */}
 			</div>
 
 			<div className="details-section">
