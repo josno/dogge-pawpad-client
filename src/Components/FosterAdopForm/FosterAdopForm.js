@@ -105,6 +105,7 @@ class FosterAdopForm extends Component {
 			foster_phone: phoneValue,
 			dog_id: this.props.dogId,
 			foster_country: country,
+			foster_completed_on: null,
 		};
 
 		let data = Encryption.encryptData(objectToEncrypt);

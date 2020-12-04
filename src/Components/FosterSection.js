@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Modal } from "react-responsive-modal";
+import DatePicker from "react-datepicker";
 
 import styled from "styled-components";
 import moment from "moment";
@@ -10,6 +12,9 @@ import Encryption from "../Utils/encryption";
 
 const FosterSection = ({ dogId, setUpdate, update }) => {
 	const [foster, setFoster] = useState([]);
+	const [endFoster, setEndFoster] = useState(false);
+	const [endDate, setEndDate] = useState("");
+	const [selectedFoster, setSelectedFoster] = useState("");
 
 	const fosterBtnStyles = {
 		textAlign: "center",
@@ -39,6 +44,29 @@ const FosterSection = ({ dogId, setUpdate, update }) => {
 		} else {
 			return formattedDate;
 		}
+	};
+
+	const updateFoster = async (e) => {
+		e.preventDefault();
+		const fosterObj = foster.find((i) => selectedFoster === i.id);
+		fosterObj.foster_completed_on = endDate;
+
+		let data = Encryption.encryptData(fosterObj);
+
+		const newFosterObj = new FormData();
+
+		newFosterObj.append("data", data);
+		await DogsApiService.updateFoster(newFosterObj, fosterObj.id);
+		const res = await DogsApiService.getFosterInfo(dogId);
+		data = Encryption.decryptData(res.data);
+
+		setFoster([...data]);
+		setEndFoster(false);
+	};
+
+	const openFosterModal = (id) => {
+		setEndFoster(!endFoster);
+		setSelectedFoster(id);
 	};
 
 	return (
@@ -73,6 +101,14 @@ const FosterSection = ({ dogId, setUpdate, update }) => {
 								</li>
 
 								<li className="list-title foster-contract">
+									{!f.foster_completed_on && (
+										<Button
+											styles={fosterBtnStyles}
+											handleClick={() => openFosterModal(f.id)}
+										>
+											End Foster
+										</Button>
+									)}
 									<Button styles={fosterBtnStyles}>
 										<a
 											className="contract-link"
@@ -88,6 +124,28 @@ const FosterSection = ({ dogId, setUpdate, update }) => {
 							</FosterItemStyles>
 						);
 					})}
+				<Modal
+					open={endFoster}
+					onClose={() => setEndFoster(!setEndFoster)}
+					center
+				>
+					<form style={{ padding: "20px" }}>
+						<label>End Foster Date</label>
+						<DatePicker
+							dateFormat="dd/MM/yyyy"
+							selected={endDate}
+							placeholderText="dd/mm/yyyy"
+							onChange={(date) => setEndDate(date)}
+							className="fade-in edit-input"
+						/>
+						<Button
+							active={false}
+							style={{ margin: "10px" }}
+							handleClick={(e) => updateFoster(e)}
+							children="Submit"
+						/>
+					</form>
+				</Modal>
 			</FosterContainerStyles>
 		</FosterSectionStyles>
 	);

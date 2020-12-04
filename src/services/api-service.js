@@ -306,6 +306,21 @@ const DogsApiService = {
 			},
 		});
 	},
+	updateFoster(fosterObj, fosterId) {
+		const fosterToUpdate = {
+			method: "PATCH",
+			headers: {
+				Authorization: `Bearer ${TokenService.getAuthToken()}`,
+			},
+			body: fosterObj,
+		};
+		return fetch(
+			`${config.API_ENDPOINT}/foster/update/${fosterId}`,
+			fosterToUpdate
+		).then((res) =>
+			!res.ok ? res.json().then((e) => Promise.reject(e)) : null
+		);
+	},
 };
 
 export default DogsApiService;
