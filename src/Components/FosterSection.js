@@ -18,7 +18,7 @@ const FosterSection = ({ dogId, setUpdate, update }) => {
 
 	const fosterBtnStyles = {
 		textAlign: "center",
-		width: "50%",
+		width: "40%",
 		margin: "0 auto",
 		color: "#00000",
 	};
@@ -183,6 +183,8 @@ const FosterItemStyles = styled.ul`
 	.foster-contract {
 		grid-area: foster-contract;
 		padding: 10px 0px;
+		display: flex;
+		justify-content: space-between;
 	}
 	.name {
 		grid-area: name;
