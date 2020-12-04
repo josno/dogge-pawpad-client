@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker";
 import DogsApiService from "../../services/api-service";
 import moment from "moment";
 import ValidationError from "../ValidationError/ValidationError";
+import Validate from "../../Utils/validation";
 
 const BatchShotForm = ({
 	selectedDogs,
@@ -32,6 +33,7 @@ const BatchShotForm = ({
 	const setAddShotForm = (e) => {
 		setAddMode(true);
 		setNewShot(e.target.value);
+		setError(Validate.validateShotName(e.target.value));
 	};
 
 	const handleSelection = (shot) => {
@@ -68,7 +70,9 @@ const BatchShotForm = ({
 		);
 	};
 
-	const onSubmit = () => {
+	const onSubmit = async (e) => {
+		e.preventDefault();
+
 		const dateString = moment(date).format("YYYY-MM-DD");
 
 		const request = addMode ? addShot(dateString) : updateShot(dateString);
@@ -147,14 +151,19 @@ const BatchShotForm = ({
 					required
 				/>
 
-				{error && <ValidationError message={error} />}
+				{error && <ValidationError className="shot-error" message={error} />}
 
 				<div className="container">
 					{addMode && !singleShotUpdate && (
 						<Button handleClick={() => setShotName("")}>Go Back</Button>
 					)}
 					<Button handleClick={() => handleCancel()}>Cancel</Button>
-					<Button handleClick={() => onSubmit()}>Submit</Button>
+					<Button
+						active={error === null || error || !date ? true : false}
+						handleClick={(e) => onSubmit(e)}
+					>
+						Submit
+					</Button>
 				</div>
 			</>
 		</BatchShotFormStyles>
@@ -173,6 +182,10 @@ const BatchShotFormStyles = styled.form`
 	padding: 10px;
 	transition: 0.3s;
 
+	.shot-error {
+		width: 100%;
+	}
+
 	.container {
 		margin: 0px 10px;
 		width: 100%;
@@ -188,8 +201,6 @@ const BatchShotFormStyles = styled.form`
 	}
 
 	.input-style-custom {
-		margin: 0px 10px;
-		width: 100%;
 		width: 100%;
 		height: 40px;
 		border-radius: 0px;
