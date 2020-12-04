@@ -17,11 +17,11 @@ const DogInfoPage = (props) => {
 	const dogId = props.match.params.dogId;
 	const [status, setStatus] = useState("");
 	const [update, setUpdate] = useState(false);
-	const [error, setError] = useState(null);
 
 	useEffect(() => {
 		async function getStatus() {
 			const res = await DogsApiService.getDogStatus(dogId);
+
 			setStatus(res.dog_status);
 		}
 		setUpdate(false);

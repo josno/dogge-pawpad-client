@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import TokenService from "../services/token-service";
 import DogsApiService from "../services/api-service";
+import ValidationError from "././ValidationError/ValidationError";
 import Button from "./Button";
 
 const DeleteDogForm = ({
@@ -36,7 +36,8 @@ const DeleteDogForm = ({
 	return (
 		<DeleteFormStyles>
 			<p>Once you delete a dog, it will be gone forever.</p>
-			<div className='button-container'>
+			{error && <ValidationError message={error} />}
+			<div className="button-container">
 				<Button handleClick={() => closeUpdateStatusForm()}>Cancel</Button>
 				<Button handleClick={() => onSubmit()}>Delete</Button>
 			</div>

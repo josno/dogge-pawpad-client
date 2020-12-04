@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-
 import styled from "styled-components";
-import ValidationError from "./ValidationError/ValidationError";
 import DogsApiService from "../services/api-service";
+
 import Validate from "../Utils/validation";
+import ValidationError from "././ValidationError/ValidationError";
 
 const AddNoteForm = ({ setModal, dogId, updateNotes }) => {
 	const [noteType, setNoteType] = useState("");
@@ -12,13 +12,6 @@ const AddNoteForm = ({ setModal, dogId, updateNotes }) => {
 		touched: false,
 	});
 	const [error, setError] = useState(null);
-
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		this.setState({
-			[name]: value,
-		});
-	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -29,10 +22,19 @@ const AddNoteForm = ({ setModal, dogId, updateNotes }) => {
 			type_of_note: noteType,
 			dog_id: dogId,
 		};
+		try {
+			const res = await DogsApiService.insertNewNote(newNote);
+			updateNotes(res);
+			setModal(false);
+		} catch (err) {
+			setError(err);
+		}
+	};
 
-		const res = await DogsApiService.insertNewNote(newNote);
-		updateNotes(res);
-		setModal(false);
+	const validateInput = (e) => {
+		e.preventDefault();
+		setText({ value: e.target.value, touched: true });
+		setError(Validate.validateNote(text.value));
 	};
 
 	return (
@@ -60,18 +62,16 @@ const AddNoteForm = ({ setModal, dogId, updateNotes }) => {
 						className="notes-input"
 						name="text"
 						value={text.value}
-						onChange={(e) => setText({ value: e.target.value, touched: true })}
+						onChange={(e) => validateInput(e)}
 						required
 					/>
 				</div>
-				{text.touched && (
-					<ValidationError message={Validate.validateNote(text.value)} />
-				)}
+				{text.touched && <ValidationError message={error} />}
 				<div className="nav-buttons">
 					<button
 						className="notes-button"
 						type="submit"
-						disabled={text.touched && Validate.validateNote(text.value)}
+						disabled={!error ? false : true}
 					>
 						Add Note
 					</button>

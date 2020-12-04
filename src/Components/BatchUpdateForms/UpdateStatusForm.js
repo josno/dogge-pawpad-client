@@ -4,13 +4,16 @@ import config from "../../config";
 import TokenService from "../../services/token-service";
 import Button from "../Button";
 
+import ValidationError from "../ValidationError/ValidationError";
+
 const statusList = ["Current", "Archived"];
 
 const UpdateStatusForm = (props) => {
 	const [status, setStatus] = useState("");
 	const [error, setError] = useState(null);
 
-	const onSubmit = () => {
+	const onSubmit = (e) => {
+		e.preventDefault();
 		let list = props.selectedDogs.map((dogId) => {
 			return {
 				fetchUrl: `${config.API_ENDPOINT}/dogs/${dogId}`,
@@ -42,7 +45,8 @@ const UpdateStatusForm = (props) => {
 		});
 	};
 
-	const closeUpdateStatusForm = () => {
+	const closeUpdateStatusForm = (e) => {
+		e.preventDefault();
 		props.resetSelected([]);
 		props.setModal(false);
 		props.setChecked(false);
@@ -52,11 +56,11 @@ const UpdateStatusForm = (props) => {
 		<UpdateStatusFormStyles>
 			<label>
 				Select Status
-				<div className='button-selection-container'>
+				<div className="button-selection-container">
 					{statusList.map((s, index) => (
 						<input
 							key={index}
-							type='button'
+							type="button"
 							value={s}
 							className={`status-button ${status === s ? "clicked" : ""}`}
 							onClick={() => setStatus(s)}
@@ -65,9 +69,11 @@ const UpdateStatusForm = (props) => {
 				</div>
 			</label>
 
+			{error && <ValidationError message={error} />}
+
 			<ButtonWrapperStyles>
-				<Button handleClick={() => closeUpdateStatusForm()}>Cancel</Button>
-				<Button handleClick={() => onSubmit()}>Submit</Button>
+				<Button handleClick={(e) => closeUpdateStatusForm(e)}>Cancel</Button>
+				<Button handleClick={(e) => onSubmit(e)}>Submit</Button>
 			</ButtonWrapperStyles>
 		</UpdateStatusFormStyles>
 	);
