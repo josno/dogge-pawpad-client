@@ -73,10 +73,7 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
 	};
 
 	async function updateDogInfo() {
-		let updatedGender = "";
-		gender.male === "true"
-			? (updatedGender = "Male")
-			: (updatedGender = "Female");
+		const updatedGender = gender.male === true ? "Male" : "Female";
 
 		const newObj = {
 			dog_name: name,
