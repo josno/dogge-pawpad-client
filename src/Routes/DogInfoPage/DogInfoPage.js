@@ -140,7 +140,7 @@ const DogInfoPageStyles = styled.div`
 
 		.details-section {
 			display: grid;
-			height: 700px;
+			max-height: 800px;
 			grid-template-columns: 0.8fr 1.1fr 1.1fr;
 			grid-template-rows: 1.4fr 0.6fr;
 

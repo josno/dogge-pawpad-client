@@ -269,7 +269,6 @@ const DogListStyles = styled.main`
 	}
 
 	.dog-list-container {
-		height: 80vh;
 		padding: 5px 5% 10px 5%;
 	}
 
