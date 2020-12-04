@@ -5,7 +5,9 @@ import { Modal } from "react-responsive-modal";
 import ArchiveModal from "./ArchiveModal/ArchiveModal";
 import FosterAdopForm from "./FosterAdopForm/FosterAdopForm";
 import ImgModalForm from "./ImgModalForm/ImgModalForm";
-
+import EditButton from "./EditButton/EditButton";
+import Validate from "./../Utils/validation";
+import ValidationError from "./ValidationError/ValidationError";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -13,7 +15,6 @@ import DogsApiService from "../services/api-service";
 import DropDown from "./DropDown";
 
 import { GrEdit } from "react-icons/gr";
-import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
 
 import moment from "moment";
 
@@ -111,6 +112,13 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
 		setStatus(status);
 	};
 
+	const validateInput = (e, type) => {
+		if (type === "name") {
+			setError(Validate.validateName(name));
+			setName(e.target.value);
+		}
+	};
+
 	async function updateDogImage(e, profileImg) {
 		e.preventDefault(e);
 		const profile_img = profileImg;
@@ -206,20 +214,30 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
 							className="edit-name-input"
 							type="text"
 							value={name}
-							onChange={(e) => setName(e.target.value)}
+							onChange={(e, name) => validateInput(e, "name")}
 						/>
 					</h1>
+					{error && <ValidationError message={error} />}
+					{!editMode ? (
+						<EditButton
+							type="edit"
+							handleClick={() => setEditMode(!editMode)}
+						/>
+					) : (
+						<>
+							<EditButton
+								styles={"active-edit-icon cancel-button"}
+								type="submit"
+								handleClick={() => updateDogInfo()}
+							/>
+							<EditButton
+								styles={"active-edit-icon check-button"}
+								type="cancel"
+								handleClick={() => setEditMode(!editMode)}
+							/>
+						</>
+					)}
 
-					<FaRegTimesCircle
-						className="icon active-edit-icon cancel-button"
-						onClick={() => setEditMode(!editMode)}
-						fill="#1f8392"
-					/>
-					<FaRegCheckCircle
-						className="icon active-edit-icon check-button"
-						onClick={() => updateDogInfo()}
-						fill="#1f8392"
-					/>
 					<div>
 						<form className="fade-in">
 							<label className="profile-list-item">

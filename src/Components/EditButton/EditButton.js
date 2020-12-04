@@ -4,24 +4,24 @@ import styled from "styled-components";
 import { GrEdit, GrAddCircle } from "react-icons/gr";
 import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
 
-const EditButton = ({ type, style, handleClick }) => {
+const EditButton = ({ type, styles, handleClick }) => {
 	return (
 		<EditStyles>
 			{type === "edit" ? (
-				<GrEdit className={`${style} icon`} onClick={() => handleClick()} />
+				<GrEdit className={`${styles} icon`} onClick={() => handleClick()} />
 			) : type === "add" ? (
 				<GrAddCircle
-					className={`${style} icon`}
+					className={`${styles} icon`}
 					onClick={() => handleClick()}
 				/>
 			) : type === "cancel" ? (
 				<FaRegTimesCircle
-					className={`${style} icon`}
+					className={`${styles} icon`}
 					onClick={() => handleClick()}
 				/>
 			) : (
 				<FaRegCheckCircle
-					className={`${style} icon`}
+					className={`${styles} icon`}
 					onClick={() => handleClick()}
 				/>
 			)}

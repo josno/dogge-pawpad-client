@@ -35,7 +35,7 @@ const MedicalSection = ({ dogId }) => {
 		<>
 			<MedicalTitleStyle>Medical </MedicalTitleStyle>
 			{editMode ? (
-				<EditShots dogId={dogId} />
+				<EditShots dogId={dogId} spayedNeutered={spayedNeutered} />
 			) : (
 				<ShotDetailsView
 					dogId={dogId}

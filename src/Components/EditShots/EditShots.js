@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import moment from "moment";
 import styled from "styled-components";
 import DogsApiService from "../../services/api-service";
-import Validate from "../../Utils/validation";
-import ValidationError from "../../Components/ValidationError/ValidationError";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -26,14 +24,15 @@ class EditShots extends Component {
 				"Complex II",
 				"Complex Yearly Booster",
 			],
+			spayedNeutered: "",
 		};
 
 		this.renderMandatoryShots = this.renderMandatoryShots.bind(this);
 		this.handleChecks = this.handleChecks.bind(this);
 		this.renderOptionShots = this.renderOptionShots.bind(this);
 		this.renderTextbox = this.renderTextbox.bind(this);
-		// this.handleAddShot = this.handleAddShot.bind(this);
 		this.handleSubmitNewShot = this.handleSubmitNewShot.bind(this);
+		this.renderSpayedNeutered = this.renderSpayedNeutered.bind(this);
 		this.deleteShot = this.deleteShot.bind(this);
 		this.formatDate = this.formatDate.bind(this);
 		this.makeDate = this.makeDate.bind(this);
@@ -137,12 +136,6 @@ class EditShots extends Component {
 		));
 	}
 
-	// handleAddShot(newShotName) {
-	// 	this.setState({
-	// 		newShot: { value: newShotName, touched: true },
-	// 	});
-	// }
-
 	renderTextbox() {
 		this.setState({
 			renderAddShot: !this.state.renderAddShot,
@@ -233,11 +226,53 @@ class EditShots extends Component {
 			);
 	}
 
+	renderSpayedNeutered() {
+		return (
+			<li className="edit-shot-line">
+				<label htmlFor={"spayed-neutered"}>
+					Spayed/Neutered
+					<label htmlFor="yes">
+						<input
+							id="yes"
+							type="radio"
+							name="spayedneutered"
+							onChange={() => this.handleSpayedNeuteredCheckbox(true)}
+							required
+							checked={this.state.spayedNeutered ? true : false}
+						/>
+						Yes
+					</label>
+					<label htmlFor="no">
+						<input
+							id="no"
+							type="radio"
+							name="spayedneutered"
+							checked={!this.state.spayedNeutered ? true : false}
+							onChange={() => this.handleSpayedNeuteredCheckbox(false)}
+						/>
+						No
+					</label>
+				</label>
+			</li>
+		);
+	}
+
+	handleSpayedNeuteredCheckbox = async (bool) => {
+		const newObj = {
+			spayedneutered: bool,
+		};
+
+		this.setState({ spayedNeutered: bool });
+		const res = await DogsApiService.updateDog(newObj, this.props.dogId);
+		console.log(res);
+	};
+
 	componentDidMount() {
 		DogsApiService.getShots(this.props.dogId).then((shots) => {
 			shots.sort((a, b) => (a.shot_name > b.shot_name ? 1 : -1));
 			this.setState({
 				shots: shots,
+				spayedNeutered: this.props.spayedNeutered ? true : false,
 			});
 		});
 	}
@@ -248,6 +283,7 @@ class EditShots extends Component {
 		return (
 			<EditShotsStyles>
 				<ul className="edit-shots-container fade-in">
+					{this.renderSpayedNeutered()}
 					{shots !== undefined && this.renderMandatoryShots(shots)}
 
 					{shots !== undefined && this.renderOptionShots(shots)}

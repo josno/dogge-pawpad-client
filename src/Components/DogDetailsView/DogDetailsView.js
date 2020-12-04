@@ -18,16 +18,8 @@ class DogDetailsView extends Component {
 			microchip: { value: "", editMode: false },
 			tag_number: { value: "", editMode: false },
 			arrival_date: { value: "", editMode: false },
-			spayedneutered: { value: "", editMode: false },
 		};
 	}
-
-	handleSpayedNeuteredCheckbox = () => {
-		const { editMode } = this.state.spayedneutered;
-		this.setState((prevState) => ({
-			spayedneutered: { editMode, value: !prevState.spayedneutered.value },
-		}));
-	};
 
 	formatDate(date) {
 		let formattedDate = moment(date).format("LL");
