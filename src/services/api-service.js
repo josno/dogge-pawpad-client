@@ -28,6 +28,15 @@ const DogsApiService = {
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
 		);
 	},
+	getDogStatus(dogId) {
+		return fetch(`${config.API_ENDPOINT}/dogs/status/${dogId}`, {
+			headers: {
+				Authorization: `Bearer ${TokenService.getAuthToken()}`,
+			},
+		}).then((res) =>
+			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+		);
+	},
 	insertNewDog(dogObj) {
 		const newDog = {
 			method: "POST",
@@ -92,7 +101,7 @@ const DogsApiService = {
 			`${config.API_ENDPOINT}/dogs/${dogId}`,
 			updatedDog
 		).then((res) =>
-			!res.ok ? res.json().then((e) => Promise.reject(e)) : null
+			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
 		);
 	},
 	uploadDogImg(data, tagNumber) {
@@ -296,6 +305,21 @@ const DogsApiService = {
 				authorization: `Bearer ${TokenService.getAuthToken()}`,
 			},
 		});
+	},
+	updateFoster(fosterObj, fosterId) {
+		const fosterToUpdate = {
+			method: "PATCH",
+			headers: {
+				Authorization: `Bearer ${TokenService.getAuthToken()}`,
+			},
+			body: fosterObj,
+		};
+		return fetch(
+			`${config.API_ENDPOINT}/foster/update/${fosterId}`,
+			fosterToUpdate
+		).then((res) =>
+			!res.ok ? res.json().then((e) => Promise.reject(e)) : null
+		);
 	},
 };
 

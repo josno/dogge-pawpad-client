@@ -6,12 +6,14 @@ import DatePicker from "react-datepicker";
 import DogsApiService from "../../services/api-service";
 import moment from "moment";
 import ValidationError from "../ValidationError/ValidationError";
+import Validate from "../../Utils/validation";
 
 const BatchShotForm = ({
 	selectedDogs,
 	resetSelected,
 	setModal,
 	updateDogs,
+	singleShotUpdate,
 }) => {
 	const [date, setDate] = useState(null);
 	const [shotList, setShotList] = useState([]);
@@ -31,6 +33,7 @@ const BatchShotForm = ({
 	const setAddShotForm = (e) => {
 		setAddMode(true);
 		setNewShot(e.target.value);
+		setError(Validate.validateShotName(e.target.value));
 	};
 
 	const handleSelection = (shot) => {
@@ -67,7 +70,9 @@ const BatchShotForm = ({
 		);
 	};
 
-	const onSubmit = () => {
+	const onSubmit = async (e) => {
+		e.preventDefault();
+
 		const dateString = moment(date).format("YYYY-MM-DD");
 
 		const request = addMode ? addShot(dateString) : updateShot(dateString);
@@ -77,63 +82,88 @@ const BatchShotForm = ({
 				setError("Something went wrong. Try again later.");
 			}
 
-			resetSelected([]);
-			setModal(false);
-			updateDogs();
+			if (singleShotUpdate) {
+				updateDogs();
+				setModal();
+			} else {
+				resetSelected([]);
+				setModal(false);
+				updateDogs();
+			}
 		});
 	};
 
 	const handleCancel = () => {
-		resetSelected([]);
-		setModal(false);
-		updateDogs();
+		if (singleShotUpdate) {
+			setModal();
+		} else {
+			resetSelected([]);
+			setModal(false);
+			updateDogs();
+		}
 	};
 
 	return (
 		<BatchShotFormStyles>
 			<>
-				{!addMode ? (
+				{singleShotUpdate ? (
 					<>
-						<label>Shot To Update</label>
+						<label className="label">Add Shot Name</label>
+						<input
+							className="input-style-custom"
+							value={newShot}
+							placeholder="Add A Shot Not In The List"
+							onChange={(e) => setAddShotForm(e)}
+							required
+						/>
+					</>
+				) : singleShotUpdate ? (
+					<>
+						<label className="label">Shot To Update</label>
 						<DropDown
 							modal={true}
 							list={shotList}
-							label='Select Shot'
+							label="Select Shot"
 							onClick={(value) => handleSelection(value)}
 							required
 						/>
 					</>
 				) : (
 					<>
-						<label>Add Shot Name</label>
+						<label className="label">Add Shot Name</label>
 						<input
-							className='input-style-custom'
+							className="input-style-custom"
 							value={newShot}
-							placeholder='Add A Shot Not In The List'
+							placeholder="Add A Shot Not In The List"
 							onChange={(e) => setAddShotForm(e)}
 							required
 						/>
 					</>
 				)}
 
-				<label>Select A Date</label>
+				<label className="label">Select A Date</label>
 				<DatePicker
 					selected={date}
-					dateFormat='dd/MM/yyyy'
+					dateFormat="dd/MM/yyyy"
 					onChange={(date) => setDate(date)}
-					placeholderText='Click To Choose Date'
-					className='input-style-custom'
+					placeholderText="Click To Choose Date"
+					className="input-style-custom"
 					required
 				/>
 
-				{error && <ValidationError message={error} />}
+				{error && <ValidationError className="shot-error" message={error} />}
 
-				<div className='container'>
-					{addMode && (
+				<div className="container">
+					{addMode && !singleShotUpdate && (
 						<Button handleClick={() => setShotName("")}>Go Back</Button>
 					)}
 					<Button handleClick={() => handleCancel()}>Cancel</Button>
-					<Button handleClick={() => onSubmit()}>Submit</Button>
+					<Button
+						active={error === null || error || !date ? true : false}
+						handleClick={(e) => onSubmit(e)}
+					>
+						Submit
+					</Button>
 				</div>
 			</>
 		</BatchShotFormStyles>
@@ -152,6 +182,10 @@ const BatchShotFormStyles = styled.form`
 	padding: 10px;
 	transition: 0.3s;
 
+	.shot-error {
+		width: 100%;
+	}
+
 	.container {
 		margin: 0px 10px;
 		width: 100%;
@@ -161,15 +195,23 @@ const BatchShotFormStyles = styled.form`
 		padding: 5px;
 	}
 
-	.input-style-custom {
-		margin: 0px 10px;
+	.label {
+		text-align: center;
 		width: 100%;
+	}
+
+	.input-style-custom {
 		width: 100%;
 		height: 40px;
 		border-radius: 0px;
 		border: 1px solid black;
 		font-size: 1rem;
 		text-align: center;
+	}
+
+	.react-datepicker-wrapper {
+		width: 80%;
+		margin: 0px auto;
 	}
 `;
 

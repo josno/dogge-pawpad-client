@@ -14,6 +14,8 @@ import UpdateStatusForm from "../../Components/BatchUpdateForms/UpdateStatusForm
 import DeleteDogForm from "../../Components/DeleteDogForm";
 import BatchShotForm from "../../Components/BatchUpdateForms/BatchShotForm";
 
+import moment from "moment";
+
 const DogList = (props) => {
 	const [error, setError] = useState("");
 	const [dogs, setDogs] = useState([]);
@@ -100,62 +102,86 @@ const DogList = (props) => {
 		dogs.map((dog) => (dog.checked = false));
 	};
 
+	const formatDate = (date) => {
+		let formattedDate = moment(date).format("LL");
+		if (formattedDate === "Invalid date") {
+			return "N/A";
+		} else {
+			return formattedDate;
+		}
+	};
+
+	const totalDogs = dogs.length > 0 && dogs.length;
+	const adoptedDogs =
+		dogs.length > 0 && dogs.filter((a) => a.dog_status === "Adopted").length;
+	const fosteredDogs =
+		dogs.length > 0 && dogs.filter((a) => a.dog_status === "Fostered").length;
+
 	return (
 		<DogListStyles>
-			<section className='search-filter-container'>
+			<OverviewCountStyles>
+				<div className="container">
+					<span className="container-title">Total Dogs:</span> {totalDogs}
+				</div>
+				<div className="container">
+					<span className="container-title">Dogs Adopted:</span> {adoptedDogs}
+				</div>
+				<div className="container">
+					<span className="container-title">Dogs Fostered:</span> {fosteredDogs}
+				</div>
+			</OverviewCountStyles>
+			<section className="search-filter-container">
 				{selected.length > 0 && !modalIsOpen && (
 					<UpdateBar onClick={(type) => setUpdateType(type)} />
 				)}
 
-				<label className='search-box ' aria-label='search'>
+				<label className="search-box " aria-label="search">
 					<input
-						className='search-dog dog-list-actions'
-						type='text'
-						name='dogSearch'
+						className="search-dog dog-list-actions"
+						type="text"
+						name="dogSearch"
 						value={dogSearch}
 						onChange={handleChange}
-						placeholder='Search by name...'
+						placeholder="Search by name..."
 					/>
 				</label>
-				<div className='filters-container'>
+				<div className="filters-container">
 					<DropDown
-						label='Filter'
+						label="Filter"
 						list={["Current", "Adopted", "Archived", "None"]}
 						onClick={(value) => setFilter(value)}
 					/>
 					<DropDown
-						label='Sort'
+						label="Sort"
 						list={["A-Z", "Z-A"]}
 						onClick={(sortType) => handleSort(sortType)}
 					/>
 				</div>
 			</section>
 
-			<section className='list-container'>
-				<ul className='dogs-list'>
-					{/* Fix THIS */}
-
+			<section className="dog-list-container">
+				<ul className="dogs-list">
 					{view === "" && !error
 						? filteredDogs.map((d) => {
 								return (
 									<DogListItem
-										id={d.id}
 										key={d.id}
 										onChange={(id) => updateSelected(id)}
 										checked={d.checked}
-									>
-										<DogItemImage img={d.profile_img} name={d.dog_name} />
-									</DogListItem>
+										info={d}
+										formatDate={(date) => formatDate(date)}
+									/>
 								);
 						  })
 						: filteredDogs.map((d) => {
 								return (
 									d.dog_status === view && (
 										<DogListItem
-											id={d.id}
 											key={d.id}
 											onChange={(id) => updateSelected(id)}
 											checked={d.checked}
+											info={d}
+											formatDate={(date) => formatDate(date)}
 										>
 											<DogItemImage img={d.profile_img} name={d.dog_name} />
 										</DogListItem>
@@ -165,8 +191,8 @@ const DogList = (props) => {
 				</ul>
 			</section>
 
-			<button className='add-a-dog-button add-dog'>
-				<Link className='add-dog-link' to={"/add-new-dog"}>
+			<button className="add-a-dog-button add-dog">
+				<Link className="add-dog-link" to={"/add-new-dog"}>
 					Add Dog
 				</Link>
 			</button>
@@ -236,10 +262,6 @@ const DogListStyles = styled.main`
 		color: white;
 	}
 
-	.dog-list-container {
-		padding-top: 40px;
-	}
-
 	.dogs-list {
 		display: flex;
 		flex-wrap: wrap;
@@ -247,10 +269,7 @@ const DogListStyles = styled.main`
 	}
 
 	.dog-list-container {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-evenly;
-		height: 80vh;
+		padding: 5px 5% 10px 5%;
 	}
 
 	.dog-list-actions {
@@ -280,8 +299,8 @@ const DogListStyles = styled.main`
 
 	.search-filter-container {
 		width: 100%;
-		height: 150px;
-		padding-top: 10px;
+		height: 100px;
+		padding-top: 20px;
 		display: flex;
 		flex-direction: column;
 	}
@@ -315,6 +334,22 @@ const DogListStyles = styled.main`
 		.search-dog {
 			width: 30vw;
 		}
+	}
+`;
+
+const OverviewCountStyles = styled.section`
+	width: 100%;
+	padding: 10px 7%;
+	display: flex;
+	justify-content: flex-start;
+
+	.container {
+		padding: 10px;
+		font-weight: bold;
+	}
+
+	.container-title {
+		font-weight: 500;
 	}
 `;
 

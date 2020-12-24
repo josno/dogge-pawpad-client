@@ -13,16 +13,23 @@ body {
 	margin: 0 0 0 0;
 }
 
+::-webkit-scrollbar {
+	width: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: lightgray;
+	border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: rgb(54, 56, 58);
+}
+
 .error {
 	font-size: 10px;
 	font-style: italic;
 	color: red;
-}
-
-.add-dog-container,
-.notes-container,
-.edit-dog-container {
-	padding-top: 30px;
 }
 
 .dogslist {
@@ -142,12 +149,6 @@ a {
 	display: inline;
 }
 
-.dog-name {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
 .additional-notes,
 .medical-notes {
 	padding: 20px;
@@ -181,7 +182,7 @@ footer {
 	}
 
 	.form-container {
-		width: 400px;
+		max-width: 400px;
 	}
 }
 
@@ -189,10 +190,6 @@ footer {
 	.updated-by {
 		grid-area: updated-by;
 		justify-content: space-evenly;
-	}
-
-	.dog-name {
-		grid-area: dog-name;
 	}
 
 	.form-buttons {
@@ -205,16 +202,6 @@ footer {
 		justify-content: center;
 		margin: 0px auto;
 	}
-
-	/* .add-new-dog,
-	.cancel,
-	.see-notes,
-	.submit,
-	.go-back,
-	.edit,
-	.notes-button {
-		width: 30vw;
-	} */
 }
 
 @media (min-width: 800px) {

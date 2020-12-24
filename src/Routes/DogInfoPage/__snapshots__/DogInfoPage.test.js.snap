@@ -1,0 +1,406 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AddNewDog /> renders as expected 1`] = `
+<div
+  className="sc-fzqNJr dxZSMt"
+>
+  <div
+    className="buttons-section"
+  >
+    <div
+      className="back-button"
+    >
+      <a
+        className="back-button-link"
+        href="/dogs-list"
+        onClick={[Function]}
+      >
+        <svg
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          strokeWidth="0"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M217.9 256L345 129c9.4-9.4 9.4-24.6 0-33.9-9.4-9.4-24.6-9.3-34 0L167 239c-9.1 9.1-9.3 23.7-.7 33.1L310.9 417c4.7 4.7 10.9 7 17 7s12.3-2.3 17-7c9.4-9.4 9.4-24.6 0-33.9L217.9 256z"
+          />
+        </svg>
+         Back
+      </a>
+    </div>
+    <button
+      className="delete-dog"
+    >
+      Delete
+    </button>
+  </div>
+  <div
+    className="details-section"
+  >
+    <div
+      className="dog-details"
+    >
+      <div
+        className="sc-AxiKw dTWOKA"
+      >
+        <div
+          className="img-container"
+        >
+          <img
+            alt="dog"
+          />
+        </div>
+        <svg
+          className="icon edit-img-icon"
+          fill="currentColor"
+          height="1em"
+          onClick={[Function]}
+          stroke="currentColor"
+          strokeWidth="0"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M14,4 L20,10 L14,4 Z M22.2942268,5.29422684 C22.6840146,5.68401459 22.6812861,6.3187139 22.2864907,6.71350932 L9,20 L2,22 L4,15 L17.2864907,1.71350932 C17.680551,1.319449 18.3127724,1.31277239 18.7057732,1.70577316 L22.2942268,5.29422684 Z M3,19 L5,21 M7,17 L15,9"
+            fill="none"
+            stroke="#000"
+            strokeWidth="2"
+          />
+        </svg>
+        <h1
+          className="dog-name name-style"
+        />
+        <div>
+          <svg
+            className="icon edit-button"
+            fill="currentColor"
+            height="1em"
+            onClick={[Function]}
+            stroke="currentColor"
+            strokeWidth="0"
+            style={
+              Object {
+                "color": undefined,
+              }
+            }
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M14,4 L20,10 L14,4 Z M22.2942268,5.29422684 C22.6840146,5.68401459 22.6812861,6.3187139 22.2864907,6.71350932 L9,20 L2,22 L4,15 L17.2864907,1.71350932 C17.680551,1.319449 18.3127724,1.31277239 18.7057732,1.70577316 L22.2942268,5.29422684 Z M3,19 L5,21 M7,17 L15,9"
+              fill="none"
+              stroke="#000"
+              strokeWidth="2"
+            />
+          </svg>
+          <ul
+            className="profile-details"
+          >
+            <li
+              className="profile-list-item"
+            >
+              <span
+                className="title"
+              >
+                Status:
+              </span>
+               
+              <span
+                className="value"
+              />
+            </li>
+            <li
+              className="profile-list-item"
+            >
+              <span
+                className="title"
+              >
+                Gender: 
+              </span>
+              <span
+                className="value"
+              />
+            </li>
+            <li
+              className="profile-list-item"
+            >
+              <span
+                className="title"
+              >
+                Birthdate:
+              </span>
+              <span
+                className="value"
+              >
+                December 3, 2020
+              </span>
+            </li>
+            <li
+              className="profile-list-item"
+            >
+              <span
+                className="title"
+              >
+                Arrival:
+              </span>
+              <span
+                className="value"
+              >
+                December 3, 2020
+              </span>
+            </li>
+            <li
+              className="profile-list-item"
+            >
+              <span
+                className="title"
+              >
+                Tag:
+              </span>
+              <span
+                className="value"
+              />
+            </li>
+            <li
+              className="profile-list-item"
+            >
+              <span
+                className="title"
+              >
+                Microchip:
+              </span>
+              <span
+                className="value"
+              />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      className="medical"
+    >
+      <h3
+        className="sc-Axmtr eClTBT"
+      >
+        Medical 
+      </h3>
+      <ul
+        className="sc-AxhCb eFyOq"
+      >
+        <div>
+          <span
+            className="indicator-no"
+          >
+            ✘ 
+          </span>
+          Spayed/Neutered
+        </div>
+      </ul>
+      <div
+        className="sc-AxmLO iIYNFW"
+      >
+        <div
+          className="sc-AxjAm gVDFa"
+        >
+          <svg
+            className="undefined icon"
+            fill="currentColor"
+            height="1em"
+            onClick={[Function]}
+            stroke="currentColor"
+            strokeWidth="0"
+            style={
+              Object {
+                "color": undefined,
+              }
+            }
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M14,4 L20,10 L14,4 Z M22.2942268,5.29422684 C22.6840146,5.68401459 22.6812861,6.3187139 22.2864907,6.71350932 L9,20 L2,22 L4,15 L17.2864907,1.71350932 C17.680551,1.319449 18.3127724,1.31277239 18.7057732,1.70577316 L22.2942268,5.29422684 Z M3,19 L5,21 M7,17 L15,9"
+              fill="none"
+              stroke="#000"
+              strokeWidth="2"
+            />
+          </svg>
+        </div>
+        <div
+          className="sc-AxjAm gVDFa"
+        >
+          <svg
+            className="undefined icon"
+            fill="currentColor"
+            height="1em"
+            onClick={[Function]}
+            stroke="currentColor"
+            strokeWidth="0"
+            style={
+              Object {
+                "color": undefined,
+              }
+            }
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M12,18 L12,6 M6,12 L18,12"
+              fill="none"
+              stroke="#000"
+              strokeWidth="2"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div
+      className="notes"
+    >
+      <div
+        className="sc-fzpans eVlJnn"
+      >
+        <h3
+          className="notes-title"
+        >
+          Notes
+        </h3>
+        <ul
+          className="notes-filter"
+        >
+          <li>
+            <button
+              className="additional-title"
+              onClick={[Function]}
+            >
+              additional
+            </button>
+          </li>
+          <li>
+            <button
+              className="adoption-title"
+              onClick={[Function]}
+            >
+              adoption
+            </button>
+          </li>
+          <li>
+            <button
+              className="medical-title"
+              onClick={[Function]}
+            >
+              medical
+            </button>
+          </li>
+          <li>
+            <button
+              className="archive-title"
+              onClick={[Function]}
+            >
+              archive
+            </button>
+          </li>
+          <li>
+            <button
+              className="foster-title"
+              onClick={[Function]}
+            >
+              foster
+            </button>
+          </li>
+          <li>
+            <button
+              className="all-title"
+              onClick={[Function]}
+            >
+              all
+            </button>
+          </li>
+        </ul>
+        <div
+          className="notes-container"
+        >
+          <div
+            className="sc-fzplWN HfApw"
+          >
+            <div
+              className="sc-AxjAm gVDFa"
+            >
+              <svg
+                className="undefined icon"
+                fill="currentColor"
+                height="1em"
+                onClick={[Function]}
+                stroke="currentColor"
+                strokeWidth="0"
+                style={
+                  Object {
+                    "color": undefined,
+                  }
+                }
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M12,18 L12,6 M6,12 L18,12"
+                  fill="none"
+                  stroke="#000"
+                  strokeWidth="2"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="adoption"
+    >
+      <div
+        className="sc-fznKkj hcjtzk"
+      >
+        <h3
+          className="adoption-title"
+        >
+          Adoption
+        </h3>
+        
+      </div>
+    </div>
+    <div
+      className="foster"
+    >
+      <div
+        className="sc-fznZeY goERMp"
+      >
+        <h3
+          className="foster-title"
+        >
+          Foster
+        </h3>
+        <div
+          className="sc-fzokOt da-dEzD"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

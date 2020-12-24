@@ -105,6 +105,7 @@ class FosterAdopForm extends Component {
 			foster_phone: phoneValue,
 			dog_id: this.props.dogId,
 			foster_country: country,
+			foster_completed_on: null,
 		};
 
 		let data = Encryption.encryptData(objectToEncrypt);
@@ -116,47 +117,50 @@ class FosterAdopForm extends Component {
 		return newFosterObj;
 	};
 
-	makeFoster = (e) => {
+	makeFoster = async (e) => {
 		e.preventDefault();
 		const newFosterObj = this.makeFosterObj();
 
-		const newNote = {
-			date_created: new Date(),
-			notes: this.state.comment.value,
-			type_of_note: "foster",
-			dog_id: this.props.dogId,
-		};
-
-		Promise.all([
-			(DogsApiService.insertFoster(newFosterObj),
-			DogsApiService.insertNewNote(newNote)),
-		])
-			.then((res) => this.props.updateDogInfo())
-			.catch((err) =>
-				this.setState({ error: "Something went wrong. Try again later." })
-			);
+		try {
+			await DogsApiService.insertFoster(newFosterObj);
+			await this.makeNote();
+			this.props.updateDogInfo();
+			this.props.setOpenFoster(false);
+		} catch (err) {
+			this.setState({ error: "Something went wrong. Try again later." });
+		}
 	};
 
-	makeAdoption = (e) => {
+	makeAdoption = async (e) => {
 		e.preventDefault();
 
 		const newAdoptionObj = this.makeAdoptionObj();
 
+		try {
+			await DogsApiService.insertAdoption(newAdoptionObj);
+			await this.makeNote();
+			this.props.updateDogInfo();
+			this.props.setOpenAdopt(false);
+		} catch (err) {
+			this.setState({ error: "Something went wrong. Try again later." });
+		}
+	};
+
+	makeNote = async () => {
+		if (this.state.comment.value === "") {
+			return;
+		}
+
+		const type = this.props.type === "adopt" ? "adoption" : "foster";
+
 		const newNote = {
 			date_created: new Date(),
 			notes: this.state.comment.value,
-			type_of_note: "adoption",
+			type_of_note: type,
 			dog_id: this.props.dogId,
 		};
 
-		Promise.all([
-			(DogsApiService.insertAdoption(newAdoptionObj),
-			DogsApiService.insertNewNote(newNote)),
-		])
-			.then((res) => this.props.updateDogInfo())
-			.catch((err) =>
-				this.setState({ error: "Something went wrong. Try again later." })
-			);
+		DogsApiService.insertNewNote(newNote);
 	};
 
 	validateNameInput = () => {
@@ -210,7 +214,7 @@ class FosterAdopForm extends Component {
 
 		return (
 			<div className="modal-inner">
-				<h1>{type === "adopt" ? "Adoption" : "Foster"} Info</h1>
+				<h1>{type === "adopt" ? "Adoption" : "Foster"} Information</h1>
 				{this.state.error !== null && (
 					<ValidationError
 						className="center-error"
@@ -276,6 +280,7 @@ class FosterAdopForm extends Component {
 							onChange={(e) => this.handleFileChange(e)}
 							type="file"
 							accept="application/pdf"
+							required
 						/>
 					</label>
 					<label className="country adopt-label">

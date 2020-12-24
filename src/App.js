@@ -5,9 +5,7 @@ import Navigation from "./Components/Navigation";
 import SideNav from "./Components/SideNav";
 import DogsList from "./Routes/DogsList/DogsList";
 import AddNewDog from "./Routes/AddNewDog/AddNewDog";
-import DogInfo from "./Routes/DogInfo/DogInfo";
-import Notes from "./Routes/Notes/Notes";
-import FosterAdopPage from "./Routes/FosterAdopPage/FosterAdopPage";
+import DogInfoPage from "./Routes/DogInfoPage/DogInfoPage";
 import Login from "./Routes/Login/Login";
 import SignUp from "./Routes/SignUp/SignUp";
 import PawPadContext from "./PawPadContext.js";
@@ -60,55 +58,8 @@ const App = () => {
 					{TokenService.hasAuthToken() ? (
 						<Route
 							exact
-							path="/dog-info/:dogId"
-							render={(routeProps) => (
-								<DogInfo
-									dogId={routeProps.match.params.dogId}
-									history={routeProps.history}
-									{...routeProps}
-								/>
-							)}
-						/>
-					) : (
-						<Redirect to="/" />
-					)}
-
-					{TokenService.hasAuthToken() ? (
-						<Route
-							exact
-							path="/notes-:dogName/:dogId"
-							render={(routeProps) => (
-								<Notes
-									dogName={routeProps.match.params.dogName}
-									dogId={routeProps.match.params.dogId}
-									history={routeProps.history}
-									{...routeProps}
-								/>
-							)}
-						/>
-					) : (
-						<Redirect to="/" />
-					)}
-
-					{TokenService.hasAuthToken() ? (
-						<Route
-							exact
-							path="/adoption-details-:dogName/:dogId"
-							render={(routeProps) => (
-								<FosterAdopPage {...routeProps} type="adoption" />
-							)}
-						/>
-					) : (
-						<Redirect to="/" />
-					)}
-
-					{TokenService.hasAuthToken() ? (
-						<Route
-							exact
-							path="/foster-details-:dogName/:dogId"
-							render={(routeProps) => (
-								<FosterAdopPage {...routeProps} type="foster" />
-							)}
+							path="/dog/:dogId/:dogName"
+							render={(routeProps) => <DogInfoPage {...routeProps} />}
 						/>
 					) : (
 						<Redirect to="/" />

@@ -51,6 +51,11 @@
 	}
 }
 
+.react-datepicker-wrapper {
+	display: block;
+	width: 100%;
+}
+
 .adopt-comment-input {
 	margin-left: 20px;
 	padding-left: 4px;

@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 
-const Button = (props) => {
+const Button = ({ active, styles, handleClick, children }) => {
 	return (
-		<ButtonStyles style={{ ...props.styles }} onClick={props.handleClick}>
-			{props.children}
+		<ButtonStyles disabled={active} style={{ ...styles }} onClick={handleClick}>
+			{children}
 		</ButtonStyles>
 	);
 };
 
-const ButtonStyles = styled.div`
+const ButtonStyles = styled.button`
 	border: 2px solid #009fb7;
 	border-radius: 20px;
 	padding: 7px 10px;

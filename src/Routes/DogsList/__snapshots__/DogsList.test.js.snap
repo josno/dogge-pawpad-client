@@ -2,8 +2,42 @@
 
 exports[`<DogsList /> renders as expected 1`] = `
 <main
-  className="sc-fzozJi jQIZFC"
+  className="sc-fzpans bvpyKZ"
 >
+  <section
+    className="sc-fzplWN hlwYua"
+  >
+    <div
+      className="container"
+    >
+      <span
+        className="container-title"
+      >
+        Total Dogs:
+      </span>
+       
+    </div>
+    <div
+      className="container"
+    >
+      <span
+        className="container-title"
+      >
+        Dogs Adopted:
+      </span>
+       
+    </div>
+    <div
+      className="container"
+    >
+      <span
+        className="container-title"
+      >
+        Dogs Fostered:
+      </span>
+       
+    </div>
+  </section>
   <section
     className="search-filter-container"
   >
@@ -24,7 +58,7 @@ exports[`<DogsList /> renders as expected 1`] = `
       className="filters-container"
     >
       <div
-        className="sc-AxiKw gZcFCT"
+        className="sc-AxhUy fkBipW"
       >
         <div
           className="list-text list-label dog-list-actions"
@@ -52,7 +86,7 @@ exports[`<DogsList /> renders as expected 1`] = `
         </div>
       </div>
       <div
-        className="sc-AxiKw gZcFCT"
+        className="sc-AxhUy fkBipW"
       >
         <div
           className="list-text list-label dog-list-actions"
@@ -82,7 +116,7 @@ exports[`<DogsList /> renders as expected 1`] = `
     </div>
   </section>
   <section
-    className="list-container"
+    className="dog-list-container"
   >
     <ul
       className="dogs-list"
