@@ -104,9 +104,9 @@ const DogsApiService = {
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
 		);
 	},
-	uploadDogImg(data, tagNumber) {
+	uploadDogImg(data) {
 		const updatedDog = {
-			method: "PUT",
+			method: "POST",
 			headers: {
 				"Access-Control-Allow-Origin": "*",
 				Authorization: `Bearer ${TokenService.getAuthToken()}`,
@@ -114,23 +114,19 @@ const DogsApiService = {
 			body: data,
 		};
 
-		return fetch(
-			`${config.API_ENDPOINT}/dogs/images/${tagNumber}`,
-			updatedDog
-		).then((res) =>
+		return fetch(`${config.API_ENDPOINT}/dogs/images`, updatedDog).then((res) =>
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
 		);
 	},
-	deleteDogImg(data, tagNumber) {
+	deleteDogImg(imgName) {
 		const updatedDog = {
 			method: "DELETE",
 			headers: {
 				Authorization: `Bearer ${TokenService.getAuthToken()}`,
 			},
-			body: data,
 		};
 		return fetch(
-			`${config.API_ENDPOINT}/dogs/images/${tagNumber}`,
+			`${config.API_ENDPOINT}/dogs/images/${imgName}`,
 			updatedDog
 		).then((res) =>
 			!res.ok ? res.json().then((e) => Promise.reject(e)) : null

@@ -123,8 +123,8 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
 		const formData = new FormData();
 		formData.append("profile_img", profile_img);
 
-		await DogsApiService.deleteDogImg(formData, imgName);
-		const newUrl = await DogsApiService.uploadDogImg(formData, info.tag_number);
+		await DogsApiService.deleteDogImg(imgName);
+		const newUrl = await DogsApiService.uploadDogImg(formData);
 
 		const dogObj = {
 			dog_name: info.dog_name,
