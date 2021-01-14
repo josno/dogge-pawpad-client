@@ -225,6 +225,7 @@ const DogList = (props) => {
 						setModal={() => setModalIsOpen()}
 						updateDogs={() => getDogs()}
 						resetSelected={setSelected}
+						singleShotUpdate={true}
 					/>
 				)}
 			</Modal>

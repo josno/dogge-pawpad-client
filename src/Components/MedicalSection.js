@@ -64,7 +64,7 @@ const MedicalSection = ({ dogId }) => {
 				center
 			>
 				<BatchShotForm
-					singleShotUpdate={true}
+					singleShotUpdate={false}
 					selectedDogs={[dogId]}
 					setModal={() => setModalIsOpen(false)}
 					updateDogs={() => updateShots()}

@@ -84,9 +84,9 @@ const BatchShotForm = ({
 
 			if (singleShotUpdate) {
 				updateDogs();
-				setModal();
+				setModal(false);
 			} else {
-				resetSelected([]);
+				resetSelected && resetSelected([]);
 				setModal(false);
 				updateDogs();
 			}
@@ -106,18 +106,7 @@ const BatchShotForm = ({
 	return (
 		<BatchShotFormStyles>
 			<>
-				{singleShotUpdate ? (
-					<>
-						<label className="label">Add Shot Name</label>
-						<input
-							className="input-style-custom"
-							value={newShot}
-							placeholder="Add A Shot Not In The List"
-							onChange={(e) => setAddShotForm(e)}
-							required
-						/>
-					</>
-				) : singleShotUpdate ? (
+				{singleShotUpdate && !addMode ? (
 					<>
 						<label className="label">Shot To Update</label>
 						<DropDown
@@ -158,12 +147,7 @@ const BatchShotForm = ({
 						<Button handleClick={() => setShotName("")}>Go Back</Button>
 					)}
 					<Button handleClick={() => handleCancel()}>Cancel</Button>
-					<Button
-						active={error === null || error || !date ? true : false}
-						handleClick={(e) => onSubmit(e)}
-					>
-						Submit
-					</Button>
+					<Button handleClick={(e) => onSubmit(e)}>Submit</Button>
 				</div>
 			</>
 		</BatchShotFormStyles>
