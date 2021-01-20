@@ -1,9 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-const Button = ({ active, styles, handleClick, children }) => {
+const Button = ({ active, styles, handleClick, children, type }) => {
 	return (
-		<ButtonStyles disabled={active} style={{ ...styles }} onClick={handleClick}>
+		<ButtonStyles
+			disabled={active}
+			style={{ ...styles }}
+			type={type}
+			onClick={handleClick}
+		>
 			{children}
 		</ButtonStyles>
 	);
@@ -19,9 +24,13 @@ const ButtonStyles = styled.button`
 	box-shadow: 1px 3px 5px #c4c4c4;
 	font-size: 0.8em;
 	transition-duration: 0.2s;
+
 	:hover {
-		background-color: #dbe1e2;
+		background-color: ${(props) =>
+			props.type === "delete" ? "rgb(200, 29, 37)" : "#dbe1e2"};
 		cursor: pointer;
+		transform: scale(1.2);
+		color: ${(props) => (props.type === "delete" ? "white" : "inherit")};
 	}
 	:active {
 		box-shadow: none;

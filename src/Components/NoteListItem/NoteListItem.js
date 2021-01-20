@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Button from "../Button";
 
 export default function NoteListItem({
 	date,
@@ -27,10 +28,15 @@ export default function NoteListItem({
 				<li className="note-item note-by">Written On: {date}</li>
 				<li className={"note-item note-by"}>Note Type: {noteType}</li>
 			</ul>
-
-			<button className="delete-note-button" onClick={() => deleteNote(noteId)}>
-				Delete
-			</button>
+			<div class="button-container">
+				<Button
+					className="delete-note-button"
+					handleClick={() => deleteNote(noteId)}
+					type={"delete"}
+				>
+					Delete
+				</Button>
+			</div>
 		</NotesListStyles>
 	);
 }
@@ -82,6 +88,12 @@ const NotesListStyles = styled.div`
 	.note-author {
 		color: #f7567c;
 		font-weight: bold;
+	}
+
+	.button-container {
+		display: flex;
+		justify-content: flex-end;
+		padding: 0 5%;
 	}
 
 	@media (min-width: 1000px) {
