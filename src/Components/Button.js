@@ -15,8 +15,9 @@ const Button = ({ active, styles, handleClick, children, type }) => {
 };
 
 const ButtonStyles = styled.button`
-	border: 2px solid #009fb7;
-	border-radius: 20px;
+	border: 2px solid
+		${(props) => (props.type === "delete" ? "black" : "#009fb7")};
+	border-radius: ${(props) => (props.type === "delete" ? "0px" : "20px")};
 	padding: 7px 10px;
 	background-color: white;
 	color: #009fb7;
