@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
@@ -24,9 +24,9 @@ const DogList = (props) => {
 	const [selected, setSelected] = useState([]);
 	const [updateType, setType] = useState();
 	const [modalIsOpen, setModalIsOpen] = useState(false);
+	const shelterId = TokenService.getShelterToken();
 
-	const getDogs = () => {
-		const shelterId = TokenService.getShelterToken();
+	const getDogs = useCallback(() => {
 		DogsApiService.getDogs(shelterId)
 			.then((responsejson) => {
 				if (responsejson.length === 0) {
@@ -42,11 +42,11 @@ const DogList = (props) => {
 			.catch((err) => {
 				setError(err.message);
 			});
-	};
+	}, [shelterId]);
 
 	useLayoutEffect(() => {
 		getDogs();
-	}, []);
+	}, [getDogs]);
 
 	let filteredDogs = dogs.filter((d) => {
 		return d.dog_name.toLowerCase().indexOf(dogSearch.toLowerCase()) !== -1;
@@ -114,6 +114,7 @@ const DogList = (props) => {
 	const totalDogs = dogs.length > 0 && dogs.length;
 	const adoptedDogs =
 		dogs.length > 0 && dogs.filter((a) => a.dog_status === "Adopted").length;
+
 	const fosteredDogs =
 		dogs.length > 0 && dogs.filter((a) => a.dog_status === "Fostered").length;
 
@@ -148,7 +149,7 @@ const DogList = (props) => {
 				<div className="filters-container">
 					<DropDown
 						label="Filter"
-						list={["Current", "Adopted", "Archived", "None"]}
+						list={["Current", "Adopted", "Archived", "Fostered", "None"]}
 						onClick={(value) => setFilter(value)}
 					/>
 					<DropDown
