@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import DogsApiService from "../services/api-service";
+import DogsApiService from "../../services/api-service";
 
-import Validate from "../Utils/validation";
-import ValidationError from "././ValidationError/ValidationError";
+import Validate from "../../Utils/validation";
+import ValidationError from "../ValidationError/ValidationError";
 
 const AddNoteForm = ({ setModal, dogId, updateNotes }) => {
 	const [noteType, setNoteType] = useState("");

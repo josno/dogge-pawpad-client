@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Modal } from "react-responsive-modal";
 import styled from "styled-components";
 
-import NoteListItem from "./NoteListItem/NoteListItem";
-import DogsApiService from "../services/api-service";
-import AddNoteForm from "./AddNoteForm";
+import NoteListItem from "../ListItems/NoteListItem";
+import DogsApiService from "../../services/api-service";
+import AddNoteForm from "../Forms/AddNoteForm";
 
-import EditButton from "./EditButton/EditButton";
+import EditButton from "../UI/EditButton";
 import moment from "moment";
 
 const NotesSection = ({ dogId, update, setUpdate }) => {

@@ -1,13 +1,13 @@
 import React, { useState, useLayoutEffect } from "react";
-import ShotDetailsView from "./ShotDetailsView/ShotDetailsView";
-import EditShots from "./EditShots/EditShots";
+import ShotDetailsView from "../Views/ShotDetailsView";
+import EditShots from "../Views/EditShots";
 import { Modal } from "react-responsive-modal";
 
-import DogsApiService from "../services/api-service";
+import DogsApiService from "../../services/api-service";
 
 import styled from "styled-components";
-import EditButton from "./EditButton/EditButton";
-import BatchShotForm from "./BatchUpdateForms/BatchShotForm";
+import EditButton from "../UI/EditButton";
+import BatchShotForm from "../BatchUpdateForms/BatchShotForm";
 
 const MedicalSection = ({ dogId }) => {
 	const [shots, setShots] = useState([]);

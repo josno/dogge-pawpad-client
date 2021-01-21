@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Home from "./Routes/Home/Home";
-import Navigation from "./Components/Navigation";
-import SideNav from "./Components/SideNav";
+import Navigation from "./Components/Navigation/Navigation";
+import SideNav from "./Components/Navigation/SideNav";
 import DogsList from "./Routes/DogsList/DogsList";
 import AddNewDog from "./Routes/AddNewDog/AddNewDog";
 import DogInfoPage from "./Routes/DogInfoPage/DogInfoPage";

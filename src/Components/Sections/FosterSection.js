@@ -5,10 +5,10 @@ import DatePicker from "react-datepicker";
 import styled from "styled-components";
 import moment from "moment";
 
-import Button from "../Components/Button";
+import Button from "../UI/Button";
 
-import DogsApiService from "../services/api-service";
-import Encryption from "../Utils/encryption";
+import DogsApiService from "../../services/api-service";
+import Encryption from "../../Utils/encryption";
 
 const FosterSection = ({ dogId, setUpdate, update }) => {
 	const [foster, setFoster] = useState([]);

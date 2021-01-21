@@ -3,7 +3,7 @@ import { Modal } from "react-responsive-modal";
 import styled from "styled-components";
 import moment from "moment";
 
-import Button from "../Button";
+import Button from "../UI/Button";
 
 export default function AdoptionDetails({
 	info,

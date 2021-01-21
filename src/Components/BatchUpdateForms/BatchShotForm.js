@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Button from "../Button";
+import Button from "../UI/Button";
 import DropDown from "../DropDown";
 import DatePicker from "react-datepicker";
 import DogsApiService from "../../services/api-service";

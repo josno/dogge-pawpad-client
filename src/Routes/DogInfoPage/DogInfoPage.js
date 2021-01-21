@@ -7,11 +7,11 @@ import styled from "styled-components";
 
 import DogsApiService from "../../services/api-service";
 
-import ProfileSection from "../../Components/ProfileSection";
-import MedicalSection from "../../Components/MedicalSection";
-import NotesSection from "../../Components/NotesSection";
-import AdoptionSection from "../../Components/AdoptionSection";
-import FosterSection from "../../Components/FosterSection";
+import ProfileSection from "../../Components/Sections/ProfileSection";
+import MedicalSection from "../../Components/Sections/MedicalSection";
+import NotesSection from "../../Components/Sections/NotesSection";
+import AdoptionSection from "../../Components/Sections/AdoptionSection";
+import FosterSection from "../../Components/Sections/FosterSection";
 
 const DogInfoPage = (props) => {
 	const dogId = props.match.params.dogId;

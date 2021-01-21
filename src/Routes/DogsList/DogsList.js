@@ -2,8 +2,8 @@ import React, { useState, useLayoutEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
-import DogListItem from "../../Components/DogListItem";
-import DogItemImage from "../../Components/DogItemImage";
+import DogListItem from "../../Components/ListItems/DogListItem";
+import DogItemImage from "../../Components/ListItems/DogItemImage";
 
 import DropDown from "../../Components/DropDown";
 import DogsApiService from "../../services/api-service";
@@ -11,7 +11,7 @@ import TokenService from "../../services/token-service";
 import UpdateBar from "../../Components/UpdateBar";
 import { Modal } from "react-responsive-modal";
 import UpdateStatusForm from "../../Components/BatchUpdateForms/UpdateStatusForm";
-import DeleteDogForm from "../../Components/DeleteDogForm";
+import DeleteDogForm from "../../Components/Forms/DeleteDogForm";
 import BatchShotForm from "../../Components/BatchUpdateForms/BatchShotForm";
 
 import moment from "moment";
