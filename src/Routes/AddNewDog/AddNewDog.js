@@ -1,4 +1,9 @@
-import React, { useReducer, useCallback } from "react";
+import React, {
+	useReducer,
+	useCallback,
+	useState,
+	useLayoutEffect,
+} from "react";
 import PawPadContext from "../../PawPadContext.js";
 import { Link } from "react-router-dom";
 import DogsApiService from "../../services/api-service";
@@ -24,6 +29,7 @@ const formReducer = (state, action) => {
 			return {
 				...state,
 				inputText: { ...state.inputText, [action.label]: action.value },
+				touched: { ...state.touched, [action.label]: true },
 			};
 		case IMG_INPUT:
 			const updatedImage = {
@@ -48,6 +54,10 @@ const formReducer = (state, action) => {
 };
 
 const AddNewDog = (props) => {
+	const shelterId = TokenService.getShelterToken();
+
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(null);
 	const [state, dispatch] = useReducer(formReducer, {
 		inputText: {
 			name: "",
@@ -62,101 +72,56 @@ const AddNewDog = (props) => {
 			file: "",
 			imagePreview: "",
 		},
-		shots: {},
-		valid: {
+		shots: {
+			"Spayed/Neutered": "",
+			Rabies: "",
+			"Complex I": "",
+			"Complex II": "",
+			"Complex Yearly Booster": "",
+		},
+		touched: {
 			name: false,
-			gender: false,
-			microchip_number: false,
-			microchip_date: false,
-			tag_number: false,
-			age: false,
-			arrival_date: false,
 		},
 	});
 
-	// componentDidMount() {
-	// 	window.scrollTo(0, 0);
-	// }
+	useLayoutEffect(() => {
+		window.scrollTo(0, 0);
+	}, [shelterId]);
 
-	// setDogObject = (
-	// 	spayedNeutered,
-	// 	gender,
-	// 	microchip,
-	// 	tagNumber,
-	// 	arrivalDate,
-	// 	age,
-	// 	dogName
-	// ) => {
-	// 	const arrivalDateString = this.stringifyDate(arrivalDate);
-	// 	const ageDateString = this.stringifyDate(age);
-	// 	const shelterId = TokenService.getShelterToken();
+	const makeDogObj = () => {
+		const newDog = [
+			{ dog_name: state.inputText.name },
+			{ gender: state.inputText.gender },
+			{ microchip: state.inputText.microchip_date },
+			{ microchip: state.inputText.microchip_number },
+			{ tag_number: state.inputText.tag_number },
+			{ age: state.inputText.age },
+			{ arrival_date: state.inputText.arrival_date },
+			{ shelter_id: shelterId },
+		];
 
-	// 	const newDog = [
-	// 		{ dog_name: dogName },
-	// 		{ spayedneutered: spayedNeutered },
-	// 		{ gender: gender },
-	// 		{ microchip: microchip },
-	// 		{ tag_number: tagNumber },
-	// 		{ age: ageDateString },
-	// 		{ arrival_date: arrivalDateString },
-	// 		{ shelter_id: shelterId },
-	// 	];
+		const formData = new FormData();
+		formData.append("profile_img", state.image.file);
 
-	// 	return newDog;
-	// };
+		newDog.forEach((i) => {
+			formData.append(Object.keys(i), Object.values(i));
+		});
 
-	// setFormData = (newDog, profileImg) => {
-	// 	const formData = new FormData();
-	// 	formData.append("profile_img", profileImg);
+		return formData;
+	};
 
-	// 	newDog.forEach((i) => {
-	// 		formData.append(Object.keys(i), Object.values(i));
-	// 	});
-
-	// 	return formData;
-	// };
-
-	// setLoading = (e) => {
-	// 	this.setState({
-	// 		loading: true,
-	// 	});
-	// };
-
-	// handleSubmit = (e) => {
-	// 	e.preventDefault();
-	// 	const {
-	// 		profileImg,
-	// 		spayedNeutered,
-	// 		gender,
-	// 		arrivalDate,
-	// 		tagNumber,
-	// 		microchip,
-	// 	} = this.state;
-	// 	const dogName = this.state.dogName.value;
-	// 	const age = this.state.age.value;
-
-	// 	const newDog = this.setDogObject(
-	// 		spayedNeutered,
-	// 		gender,
-	// 		microchip,
-	// 		tagNumber,
-	// 		arrivalDate,
-	// 		age,
-	// 		dogName
-	// 	);
-	// 	const allCompletedShots = this.setShotsObject();
-	// 	const formData = this.setFormData(newDog, profileImg);
-
-	// 	DogsApiService.insertNewDog(formData)
-	// 		.then((res) => {
-	// 			allCompletedShots.map((i) => (i.dog_id = res.id));
-	// 			allCompletedShots.map((shot) => DogsApiService.insertNewShot(shot));
-	// 		})
-	// 		.then((res) => this.props.history.push("/dogs-list"))
-	// 		.catch((error) => {
-	// 			this.setState({ error: error.message });
-	// 		});
-	// };
+	const makeShotsArray = () => {
+		let shotList = [];
+		for (const shot in state.shots) {
+			const obj = {
+				shot_name: shot,
+				shot_date: !state.shots[shot] ? null : state.shots[shot],
+				shot_iscompleted: !state.shots[shot] ? false : true,
+			};
+			shotList.push(obj);
+		}
+		return shotList;
+	};
 
 	const handleChange = useCallback(
 		(e, label, value) => {
@@ -188,6 +153,23 @@ const AddNewDog = (props) => {
 		dispatch({ type: "SHOT_INPUT", label: label, date: date });
 	};
 
+	const handleSubmit = (e) => {
+		e.preventDefault();
+
+		const newDogObj = makeDogObj();
+		const shotsObj = makeShotsArray();
+
+		DogsApiService.insertNewDog(newDogObj)
+			.then((res) => {
+				shotsObj.map((i) => (i.dog_id = res.id));
+				shotsObj.map((shot) => DogsApiService.insertNewShot(shot));
+			})
+			.then((res) => this.props.history.push("/dogs-list"))
+			.catch((error) => {
+				setError(error.message);
+			});
+	};
+
 	return (
 		<AddDogStyles
 			className="add-dog-container"
@@ -195,7 +177,7 @@ const AddNewDog = (props) => {
 		>
 			<h1 className="form-title">Add New Dog</h1>
 
-			<form className="form-container" onSubmit={() => {}}>
+			<form className="form-container" onSubmit={(e) => handleSubmit(e)}>
 				<div className="field-item">
 					<label htmlFor="name" className="bold">
 						Name
@@ -208,11 +190,11 @@ const AddNewDog = (props) => {
 						onChange={(e) => handleChange(e, "name")}
 						required
 					/>
-					{/* {this.state.dogName.touched && (
-							<ValidationError
-								message={Validate.validateName(this.state.dogName.value)}
-							/>
-						)} */}
+					{state.touched.name && (
+						<ValidationError
+							message={Validate.validateName(state.inputText.name)}
+						/>
+					)}
 				</div>
 
 				<div className="field-item">
@@ -358,13 +340,13 @@ const AddNewDog = (props) => {
 						/>
 					</label>
 
-					<label htmlFor="Complex One">
+					<label htmlFor="Complex I">
 						Complex I
 						<DatePicker
 							dateFormat="dd/MM/yyyy"
-							selected={state.shots["Complex One"]}
+							selected={state.shots["Complex I"]}
 							placeholderText="Click to select a date"
-							onChange={(date) => handleShotChange(date, "Complex One")}
+							onChange={(date) => handleShotChange(date, "Complex I")}
 							className="shot-date-input"
 						/>
 					</label>
@@ -409,18 +391,18 @@ const AddNewDog = (props) => {
 					<button
 						className="submit"
 						type="submit"
-						// onClick={this.setLoading}
+						onClick={() => setLoading((prevState) => !loading)}
 						// disabled={Validate.validateName(this.state.dogName.value)}
 					>
 						Submit
 					</button>
 				</div>
 			</form>
-			{/* {this.state.loading && (
-					<div className="loader-container">
-						<div className="loader"></div>
-					</div>
-				)} */}
+			{loading && (
+				<div className="loader-container">
+					<div className="loader"></div>
+				</div>
+			)}
 		</AddDogStyles>
 	);
 };
