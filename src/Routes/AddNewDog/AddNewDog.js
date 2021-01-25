@@ -10,6 +10,7 @@ import DogsApiService from "../../services/api-service";
 import "./AddNewDog.css";
 import ValidationError from "../../Components/ValidationError/ValidationError";
 import Validate from "../../Utils/validation";
+import Format from "../../Utils/format";
 
 import styled from "styled-components";
 
@@ -89,14 +90,19 @@ const AddNewDog = (props) => {
 	}, [shelterId]);
 
 	const makeDogObj = () => {
+		const arrDateStr = Format.stringifyDate(state.inputText.arrival_date);
+		const ageStr = Format.stringifyDate(state.inputText.age);
+		const microchipDate = Format.stringifyDate(state.inputText.microchip_date);
+		console.log(arrDateStr, ageStr, microchipDate);
+
 		const newDog = [
 			{ dog_name: state.inputText.name },
 			{ gender: state.inputText.gender },
-			{ microchip: state.inputText.microchip_date },
+			{ microchip: microchipDate },
 			{ microchip: state.inputText.microchip_number },
 			{ tag_number: state.inputText.tag_number },
-			{ age: state.inputText.age },
-			{ arrival_date: state.inputText.arrival_date },
+			{ age: ageStr },
+			{ arrival_date: arrDateStr },
 			{ shelter_id: shelterId },
 		];
 
@@ -113,9 +119,10 @@ const AddNewDog = (props) => {
 	const makeShotsArray = () => {
 		let shotList = [];
 		for (const shot in state.shots) {
+			const dateStr = Format.stringifyDate(state.shots[shot]);
 			const obj = {
 				shot_name: shot,
-				shot_date: !state.shots[shot] ? null : state.shots[shot],
+				shot_date: !state.shots[shot] ? null : dateStr,
 				shot_iscompleted: !state.shots[shot] ? false : true,
 			};
 			shotList.push(obj);
@@ -223,7 +230,7 @@ const AddNewDog = (props) => {
 							type="radio"
 							name="gender"
 							value="Male"
-							onChange={(e) => handleChange(e, "gender", "male")}
+							onChange={(e) => handleChange(e, "gender", "Male")}
 							id="male"
 							required
 						/>
@@ -235,7 +242,7 @@ const AddNewDog = (props) => {
 							type="radio"
 							name="gender"
 							value="Female"
-							onChange={(e) => handleChange(e, "gender", "female")}
+							onChange={(e) => handleChange(e, "gender", "Female")}
 							id="female"
 						/>
 						Female
