@@ -32,9 +32,8 @@ const MedicalSection = ({ dogId }) => {
 			updateShotList.map((shotObj) =>
 				DogsApiService.updateDogShot(shotObj, shotObj.id)
 			);
-
-			getShots();
 		}
+		getShots();
 		setEditMode(false);
 	};
 
