@@ -5,6 +5,17 @@ const Format = {
 
 		return dateString;
 	},
+	formatDateInput(date) {
+		let formattedDate = "";
+
+		if (date === null) {
+			formattedDate = "Pick A Date";
+		} else {
+			formattedDate = moment(date).format("LL");
+		}
+
+		return formattedDate;
+	},
 };
 
 export default Format;
