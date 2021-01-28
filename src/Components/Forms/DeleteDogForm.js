@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import DogsApiService from "../services/api-service";
-import ValidationError from "././ValidationError/ValidationError";
-import Button from "./Button";
+import DogsApiService from "../../services/api-service";
+import ValidationError from "../ValidationError/ValidationError";
+import Button from "../UI/Button";
 
 const DeleteDogForm = ({
 	selectedDogs,

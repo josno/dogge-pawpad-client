@@ -2,17 +2,17 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Modal } from "react-responsive-modal";
 
-import ArchiveModal from "./ArchiveModal/ArchiveModal";
-import FosterAdopForm from "./FosterAdopForm/FosterAdopForm";
-import ImgModalForm from "./ImgModalForm/ImgModalForm";
-import EditButton from "./EditButton/EditButton";
-import Validate from "./../Utils/validation";
-import ValidationError from "./ValidationError/ValidationError";
+import ArchiveModal from "../ArchiveModal/ArchiveModal";
+import FosterAdopForm from "../Forms/FosterAdopForm";
+import ImgModalForm from "../Forms/ImgModalForm";
+import EditButton from "../UI/EditButton";
+import Validate from "../../Utils/validation";
+import ValidationError from "../ValidationError/ValidationError";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import DogsApiService from "../services/api-service";
-import DropDown from "./DropDown";
+import DogsApiService from "../../services/api-service";
+import DropDown from "../DropDown";
 
 import { GrEdit } from "react-icons/gr";
 

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 
 import styled from "styled-components";
 
-import DogsApiService from "../services/api-service";
-import Encryption from "../Utils/encryption";
-import AdoptionDetails from "../Components/AdoptionDetails/AdoptionDetails";
+import DogsApiService from "../../services/api-service";
+import Encryption from "../../Utils/encryption";
+import AdoptionDetails from "../Views/AdoptionDetails";
 
 const AdoptionSection = ({
 	dogId,

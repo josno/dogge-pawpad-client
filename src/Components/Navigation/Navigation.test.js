@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import Navigation from "./Navigation";
 import { BrowserRouter } from "react-router-dom";
 import renderer from "react-test-renderer";
-import { mount, shallow } from "enzyme";
+import { mount } from "enzyme";
 import toJson from "enzyme-to-json";
 
 describe("Navigation render", () => {

@@ -7,8 +7,8 @@ import {
 	IoMdHome,
 } from "react-icons/io";
 import styled from "styled-components";
-import TokenService from "../services/token-service";
-import PawPadContext from "../PawPadContext";
+import TokenService from "../../services/token-service";
+import PawPadContext from "../../PawPadContext";
 
 import NavItem from "./NavItem";
 
@@ -23,29 +23,29 @@ const Navigation = (props) => {
 
 	const loggedInNavIcons = (
 		<>
-			<NavItem to='/dogs-list'>
-				<IoMdHome className='top-nav-icon' size={"1.3em"} fill='white' />
+			<NavItem to="/dogs-list">
+				<IoMdHome className="top-nav-icon" size={"1.3em"} fill="white" />
 			</NavItem>
-			<NavItem to='/add-new-dog'>
+			<NavItem to="/add-new-dog">
 				<IoIosAddCircleOutline
-					className='top-nav-icon'
+					className="top-nav-icon"
 					size={"1.3em"}
-					fill='white'
+					fill="white"
 				/>
 			</NavItem>
 			<NavItem to={"/"} onClick={handleLogoutClick}>
-				<IoMdLogOut className='top-nav-icon' size={"1.3em"} fill='white' />
+				<IoMdLogOut className="top-nav-icon" size={"1.3em"} fill="white" />
 			</NavItem>
 		</>
 	);
 
 	const loggedOutNavIcons = (
 		<>
-			<NavItem className='sign-up' to={"/sign-up"}>
+			<NavItem className="sign-up" to={"/sign-up"}>
 				Sign up
 			</NavItem>
 			<NavItem to={"/login"}>
-				<IoMdLogIn className='top-nav-icon' size={"1.3em"} fill='white' />
+				<IoMdLogIn className="top-nav-icon" size={"1.3em"} fill="white" />
 			</NavItem>
 		</>
 	);
@@ -54,7 +54,7 @@ const Navigation = (props) => {
 		<header>
 			<NavigationStyles>
 				<Hamburger
-					className='hamburger'
+					className="hamburger"
 					open={props.open}
 					onClick={props.handleOpen}
 				>
@@ -63,10 +63,10 @@ const Navigation = (props) => {
 					<span />
 				</Hamburger>
 
-				<Link className='nav-title' to='/'>
+				<Link className="nav-title" to="/">
 					Pawpad
 				</Link>
-				<nav className='nav-wrapper'>
+				<nav className="nav-wrapper">
 					{TokenService.hasAuthToken() ? loggedInNavIcons : loggedOutNavIcons}
 				</nav>
 			</NavigationStyles>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Button from "../Button";
+import Button from "../UI/Button";
 import DropDown from "../DropDown";
 import DatePicker from "react-datepicker";
 import DogsApiService from "../../services/api-service";
@@ -14,6 +14,7 @@ const BatchShotForm = ({
 	setModal,
 	updateDogs,
 	singleShotUpdate,
+	currentShotNames,
 }) => {
 	const [date, setDate] = useState(null);
 	const [shotList, setShotList] = useState([]);
@@ -24,11 +25,16 @@ const BatchShotForm = ({
 
 	useEffect(() => {
 		DogsApiService.getShotNames().then((res) => {
-			const list = res.map((item) => item.shot_name);
+			let list = res.map((item) => item.shot_name);
+			if (currentShotNames) {
+				list = list.filter(
+					(item) => !currentShotNames.some((name) => item === name)
+				);
+			}
 			list.push("Add A New Shot");
 			setShotList(list);
 		});
-	}, []);
+	}, [currentShotNames]);
 
 	const setAddShotForm = (e) => {
 		setAddMode(true);
@@ -102,7 +108,7 @@ const BatchShotForm = ({
 			updateDogs();
 		}
 	};
-
+	console.log(shotList);
 	return (
 		<BatchShotFormStyles>
 			<>

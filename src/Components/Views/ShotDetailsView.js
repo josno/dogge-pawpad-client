@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import moment from "moment";
 
-const ShotDetailsView = ({ shots, spayedNeutered }) => {
+const ShotDetailsView = ({ shots }) => {
 	const formatDate = (date) => {
 		let formattedDate = moment(date).format("LL");
 		if (formattedDate === "Invalid date") {
@@ -30,18 +30,11 @@ const ShotDetailsView = ({ shots, spayedNeutered }) => {
 
 	return (
 		<ShotDetailsStyles>
-			<div>
-				{spayedNeutered ? (
-					<span className="indicator-yes">&#10004; </span>
-				) : (
-					<span className="indicator-no">&#10008; </span>
-				)}
-				Spayed/Neutered
-			</div>
-			{shots &&
-				shots
-					.sort((a, b) => (a.shot_name > b.shot_name ? 1 : -1))
-					.map((i, index) => <div key={index}>{renderShots(i)}</div>)}
+			{shots
+				? shots
+						.sort((a, b) => (a.shot_name > b.shot_name ? 1 : -1))
+						.map((i, index) => <div key={index}>{renderShots(i)}</div>)
+				: `Can't display shots. `}
 		</ShotDetailsStyles>
 	);
 };

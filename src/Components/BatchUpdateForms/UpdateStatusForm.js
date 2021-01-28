@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import config from "../../config";
 import TokenService from "../../services/token-service";
-import Button from "../Button";
+import Button from "../UI/Button";
 
 import ValidationError from "../ValidationError/ValidationError";
 
