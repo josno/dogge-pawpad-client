@@ -10,7 +10,7 @@ import Validate from "../../Utils/validation";
 import ValidationError from "../ValidationError/ValidationError";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import Format from "../../Utils/format";
 import DogsApiService from "../../services/api-service";
 import DropDown from "../DropDown";
 
@@ -27,6 +27,7 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
 	const [gender, setGender] = useState({ male: false, female: false });
 	const [tag, setTag] = useState("");
 	const [microchip, setMicrochip] = useState("");
+	const [microchipDate, setMicrochipDate] = useState("");
 	const [editMode, setEditMode] = useState(false);
 	const [editingPhoto, setPhotoEditing] = useState(false);
 	const [imgName, setImgName] = useState("");
@@ -46,6 +47,7 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
 				: setGender({ male: false, female: true });
 
 			setMicrochip(res.microchip);
+			setMicrochipDate(res.microchip_date);
 			setTag(res.tag_number);
 			setArrivalDate(new Date(res.arrival_date));
 			setName(res.dog_name);
@@ -83,6 +85,7 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
 			dog_status: status,
 			tag_number: tag,
 			microchip: microchip,
+			microchip_date: microchipDate,
 		};
 
 		const res = await DogsApiService.updateDog(newObj, dogId);
@@ -315,6 +318,15 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
 									onChange={(e) => setMicrochip(e.target.value)}
 								/>
 							</label>
+							{/* <label className="profile-list-item">
+								<span className="title">Microchip Date:</span>
+								<input
+									className="fade-in edit-input"
+									value={microchipDate}
+									type="text"
+									onChange={(e) => setMicrochip(e.target.value)}
+								/>
+							</label> */}
 						</form>
 					</div>
 				</>
@@ -350,6 +362,10 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
 							<li className="profile-list-item">
 								<span className="title">Microchip:</span>
 								<span className="value">{info.microchip}</span>
+							</li>
+							<li className="profile-list-item">
+								<span className="title">Microchip Date:</span>
+								<span className="value">{formatDate(info.age)}</span>
 							</li>
 						</ul>
 					</div>

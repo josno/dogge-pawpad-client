@@ -4,20 +4,17 @@ import React, {
 	useState,
 	useLayoutEffect,
 } from "react";
-import PawPadContext from "../../PawPadContext.js";
 import { Link } from "react-router-dom";
 import DogsApiService from "../../services/api-service";
 import "./AddNewDog.css";
 import ValidationError from "../../Components/ValidationError/ValidationError";
 import Validate from "../../Utils/validation";
 import Format from "../../Utils/format";
-
 import styled from "styled-components";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import moment from "moment";
 import TokenService from "../../services/token-service.js";
 
 const TEXT_INPUT = "TEXT_INPUT";
@@ -93,12 +90,11 @@ const AddNewDog = (props) => {
 		const arrDateStr = Format.stringifyDate(state.inputText.arrival_date);
 		const ageStr = Format.stringifyDate(state.inputText.age);
 		const microchipDate = Format.stringifyDate(state.inputText.microchip_date);
-		console.log(arrDateStr, ageStr, microchipDate);
 
 		const newDog = [
 			{ dog_name: state.inputText.name },
 			{ gender: state.inputText.gender },
-			{ microchip: microchipDate },
+			{ microchip_date: microchipDate },
 			{ microchip: state.inputText.microchip_number },
 			{ tag_number: state.inputText.tag_number },
 			{ age: ageStr },
