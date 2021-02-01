@@ -356,16 +356,16 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
 								<span className="value">{formatDate(info.arrival_date)}</span>
 							</li>
 							<li className="profile-list-item">
-								<span className="title">Tag:</span>
-								<span className="value">{info.tag_number}</span>
+								<span className="title">Microchip Date:</span>
+								<span className="value">{formatDate(info.age)}</span>
 							</li>
 							<li className="profile-list-item">
 								<span className="title">Microchip:</span>
 								<span className="value">{info.microchip}</span>
 							</li>
 							<li className="profile-list-item">
-								<span className="title">Microchip Date:</span>
-								<span className="value">{formatDate(info.age)}</span>
+								<span className="title">Tag:</span>
+								<span className="value">{info.tag_number}</span>
 							</li>
 						</ul>
 					</div>
