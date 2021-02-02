@@ -14,13 +14,10 @@ const MedicalSection = ({ dogId }) => {
 	const [editMode, setEditMode] = useState(false);
 	const [modalIsOpen, setModalIsOpen] = useState(false);
 	const [updateShotList, setUpdateShotList] = useState([]);
-	const [currentShotNames, setCurrentShotName] = useState([]);
 
 	const getShots = useCallback(async () => {
 		const res = await DogsApiService.getDogInfo(dogId);
 		setShots([...res.shotsCompleted]);
-		const shotNameList = res.shotsCompleted.map((obj) => obj.shot_name);
-		setCurrentShotName(shotNameList);
 	}, [dogId]);
 
 	useLayoutEffect(() => {
@@ -74,7 +71,6 @@ const MedicalSection = ({ dogId }) => {
 					selectedDogs={[dogId]}
 					setModal={() => setModalIsOpen(false)}
 					updateDogs={() => updateShots()}
-					currentShotNames={currentShotNames}
 				/>
 			</Modal>
 		</>

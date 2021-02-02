@@ -148,12 +148,7 @@ const DogsApiService = {
 			},
 			body: JSON.stringify(shot),
 		};
-		return fetch(
-			`${config.API_ENDPOINT}/shots/${shotId}`,
-			shotToUpdate
-		).then((res) =>
-			!res.ok ? res.json().then((e) => Promise.reject(e)) : null
-		);
+		return fetch(`${config.API_ENDPOINT}/shots/${shotId}`, shotToUpdate);
 	},
 	updateDogShotByDogId(shot, dogId) {
 		const shotToUpdate = {
@@ -164,12 +159,7 @@ const DogsApiService = {
 			},
 			body: JSON.stringify(shot),
 		};
-		return fetch(
-			`${config.API_ENDPOINT}/shots/dogs/${dogId}`,
-			shotToUpdate
-		).then((res) =>
-			!res.ok ? res.json().then((e) => Promise.reject(e)) : null
-		);
+		return fetch(`${config.API_ENDPOINT}/shots/dogs/${dogId}`, shotToUpdate);
 	},
 	deleteDogShot(shotId) {
 		return fetch(`${config.API_ENDPOINT}/shots/${shotId}`, {
