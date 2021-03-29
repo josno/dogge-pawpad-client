@@ -14,7 +14,6 @@ const BatchShotForm = ({
 	setModal,
 	updateDogs,
 	singleShotUpdate,
-	currentShotNames,
 }) => {
 	const [date, setDate] = useState(null);
 	const [shotList, setShotList] = useState([]);
@@ -26,15 +25,11 @@ const BatchShotForm = ({
 	useEffect(() => {
 		DogsApiService.getShotNames().then((res) => {
 			let list = res.map((item) => item.shot_name);
-			if (currentShotNames) {
-				list = list.filter(
-					(item) => !currentShotNames.some((name) => item === name)
-				);
-			}
+
 			list.push("Add A New Shot");
 			setShotList(list);
 		});
-	}, [currentShotNames]);
+	}, [shotList]);
 
 	const setAddShotForm = (e) => {
 		setAddMode(true);
@@ -57,7 +52,15 @@ const BatchShotForm = ({
 		};
 		return Promise.all(
 			selectedDogs.map((dogId) => {
-				return DogsApiService.updateDogShotByDogId(shotObj, dogId);
+				return DogsApiService.updateDogShotByDogId(shotObj, dogId).then(
+					(res) => {
+						if (res.status === 404) {
+							shotObj.dog_id = dogId;
+							shotObj.shot_iscompleted = true;
+							return DogsApiService.insertNewShot(shotObj);
+						}
+					}
+				);
 			})
 		);
 	};
@@ -108,7 +111,7 @@ const BatchShotForm = ({
 			updateDogs();
 		}
 	};
-	console.log(shotList);
+
 	return (
 		<BatchShotFormStyles>
 			<>

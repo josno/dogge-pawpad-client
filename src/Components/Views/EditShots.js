@@ -11,6 +11,7 @@ class EditShots extends Component {
 		super(props);
 		this.state = {
 			shots: [],
+			error: null,
 		};
 
 		this.renderShots = this.renderShots.bind(this);
@@ -43,34 +44,37 @@ class EditShots extends Component {
 		));
 	}
 
-	deleteShot(id) {
-		DogsApiService.deleteDogShot(id)
-			.then((response) => {
-				DogsApiService.getShots(this.props.dogId)
-					.then((shots) => {
-						shots.sort((a, b) => (a.shot_name > b.shot_name ? 1 : -1));
-						return shots;
-					})
-					.then((sortedShots) =>
-						this.setState({
-							shots: sortedShots,
-						})
-					);
-			})
-			.catch((e) =>
-				this.setState({
-					error: `Something went wrong. Try again later.`,
-				})
-			);
+	async deleteShot(id) {
+		const deleteRes = await DogsApiService.deleteDogShot(id);
+		if (!deleteRes.ok) {
+			this.setState({
+				error: "Something went wrong.",
+			});
+		} else {
+			await this.getShots();
+		}
 	}
 
-	componentDidMount() {
-		DogsApiService.getShots(this.props.dogId).then((shots) => {
+	async getShots() {
+		const res = await DogsApiService.getShots(this.props.dogId);
+
+		if (!res.ok && res.status !== 404) {
+			return;
+		} else if (res.status === 404) {
+			this.setState({
+				shots: [],
+			});
+		} else {
+			const shots = await res.json();
 			shots.sort((a, b) => (a.shot_name > b.shot_name ? 1 : -1));
 			this.setState({
 				shots: shots,
 			});
-		});
+		}
+	}
+
+	componentDidMount() {
+		this.getShots();
 	}
 
 	render() {
