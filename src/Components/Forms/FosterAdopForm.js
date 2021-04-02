@@ -204,13 +204,7 @@ class FosterAdopForm extends Component {
 
     const { type } = this.props
 
-    const disabled =
-      Validate.validateName(name.value) ||
-      Validate.validateEmail(email.value) ||
-      Validate.validatePhone(phone.value) ||
-      !country
-        ? true
-        : false
+    const disabled = Validate.validateName(name.value)
 
     return (
       <div className="modal-inner">
@@ -257,7 +251,6 @@ class FosterAdopForm extends Component {
               value={email.value}
               onChange={(e) => this.onChange(e)}
               type="text"
-              required
             />
             {this.validateEmailInput()}
           </label>
