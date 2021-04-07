@@ -88,12 +88,17 @@ const AddNewDog = (props) => {
   const makeDogObj = () => {
     const arrDateStr = Format.stringifyDate(state.inputText.arrival_date)
     const ageStr = Format.stringifyDate(state.inputText.age)
-    const microchipDate = Format.stringifyDate(state.inputText.microchip_date)
+    const microchipDate =
+      state.inputText.microchip_date === ''
+        ? Format.stringifyDate(new Date())
+        : Format.stringifyDate(state.inputText.microchip_date)
 
     const newDog = [
       { dog_name: state.inputText.name },
       { gender: state.inputText.gender },
-      { microchip_date: microchipDate },
+      {
+        microchip_date: microchipDate,
+      },
       { microchip: state.inputText.microchip_number },
       { tag_number: state.inputText.tag_number },
       { age: ageStr },
