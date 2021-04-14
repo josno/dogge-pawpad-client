@@ -2,10 +2,10 @@
 
 exports[`<DogsList /> renders as expected 1`] = `
 <main
-  className="sc-fzpans bvpyKZ"
+  className="sc-fzpans eOBqKX"
 >
   <section
-    className="sc-fzplWN hlwYua"
+    className="sc-fzplWN bTOJqa"
   >
     <div
       className="container"
@@ -13,9 +13,11 @@ exports[`<DogsList /> renders as expected 1`] = `
       <span
         className="container-title"
       >
-        Total Dogs:
+        Total Dogs
+        :
       </span>
        
+      
     </div>
     <div
       className="container"
@@ -23,9 +25,11 @@ exports[`<DogsList /> renders as expected 1`] = `
       <span
         className="container-title"
       >
-        Dogs Adopted:
+        Current Dogs
+        :
       </span>
        
+      
     </div>
     <div
       className="container"
@@ -33,9 +37,23 @@ exports[`<DogsList /> renders as expected 1`] = `
       <span
         className="container-title"
       >
-        Dogs Fostered:
+        Adopted Dogs
+        :
       </span>
        
+      
+    </div>
+    <div
+      className="container"
+    >
+      <span
+        className="container-title"
+      >
+        Fostered Dogs
+        :
+      </span>
+       
+      
     </div>
   </section>
   <section

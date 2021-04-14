@@ -2,7 +2,7 @@
 
 exports[`<AddNewDog /> renders as expected 1`] = `
 <div
-  className="sc-fzqNJr dxZSMt"
+  className="sc-fzoyAV iTNwVp"
 >
   <div
     className="buttons-section"
@@ -36,11 +36,6 @@ exports[`<AddNewDog /> renders as expected 1`] = `
          Back
       </a>
     </div>
-    <button
-      className="delete-dog"
-    >
-      Delete
-    </button>
   </div>
   <div
     className="details-section"
@@ -49,7 +44,7 @@ exports[`<AddNewDog /> renders as expected 1`] = `
       className="dog-details"
     >
       <div
-        className="sc-AxiKw dTWOKA"
+        className="sc-AxiKw bZsfrn"
       >
         <div
           className="img-container"
@@ -147,7 +142,7 @@ exports[`<AddNewDog /> renders as expected 1`] = `
               <span
                 className="value"
               >
-                December 3, 2020
+                April 14, 2021
               </span>
             </li>
             <li
@@ -161,7 +156,7 @@ exports[`<AddNewDog /> renders as expected 1`] = `
               <span
                 className="value"
               >
-                December 3, 2020
+                April 14, 2021
               </span>
             </li>
             <li
@@ -170,11 +165,13 @@ exports[`<AddNewDog /> renders as expected 1`] = `
               <span
                 className="title"
               >
-                Tag:
+                Microchip Date:
               </span>
               <span
                 className="value"
-              />
+              >
+                April 14, 2021
+              </span>
             </li>
             <li
               className="profile-list-item"
@@ -188,6 +185,18 @@ exports[`<AddNewDog /> renders as expected 1`] = `
                 className="value"
               />
             </li>
+            <li
+              className="profile-list-item"
+            >
+              <span
+                className="title"
+              >
+                Tag:
+              </span>
+              <span
+                className="value"
+              />
+            </li>
           </ul>
         </div>
       </div>
@@ -196,27 +205,18 @@ exports[`<AddNewDog /> renders as expected 1`] = `
       className="medical"
     >
       <h3
-        className="sc-Axmtr eClTBT"
+        className="sc-AxmLO loTDxG"
       >
-        Medical 
+        Medical
       </h3>
       <ul
         className="sc-AxhCb eFyOq"
-      >
-        <div>
-          <span
-            className="indicator-no"
-          >
-            ✘ 
-          </span>
-          Spayed/Neutered
-        </div>
-      </ul>
+      />
       <div
-        className="sc-AxmLO iIYNFW"
+        className="sc-fzozJi cfGnXn"
       >
         <div
-          className="sc-AxjAm gVDFa"
+          className="sc-AxjAm ecLiXZ"
         >
           <svg
             className="undefined icon"
@@ -243,7 +243,7 @@ exports[`<AddNewDog /> renders as expected 1`] = `
           </svg>
         </div>
         <div
-          className="sc-AxjAm gVDFa"
+          className="sc-AxjAm ecLiXZ"
         >
           <svg
             className="undefined icon"
@@ -275,7 +275,7 @@ exports[`<AddNewDog /> renders as expected 1`] = `
       className="notes"
     >
       <div
-        className="sc-fzpans eVlJnn"
+        className="sc-fzplWN kycYaO"
       >
         <h3
           className="notes-title"
@@ -338,10 +338,10 @@ exports[`<AddNewDog /> renders as expected 1`] = `
           className="notes-container"
         >
           <div
-            className="sc-fzplWN HfApw"
+            className="sc-fznyAO hKaXBs"
           >
             <div
-              className="sc-AxjAm gVDFa"
+              className="sc-AxjAm ecLiXZ"
             >
               <svg
                 className="undefined icon"
@@ -375,7 +375,7 @@ exports[`<AddNewDog /> renders as expected 1`] = `
       className="adoption"
     >
       <div
-        className="sc-fznKkj hcjtzk"
+        className="sc-fznZeY jZLVg"
       >
         <h3
           className="adoption-title"
@@ -389,7 +389,7 @@ exports[`<AddNewDog /> renders as expected 1`] = `
       className="foster"
     >
       <div
-        className="sc-fznZeY goERMp"
+        className="sc-fzokOt jqBIvf"
       >
         <h3
           className="foster-title"
@@ -397,7 +397,7 @@ exports[`<AddNewDog /> renders as expected 1`] = `
           Foster
         </h3>
         <div
-          className="sc-fzokOt da-dEzD"
+          className="sc-fzqBZW hraBuz"
         />
       </div>
     </div>

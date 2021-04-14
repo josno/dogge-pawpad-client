@@ -2,7 +2,7 @@
 
 exports[`<AddNewDog /> renders as expected 1`] = `
 <main
-  className="add-dog-container"
+  className="sc-AxjAm gpLhwb add-dog-container"
 >
   <h1
     className="form-title"
@@ -25,10 +25,10 @@ exports[`<AddNewDog /> renders as expected 1`] = `
       <input
         className="block"
         id="name"
-        name="dogName"
         onChange={[Function]}
         required={true}
         type="text"
+        value=""
       />
     </div>
     <div
@@ -52,11 +52,6 @@ exports[`<AddNewDog /> renders as expected 1`] = `
         alt="your-pic"
         className="img-preview"
         src=""
-        style={
-          Object {
-            "display": "none",
-          }
-        }
       />
     </div>
     <fieldset
@@ -157,10 +152,9 @@ exports[`<AddNewDog /> renders as expected 1`] = `
     </label>
     <input
       className="block"
-      id="tag-number"
-      name="tagNumber"
       onChange={[Function]}
       type="text"
+      value=""
     />
     <label
       className="bold"
@@ -170,43 +164,39 @@ exports[`<AddNewDog /> renders as expected 1`] = `
     </label>
     <input
       className="block"
-      id="microchip"
       name="microchip"
       onChange={[Function]}
       type="text"
+      value=""
     />
-    <fieldset
-      className="field-item"
+    <label
+      className="bold"
+      htmlFor="microchip"
     >
-      <legend
-        className="bold"
-      >
-        Spayed/Neutered 
-      </legend>
-      <label
-        htmlFor="yes"
-      >
-        <input
-          id="yes"
-          name="spayedNeutered"
-          onChange={[Function]}
-          required={true}
-          type="radio"
-        />
-        Yes
-      </label>
-      <label
-        htmlFor="no"
+      Microchip Date
+    </label>
+    <div
+      className="react-datepicker-wrapper"
+    >
+      <div
+        className="react-datepicker__input-container"
       >
         <input
-          id="no"
-          name="spayedNeutered"
+          className="block"
+          disabled={false}
+          id="arrival"
+          onBlur={[Function]}
           onChange={[Function]}
-          type="radio"
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          placeholder="Click to select a date"
+          readOnly={false}
+          type="text"
+          value=""
         />
-        No
-      </label>
-    </fieldset>
+      </div>
+    </div>
     <fieldset
       className="field-item "
     >
@@ -216,7 +206,33 @@ exports[`<AddNewDog /> renders as expected 1`] = `
         Required Shots Completed
       </legend>
       <label
-        htmlFor="rabies"
+        htmlFor="Spayed/Neutered"
+      >
+        Spayed/Neutered
+        <div
+          className="react-datepicker-wrapper"
+        >
+          <div
+            className="react-datepicker__input-container"
+          >
+            <input
+              className="shot-date-input"
+              disabled={false}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              placeholder="Click to select a date"
+              readOnly={false}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </label>
+      <label
+        htmlFor="Rabies"
       >
         Rabies
          
@@ -229,7 +245,6 @@ exports[`<AddNewDog /> renders as expected 1`] = `
             <input
               className="shot-date-input"
               disabled={false}
-              name="rabies"
               onBlur={[Function]}
               onChange={[Function]}
               onClick={[Function]}
@@ -244,10 +259,9 @@ exports[`<AddNewDog /> renders as expected 1`] = `
         </div>
       </label>
       <label
-        htmlFor="rabiesBooster"
+        htmlFor="Rabies Yearly Booster"
       >
         Rabies Yearly Booster
-         
         <div
           className="react-datepicker-wrapper"
         >
@@ -257,7 +271,6 @@ exports[`<AddNewDog /> renders as expected 1`] = `
             <input
               className="shot-date-input"
               disabled={false}
-              name="rabiesBooster"
               onBlur={[Function]}
               onChange={[Function]}
               onClick={[Function]}
@@ -272,7 +285,7 @@ exports[`<AddNewDog /> renders as expected 1`] = `
         </div>
       </label>
       <label
-        htmlFor="complexOne"
+        htmlFor="Complex I"
       >
         Complex I
         <div
@@ -284,7 +297,6 @@ exports[`<AddNewDog /> renders as expected 1`] = `
             <input
               className="shot-date-input"
               disabled={false}
-              name="complexOne"
               onBlur={[Function]}
               onChange={[Function]}
               onClick={[Function]}
@@ -299,7 +311,7 @@ exports[`<AddNewDog /> renders as expected 1`] = `
         </div>
       </label>
       <label
-        htmlFor="complexTwo"
+        htmlFor="Complex II"
       >
         Complex II
         <div
@@ -311,7 +323,6 @@ exports[`<AddNewDog /> renders as expected 1`] = `
             <input
               className="shot-date-input"
               disabled={false}
-              name="complexTwo"
               onBlur={[Function]}
               onChange={[Function]}
               onClick={[Function]}
@@ -326,7 +337,7 @@ exports[`<AddNewDog /> renders as expected 1`] = `
         </div>
       </label>
       <label
-        htmlFor="complexBooster"
+        htmlFor="Complex Yearly Booster"
       >
         Complex Yearly Booster
         <div
@@ -338,7 +349,6 @@ exports[`<AddNewDog /> renders as expected 1`] = `
             <input
               className="shot-date-input"
               disabled={false}
-              name="complexBooster"
               onBlur={[Function]}
               onChange={[Function]}
               onClick={[Function]}
@@ -369,7 +379,6 @@ exports[`<AddNewDog /> renders as expected 1`] = `
       </button>
       <button
         className="submit"
-        disabled="Name should have more than one letter."
         onClick={[Function]}
         type="submit"
       >
