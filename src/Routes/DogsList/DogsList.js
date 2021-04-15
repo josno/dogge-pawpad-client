@@ -142,8 +142,8 @@ const DogList = (props) => {
   return (
     <DogListStyles>
       <OverviewCountStyles>
-        {Object.keys(count).map((i) => (
-          <OverviewCount title={i} value={count[i]} />
+        {Object.keys(count).map((i, index) => (
+          <OverviewCount key={index} title={i} value={count[i]} />
         ))}
       </OverviewCountStyles>
       <section className="search-filter-container">
@@ -199,7 +199,7 @@ const DogList = (props) => {
                       info={d}
                       formatDate={(date) => formatDate(date)}
                     >
-                      <DogItemImage img={d.profile_img} name={d.dog_name} />
+                      {/* <DogItemImage img={d.profile_img} name={d.dog_name} /> */}
                     </DogListItem>
                   )
                 )
