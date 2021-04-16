@@ -2,10 +2,10 @@
 
 exports[`<DogsList /> renders as expected 1`] = `
 <main
-  className="sc-fzpans eOBqKX"
+  className="sc-fzoLsD fIrJKz"
 >
   <section
-    className="sc-fzplWN bTOJqa"
+    className="sc-fzpans gcCCXf"
   >
     <div
       className="container"
@@ -76,7 +76,7 @@ exports[`<DogsList /> renders as expected 1`] = `
       className="filters-container"
     >
       <div
-        className="sc-AxhUy fkBipW"
+        className="sc-AxhCb kmOGvn"
       >
         <div
           className="list-text list-label dog-list-actions"
@@ -104,7 +104,7 @@ exports[`<DogsList /> renders as expected 1`] = `
         </div>
       </div>
       <div
-        className="sc-AxhUy fkBipW"
+        className="sc-AxhCb kmOGvn"
       >
         <div
           className="list-text list-label dog-list-actions"
