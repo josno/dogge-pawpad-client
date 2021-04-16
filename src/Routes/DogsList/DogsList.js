@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 
 import styled from 'styled-components'
 import DogListItem from '../../Components/ListItems/DogListItem'
-import DogItemImage from '../../Components/ListItems/DogItemImage'
 
 import DropDown from '../../Components/DropDown'
 import DogsApiService from '../../services/api-service'
@@ -198,9 +197,7 @@ const DogList = (props) => {
                       checked={d.checked}
                       info={d}
                       formatDate={(date) => formatDate(date)}
-                    >
-                      {/* <DogItemImage img={d.profile_img} name={d.dog_name} /> */}
-                    </DogListItem>
+                    />
                   )
                 )
               })}

@@ -200,7 +200,7 @@ class FosterAdopForm extends Component {
   }
 
   render(props) {
-    const { name, date, email, phone, comment, country } = this.state
+    const { name, date, email, phone, comment } = this.state
 
     const { type } = this.props
 

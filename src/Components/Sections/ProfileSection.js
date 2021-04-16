@@ -10,7 +10,6 @@ import Validate from '../../Utils/validation'
 import ValidationError from '../ValidationError/ValidationError'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import Format from '../../Utils/format'
 import DogsApiService from '../../services/api-service'
 import DropDown from '../DropDown'
 
