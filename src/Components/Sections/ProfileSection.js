@@ -51,7 +51,7 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
         : setGender({ male: false, female: true })
 
       setMicrochip(res.microchip)
-      setMicrochipDate(res.microchip_date)
+      setMicrochipDate(new Date(res.microchip_date))
       setTag(res.tag_number)
       setArrivalDate(new Date(res.arrival_date))
       setName(res.dog_name)
@@ -318,6 +318,16 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
                 />
               </label>
               <label className="profile-list-item">
+                <span className="title">Microchip Date:</span>
+                <DatePicker
+                  dateFormat="dd/MM/yyyy"
+                  selected={microchipDate}
+                  placeholderText="dd/mm/yyyy"
+                  onChange={(date) => setMicrochipDate(date)}
+                  className="fade-in edit-input"
+                />
+              </label>
+              <label className="profile-list-item">
                 <span className="title">Microchip:</span>
                 <input
                   className="fade-in edit-input"
@@ -326,15 +336,6 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
                   onChange={(e) => setMicrochip(e.target.value)}
                 />
               </label>
-              {/* <label className="profile-list-item">
-								<span className="title">Microchip Date:</span>
-								<input
-									className="fade-in edit-input"
-									value={microchipDate}
-									type="text"
-									onChange={(e) => setMicrochip(e.target.value)}
-								/>
-							</label> */}
             </form>
           </div>
         </>
@@ -365,7 +366,7 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
               </li>
               <li className="profile-list-item">
                 <span className="title">Microchip Date:</span>
-                <span className="value">{formatDate(info.age)}</span>
+                <span className="value">{formatDate(info.microchip_date)}</span>
               </li>
               <li className="profile-list-item">
                 <span className="title">Microchip:</span>
