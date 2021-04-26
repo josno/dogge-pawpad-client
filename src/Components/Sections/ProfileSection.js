@@ -73,6 +73,8 @@ const ProfileSection = ({ dogId, buttonStatus, setUpdate, update }) => {
     let formattedDate = moment(date).format('LL')
     if (formattedDate === 'N/A') {
       return moment(date, 'DD-MM-YYYY').format('LL')
+    } else if (formattedDate === 'Invalid date') {
+      return 'N/A'
     } else {
       return formattedDate
     }
@@ -432,7 +434,7 @@ const ProfileSectionStyles = styled.div`
     padding: 2px;
     line-height: 2;
     display: grid;
-    grid-template-columns: 0.5fr 1fr;
+    grid-template-columns: 0.75fr 1fr;
     grid-template-rows: 1fr;
     gap: 10px 10px;
     grid-template-areas: 'title value';
@@ -510,7 +512,7 @@ const ProfileSectionStyles = styled.div`
 
   @media (min-width: 1000px) {
     .profile-list-item {
-      font-size: 1.2rem;
+      font-size: 0.8rem;
     }
   }
 `
