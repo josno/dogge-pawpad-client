@@ -147,6 +147,7 @@ const DogList = (props) => {
         ))}
       </OverviewCountStyles>
       <DownloadCSV />
+
       <section className="search-filter-container">
         {selected.length > 0 && !modalIsOpen && (
           <UpdateBar onClick={(type) => setUpdateType(type)} />
@@ -249,7 +250,7 @@ const DogList = (props) => {
 }
 
 const DogListStyles = styled.main`
-  padding-top: 60px;
+  padding: 60px 30px;
   width: 100%;
 
   .add-a-dog-button {
@@ -282,10 +283,6 @@ const DogListStyles = styled.main`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-  }
-
-  .dog-list-container {
-    padding: 5px 5% 10px 5%;
   }
 
   .dog-list-actions {
@@ -338,7 +335,7 @@ const DogListStyles = styled.main`
   @media (min-width: 500px) {
     .search-filter-container {
       flex-direction: row;
-      justify-content: space-around;
+      justify-content: space-between;
     }
 
     .filters-container {
@@ -354,13 +351,11 @@ const DogListStyles = styled.main`
 `
 
 const OverviewCountStyles = styled.section`
-  width: 100%;
-  padding: 10px 7%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
+  width: 80%;
 
   .container {
-    padding: 10px;
     font-weight: bold;
   }
 

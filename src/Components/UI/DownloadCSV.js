@@ -42,13 +42,23 @@ const DownloadCSV = (props) => {
   }, [getList])
 
   return (
-    <div>
+    <DownloadStyles>
       <CSVLink data={dogs} headers={headerList}>
         Download CSV File
       </CSVLink>
-      ;
-    </div>
+    </DownloadStyles>
   )
 }
+
+const DownloadStyles = styled.div`
+  display: inline;
+  position: relative;
+  float: right;
+  font-size: 10px;
+  bottom: 20px;
+  right: 10px;
+  border: 1px solid black;
+  padding: 5px;
+`
 
 export default DownloadCSV
