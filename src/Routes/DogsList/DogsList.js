@@ -13,6 +13,7 @@ import UpdateStatusForm from '../../Components/BatchUpdateForms/UpdateStatusForm
 import DeleteDogForm from '../../Components/Forms/DeleteDogForm'
 import BatchShotForm from '../../Components/BatchUpdateForms/BatchShotForm'
 import OverviewCount from '../../Components/OverviewSection'
+import DownloadCSV from '../../Components/UI/DownloadCSV'
 
 import moment from 'moment'
 
@@ -145,6 +146,7 @@ const DogList = (props) => {
           <OverviewCount key={index} title={i} value={count[i]} />
         ))}
       </OverviewCountStyles>
+      <DownloadCSV />
       <section className="search-filter-container">
         {selected.length > 0 && !modalIsOpen && (
           <UpdateBar onClick={(type) => setUpdateType(type)} />
