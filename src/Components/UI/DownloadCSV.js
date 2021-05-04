@@ -13,8 +13,18 @@ const DownloadCSV = (props) => {
   const getList = useCallback(async () => {
     const list = await DogsApiService.getDogsList(shelterId)
     list.forEach((i) => {
+      i.arrival_date = !i.arrival_date
+        ? ''
+        : new Date(i.arrival_date).toLocaleDateString('en-UK')
+      i.age = !i.age ? '' : new Date(i.age).toLocaleDateString('en-UK')
+      i.microchip_date = !i.microchip_date
+        ? ''
+        : new Date(i.microchip_date).toLocaleDateString('en-UK')
       i.shotsCompleted.forEach((shot) => {
-        i[shot.shot_name] = shot.shot_date
+        const dateItem = !shot.shot_date
+          ? ''
+          : new Date(shot.shot_date).toLocaleDateString('en-UK')
+        i[shot.shot_name] = dateItem
       })
       delete i.shotsCompleted
     })
