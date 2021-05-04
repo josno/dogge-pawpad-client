@@ -44,7 +44,7 @@ const DownloadCSV = (props) => {
   return (
     <div>
       <CSVLink data={dogs} headers={headerList}>
-        Download me
+        Download CSV File
       </CSVLink>
       ;
     </div>
